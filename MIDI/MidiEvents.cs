@@ -8,7 +8,7 @@ namespace MIDIEvents
     delegate void SysExHandler(object sender, SysExEventArgs e);
 
     // Channel Commands according to Sanford.ChannelCommand enum
-    enum EventChannelCommand
+    enum ChannelCommand
     {
         ChannelPressure = 208,
         Controller = 176,
@@ -35,12 +35,12 @@ namespace MIDIEvents
     // Channel Message Event Arguments
     class ChannelEventArgs
     {
-        private readonly EventChannelCommand command;
+        private readonly ChannelCommand command;
         private readonly int midiChannel;
         private readonly int data1;
         private readonly int data2;
 
-        public ChannelEventArgs(EventChannelCommand com, int chan, int d1, int d2)
+        public ChannelEventArgs(ChannelCommand com, int chan, int d1, int d2)
         {
             command = com;
             midiChannel = chan;

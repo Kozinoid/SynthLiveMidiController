@@ -2,7 +2,7 @@
     This interface is intended to align the application with different MIDI libraries.
  */
 
-using MIDIEvents;
+//using MIDIEvents;
 
 namespace MIDIDevice
 {
@@ -11,8 +11,8 @@ namespace MIDIDevice
         //-----------------------------------------------------------------------------------------------------
         //|                                              EVENTS                                               |
         //-----------------------------------------------------------------------------------------------------
-        event ChannelHandler ChannelEvent;
-        event SysExHandler SysExEvent;
+        event MIDIEvents.ChannelHandler ChannelEvent;
+        event MIDIEvents.SysExHandler SysExEvent;
 
         //-----------------------------------------------------------------------------------------------------
         //|                               INPUT/OUTPUT DEVICES INIT/CLOSE                                     |
@@ -24,7 +24,7 @@ namespace MIDIDevice
         //|                                          OUTPUT COMMANDS                                         |
         //----------------------------------------------------------------------------------------------------
         void SendSysExMessage(byte[] buf);
-        void SendChannelMessage(EventChannelCommand command, int midiChannel, int data1);
-        void SendChannelMessage(EventChannelCommand command, int midiChannel, int data1, int data2);
+        void SendChannelMessage(MIDIEvents.ChannelCommand command, int midiChannel, int data1);
+        void SendChannelMessage(MIDIEvents.ChannelCommand command, int midiChannel, int data1, int data2);
     }
 }

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Sanford.Multimedia.Midi;
+using SanfordMIDI = Sanford.Multimedia.Midi;
 
 namespace SynthLiveMidiController
 {
@@ -24,16 +24,16 @@ namespace SynthLiveMidiController
         protected override void OnLoad(EventArgs e)
         {
             lb_InputDevice.Items.Clear();
-            for (int i = 0; i < InputDevice.DeviceCount; i++)
+            for (int i = 0; i < SanfordMIDI.InputDevice.DeviceCount; i++)
             {
-                lb_InputDevice.Items.Add(InputDevice.GetDeviceCapabilities(i).name);
+                lb_InputDevice.Items.Add(SanfordMIDI.InputDevice.GetDeviceCapabilities(i).name);
             }
             lb_InputDevice.SelectedIndex = selectedInIndex;
 
             lb_OutputDevice.Items.Clear();
-            for (int i = 0; i < OutputDevice.DeviceCount; i++)
+            for (int i = 0; i < SanfordMIDI.OutputDevice.DeviceCount; i++)
             {
-                lb_OutputDevice.Items.Add(OutputDevice.GetDeviceCapabilities(i).name);
+                lb_OutputDevice.Items.Add(SanfordMIDI.OutputDevice.GetDeviceCapabilities(i).name);
             }
             lb_OutputDevice.SelectedIndex = selectedOutIndex;
 

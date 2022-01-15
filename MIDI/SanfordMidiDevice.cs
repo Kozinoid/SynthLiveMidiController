@@ -5,9 +5,9 @@
 using System;
 using System.Threading;
 using Sanford.Multimedia;
-using Sanford.Multimedia.Midi;
+using SanfordMIDI =  Sanford.Multimedia.Midi;
 using System.Windows.Forms;
-using MIDIEvents;
+//using MIDIEvents;
 
 namespace MIDIDevice
 {
@@ -17,16 +17,16 @@ namespace MIDIDevice
         //|                                          DEVICES FIELDS                                           |
         //-----------------------------------------------------------------------------------------------------
 
-        private static InputDevice inDevice = null;
-        private static OutputDevice opDevice = null;
+        private static SanfordMIDI.InputDevice inDevice = null;
+        private static SanfordMIDI.OutputDevice opDevice = null;
 
         //-----------------------------------------------------------------------------------------------------
         //|                                              EVENTS                                               |
         //-----------------------------------------------------------------------------------------------------
 
-        event ChannelHandler ChannelEvent;
-        event SysExHandler SysExEvent;
-        event ChannelHandler IMidiInOutInterface.ChannelEvent
+        event MIDIEvents.ChannelHandler ChannelEvent;
+        event MIDIEvents.SysExHandler SysExEvent;
+        event MIDIEvents.ChannelHandler IMidiInOutInterface.ChannelEvent
         {
             add
             {
@@ -38,7 +38,7 @@ namespace MIDIDevice
                 ChannelEvent -= value; ;
             }
         }
-        event SysExHandler IMidiInOutInterface.SysExEvent
+        event MIDIEvents.SysExHandler IMidiInOutInterface.SysExEvent
         {
             add
             {
@@ -60,7 +60,7 @@ namespace MIDIDevice
         {
             try
             {
-                inDevice = new InputDevice(inIndex);
+                inDevice = new SanfordMIDI.InputDevice(inIndex);
 
                 inDevice.ChannelMessageReceived += HandleChannelMessageReceived;
                 inDevice.SysExMessageReceived += HandleSysExMessageReceived;
@@ -75,7 +75,7 @@ namespace MIDIDevice
 
             try
             {
-                opDevice = new OutputDevice(outIndex);
+                opDevice = new SanfordMIDI.OutputDevice(outIndex);
             }
             catch
             {
@@ -125,16 +125,16 @@ namespace MIDIDevice
         //-----------------------------------------------------------------------------------------------------
 
         // Channel message received
-        private void HandleChannelMessageReceived(object sender, ChannelMessageEventArgs e)
+        private void HandleChannelMessageReceived(object sender, SanfordMIDI.ChannelMessageEventArgs e)
         {
-            ChannelEventArgs ea = new ChannelEventArgs(GetEventChannelCommand(e.Message.Command), e.Message.MidiChannel, e.Message.Data1, e.Message.Data2);
+            MIDIEvents.ChannelEventArgs ea = new MIDIEvents.ChannelEventArgs(GetEventChannelCommand(e.Message.Command), e.Message.MidiChannel, e.Message.Data1, e.Message.Data2);
             ChannelEvent?.Invoke(this, ea);
         }
 
         // System exclusive message received
-        private void HandleSysExMessageReceived(object sender, SysExMessageEventArgs e)
+        private void HandleSysExMessageReceived(object sender, SanfordMIDI.SysExMessageEventArgs e)
         {
-            SysExEventArgs ea = new SysExEventArgs(e.Message.GetBytes());
+            MIDIEvents.SysExEventArgs ea = new MIDIEvents.SysExEventArgs(e.Message.GetBytes());
             SysExEvent?.Invoke(this, ea);
         }
 
@@ -151,79 +151,79 @@ namespace MIDIDevice
         // Send SysEx Message
         public void SendSysExMessage(byte[] buf)
         {
-            SysExMessage message = new SysExMessage(buf);
+            SanfordMIDI.SysExMessage message = new SanfordMIDI.SysExMessage(buf);
             opDevice.Send(message);
         }
 
         // Send Channel Message 1 
-        public void SendChannelMessage(EventChannelCommand command, int midiChannel, int data1)
+        public void SendChannelMessage(MIDIEvents.ChannelCommand command, int midiChannel, int data1)
         {
-            ChannelCommand cmd = GetChannelCommand(command);
-            ChannelMessage message = new ChannelMessage(cmd, midiChannel, data1);
+            SanfordMIDI.ChannelCommand cmd = GetChannelCommand(command);
+            SanfordMIDI.ChannelMessage message = new SanfordMIDI.ChannelMessage(cmd, midiChannel, data1);
             opDevice.Send(message);
         }
 
         // Send Channel Message 2 
-        public void SendChannelMessage(EventChannelCommand command, int midiChannel, int data1, int data2)
+        public void SendChannelMessage(MIDIEvents.ChannelCommand command, int midiChannel, int data1, int data2)
         {
-            ChannelCommand cmd = GetChannelCommand(command);
-            ChannelMessage message = new ChannelMessage(cmd, midiChannel, data1, data2);
+            SanfordMIDI.ChannelCommand cmd = GetChannelCommand(command);
+            SanfordMIDI.ChannelMessage message = new SanfordMIDI.ChannelMessage(cmd, midiChannel, data1, data2);
             opDevice.Send(message);
         }
 
         // Command Converter App -> Sanford
-        private ChannelCommand GetChannelCommand(EventChannelCommand cmd)
+        private SanfordMIDI.ChannelCommand GetChannelCommand(MIDIEvents.ChannelCommand cmd)
         {
             switch (cmd)
             {
-                case EventChannelCommand.ChannelPressure:
-                    return ChannelCommand.ChannelPressure;
+                case MIDIEvents.ChannelCommand.ChannelPressure:
+                    return SanfordMIDI.ChannelCommand.ChannelPressure;
 
-                case EventChannelCommand.Controller:
-                    return ChannelCommand.Controller;
+                case MIDIEvents.ChannelCommand.Controller:
+                    return SanfordMIDI.ChannelCommand.Controller;
 
-                case EventChannelCommand.NoteOff:
-                    return ChannelCommand.NoteOff;
+                case MIDIEvents.ChannelCommand.NoteOff:
+                    return SanfordMIDI.ChannelCommand.NoteOff;
 
-                case EventChannelCommand.NoteOn:
-                    return ChannelCommand.NoteOn;
+                case MIDIEvents.ChannelCommand.NoteOn:
+                    return SanfordMIDI.ChannelCommand.NoteOn;
 ;
-                case EventChannelCommand.PitchWheel:
-                    return ChannelCommand.PitchWheel;
+                case MIDIEvents.ChannelCommand.PitchWheel:
+                    return SanfordMIDI.ChannelCommand.PitchWheel;
 
-                case EventChannelCommand.ProgramChange:
-                    return ChannelCommand.ProgramChange;
+                case MIDIEvents.ChannelCommand.ProgramChange:
+                    return SanfordMIDI.ChannelCommand.ProgramChange;
 
                 default:
-                    return ChannelCommand.PolyPressure;
+                    return SanfordMIDI.ChannelCommand.PolyPressure;
             }
         }
 
         // Command Converter Sanford -> App
-        private EventChannelCommand GetEventChannelCommand(ChannelCommand cmd)
+        private MIDIEvents.ChannelCommand GetEventChannelCommand(SanfordMIDI.ChannelCommand cmd)
         {
             switch (cmd)
             {
-                case ChannelCommand.ChannelPressure:
-                    return EventChannelCommand.ChannelPressure;
+                case SanfordMIDI.ChannelCommand.ChannelPressure:
+                    return MIDIEvents.ChannelCommand.ChannelPressure;
 
-                case ChannelCommand.Controller:
-                    return EventChannelCommand.Controller;
+                case SanfordMIDI.ChannelCommand.Controller:
+                    return MIDIEvents.ChannelCommand.Controller;
 
-                case ChannelCommand.NoteOff:
-                    return EventChannelCommand.NoteOff;
+                case SanfordMIDI.ChannelCommand.NoteOff:
+                    return MIDIEvents.ChannelCommand.NoteOff;
 
-                case ChannelCommand.NoteOn:
-                    return EventChannelCommand.NoteOn;
+                case SanfordMIDI.ChannelCommand.NoteOn:
+                    return MIDIEvents.ChannelCommand.NoteOn;
                     ;
-                case ChannelCommand.PitchWheel:
-                    return EventChannelCommand.PitchWheel;
+                case SanfordMIDI.ChannelCommand.PitchWheel:
+                    return MIDIEvents.ChannelCommand.PitchWheel;
 
-                case ChannelCommand.ProgramChange:
-                    return EventChannelCommand.ProgramChange;
+                case SanfordMIDI.ChannelCommand.ProgramChange:
+                    return MIDIEvents.ChannelCommand.ProgramChange;
 
                 default:
-                    return EventChannelCommand.PolyPressure;
+                    return MIDIEvents.ChannelCommand.PolyPressure;
             }
         }
         
