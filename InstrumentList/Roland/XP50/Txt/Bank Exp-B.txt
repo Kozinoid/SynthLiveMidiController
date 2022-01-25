@@ -1,0 +1,255 @@
+Prologue
+EasternTempl
+Replicants
+Converge
+JX3P Polaris
+Big Pad Swp
+Big LFOSweep
+Animotion
+Mega 5ths
+CS-Sixty BPF
+Waspy Synth
+Polychrome
+Euro Sweep
+OBig Poly
+OB Synthy
+80s OBxa
+Thick Matrix
+Poly X-pandr
+Synth-X Poly
+Prophetic
+Oct MG Saw
+Juno-6 Power
+Hyperphases
+Synth-X Phaz
+MIDI Brs Pad
+Poly Palette
+Spit Brass
+Pro-10 Brass
+OB Stab Brs
+Pro-5 Brass
+MKS-7 Brass
+Quack Brass
+MemoryMG Brs
+FM Brass
+Ghost Blow
+Metal Drone
+Rotary Strng
+Random Pad
+S/H Texture
+Warm Shimmer
+Nervous Pan
+JX-3P Planet
+JX Melon Vox
+Horror Pad
+Shining Wave
+The Big Wave
+Mantrawave
+WavetablePan
+2.3 GlassSEQ
+VS Organbell
+DigitalChoir
+Additive
+Tower Silvis
+2.2 Rezidue
+Polysync
+Wavesync
+Rock Sync
+Kalimbasynth
+Stacc Heaven
+D50 Bellpad1
+D50 Bellpad2
+D50 Bellpad3
+Snow Lake
+Time flies
+Fanta-Retro
+SimpleEP+Pad
+Juno-1 Bells
+Random Chime
+Asia Wave
+GoodniteBell
+2600 TRIbell
+Twinkle
+Analog Chime
+Space Echo
+Ethno Stack
+SH-1000 MIDI
+ElectraPiano
+Rhodes Pad
+Sine Piano
+VCO Wurly
+Clavipad
+P10 GuitClav
+Gum Clav
+JunoBiteClav
+Phazyn Clav
+JP-8 Clav
+Alpha Clav
+Hyper Clav
+Perky Pad
+Perkolator
+MondoDiGiTaL
+Poly Flange
+and thenMIDI
+JP4Sharp Pad
+Splatty
+MKS80 Sprang
+JP8 Strings1
+JP8 Strings2
+JP+OB Strngs
+Wavestrings
+PWM Strings
+MemoryMG STR
+OB Thick Pad
+OB Soft Pad
+OctavaStrngs
+CS Saw Pad
+CS Strings
+Solina
+Rhapsody STR
+Big Strings
+Juno 106 Pad
+Majesty Pad
+Peaceful Pad
+Flange Strng
+JP SquarePad
+HollowBreath
+Hollow JX
+DarkEnsemble
+LonesomeHill
+VP-330 Choir
+VP-330 Tutti
+VP-330 Sweep
+RS-202 Brass
+Orchestrator
+OBJX Vox Pad
+Voices JX-8P
+D50 Heavenly
+Mini Lead 1
+Mini Lead 2
+Pulse Lead
+Shmoog
+ClassicLead
+MG Swell
+MultiMG 5ths
+Sharp 5ths
+Retrosweep
+Velochord Ld
+Micro MG
+VCO Oct Lead
+ModularLead
+Expressolo
+Jupiter Lead
+GR500 SlowLd
+Pats GR-300
+SH-2000 Vox
+P5 Sync Lead
+Synkoid
+Promars Lead
+FM Lead
+CS Lead
+Wagnerian Ld
+Naked Cheese
+Telstar
+Limonaire
+Lucky Man
+OB 2 Voice
+Fue Pipe
+Living Calli
+Arpy Micro
+JP6 Bend 5th
+Happy Hollow
+Resotrails
+70s Sinusolo
+Alpha Lead
+Dark Brass
+Intervalead
+MG Beef Bass
+Monster MG
+Fat MG Bass
+Spike Bass
+ClassicMG Bs
+Reso MG Bass
+Wet MG Bass
+MG Ow Bass
+Rogue Bass
+MG Bs Pedals
+SH101 Zap Bs
+Bassic 101
+101 Oct Bass
+101 Ow Bass
+SH-2 Bass
+JP-4 Bass 1
+JP-4 Bass 2
+Systm700 Bs1
+Systm700 Bs2
+TB303 AcidBs
+Talking Bs
+OB Bass
+2600 Reso Bs
+Odyssee Bs
+House Bass
+Woofer Bass
+Sharp Sub Bs
+Big Sub Bass
+Big Spike Bs
+System100 Bs
+Techno Bass
+Housine Bass
+Bark Bass
+Super Bass
+X Wire Bass
+T8 Sync
+P5 Sync Rush
+ArpeggiBs+12
+ArpeggiSaws
+Planet-S SEQ
+Synthacon
+Palpitating
+Descender
+Playmate
+MC8 Sequence
+Thips Blips
+Techno Perc
+Power B
+DirtyPurple
+Velo Rotary
+Gospel B
+Echo - Organ
+Organwave2.2
+VS Organ
+VK-1 Organ
+Celesty Juno
+Alpharphisa
+Juno60 Organ
+JX-8P Organ
+D-50 Organ 1
+D-50 Organ 2
+Are am eye?
+2600 Clk Org
+JX-3P Pipes
+Tron Choir
+Misty Choir
+Tron Strings
+Melotron Pad
+Tape Echo
+StrawberyFlt
+MellowFlutes
+Cyborg
+MKS80 Vortex
+Earthquake
+Dark Air
+Airdrome Pan
+Deep Wind
+Chronos
+Infinity
+Atmosphlange
+Medusa
+Aquaphone
+Computer Net
+Faveoravo
+Insecticide
+Off The Key
+H2O Asylum
+Aural Enigma
+RSS Spinner

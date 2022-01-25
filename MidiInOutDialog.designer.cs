@@ -46,7 +46,7 @@
             this.lb_InputDevice.Name = "lb_InputDevice";
             this.lb_InputDevice.Size = new System.Drawing.Size(188, 274);
             this.lb_InputDevice.TabIndex = 0;
-            this.lb_InputDevice.SelectedIndexChanged += new System.EventHandler(this.lb_SelectedIndexChanged);
+            this.lb_InputDevice.SelectedIndexChanged += new System.EventHandler(this.LB_SelectedIndexChanged);
             // 
             // lb_OutputDevice
             // 
@@ -57,7 +57,7 @@
             this.lb_OutputDevice.Name = "lb_OutputDevice";
             this.lb_OutputDevice.Size = new System.Drawing.Size(188, 274);
             this.lb_OutputDevice.TabIndex = 1;
-            this.lb_OutputDevice.SelectedIndexChanged += new System.EventHandler(this.lb_SelectedIndexChanged);
+            this.lb_OutputDevice.SelectedIndexChanged += new System.EventHandler(this.LB_SelectedIndexChanged);
             // 
             // bt_Ok
             // 

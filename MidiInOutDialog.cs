@@ -40,7 +40,7 @@ namespace SynthLiveMidiController
             base.OnLoad(e);
         }
 
-        private void lb_SelectedIndexChanged(object sender, EventArgs e)
+        private void LB_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedInIndex = lb_InputDevice.SelectedIndex;
             selectedOutIndex = lb_OutputDevice.SelectedIndex;

@@ -3,13 +3,11 @@
  */
 
 using System;
-using System.Threading;
 using Sanford.Multimedia;
 using SanfordMIDI =  Sanford.Multimedia.Midi;
 using System.Windows.Forms;
-//using MIDIEvents;
 
-namespace MIDIDevice
+namespace SynthLiveMidiController.MIDIDevice
 {
     class SanfordMidiDevice : IMidiInOutInterface
     {

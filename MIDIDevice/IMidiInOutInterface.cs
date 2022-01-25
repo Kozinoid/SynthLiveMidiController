@@ -4,7 +4,7 @@
 
 //using MIDIEvents;
 
-namespace MIDIDevice
+namespace SynthLiveMidiController.MIDIDevice
 {
     interface IMidiInOutInterface
     {
