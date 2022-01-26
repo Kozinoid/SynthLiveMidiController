@@ -66,12 +66,13 @@ namespace SynthLiveMidiController
         private void Button1_Click(object sender, EventArgs e)
         {
             //mainPerformance.PrintAddresses();
-            mainPerformance.RequestPerformance();
+            //mainPerformance.RequestPerformance();
+            //mainPerformance.SetPerformanceCommon()
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            mainPerformance.SendPerformance();
+            //mainPerformance.SendPerformance();
         }
     }
 }

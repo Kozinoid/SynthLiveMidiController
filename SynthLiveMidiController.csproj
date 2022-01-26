@@ -49,19 +49,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sanford.Collections">
-      <HintPath>..\RolandMIDIExController\bin\Debug\netcoreapp3.1\lib\Sanford.Collections.dll</HintPath>
+      <HintPath>lib\Sanford.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Sanford.Multimedia">
-      <HintPath>..\RolandMIDIExController\bin\Debug\netcoreapp3.1\lib\Sanford.Multimedia.dll</HintPath>
+      <HintPath>lib\Sanford.Multimedia.dll</HintPath>
     </Reference>
     <Reference Include="Sanford.Multimedia.Midi">
-      <HintPath>..\RolandMIDIExController\bin\Debug\netcoreapp3.1\lib\Sanford.Multimedia.Midi.dll</HintPath>
+      <HintPath>lib\Sanford.Multimedia.Midi.dll</HintPath>
     </Reference>
     <Reference Include="Sanford.Multimedia.Timers">
-      <HintPath>..\RolandMIDIExController\bin\Debug\netcoreapp3.1\lib\Sanford.Multimedia.Timers.dll</HintPath>
+      <HintPath>lib\Sanford.Multimedia.Timers.dll</HintPath>
     </Reference>
     <Reference Include="Sanford.Threading">
-      <HintPath>..\RolandMIDIExController\bin\Debug\netcoreapp3.1\lib\Sanford.Threading.dll</HintPath>
+      <HintPath>lib\Sanford.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

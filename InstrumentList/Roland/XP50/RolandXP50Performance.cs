@@ -12,6 +12,8 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     {
         // -------------------------------------------  Static fields  ----------------------------------------
         public static int MIDIChannelCount = 16;
+        public static int SongChannelCount = 10;
+        public static int FastChannelCount = 6;
         public static uint TemporaryPerformanceAddress = 0x01000000;
         public static uint[] USERPerformanceAddresses = {
                 0x10000000, 0x10010000, 0x10020000, 0x10030000, 0x10040000, 0x10050000, 0x10060000, 0x10070000, 
@@ -28,7 +30,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         private readonly string defaultPath = "";
         private readonly string txtPath = "";
 
-        //----------------------------------  Methods  --------------------------------------------------------
+        // Constructor
         public RolandXP50Performance(uint perfAddr, IPerformanceMIDIInOutInterface comm)                         // Constructor
         {
             defaultPath = Path.GetDirectoryName(Application.ExecutablePath);
@@ -50,11 +52,43 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             commander.OnSysExRquestedDataEvent += Commander_OnSysExRquestedDataEvent;
         }
 
+        //---------------------------------- Send/Request Methods  ---------------------------------------------
+        // MIDI Commander Send Performance Common
+        public void SendPerformanceCommon()
+        {
+            performanceCommon.SendData(commander);
+        }
+
+        // MIDI Commander Sent Performance Part #cannel
+        public void SendPerformancePart(int channel)
+        {
+            performancePartList[channel].SendData(commander);
+        }
+
         // MIDI Commander Send Data
         public void SendPerformance()
         {
-            performanceCommon.SendData(commander);
+            SendPerformanceCommon();
             for (int i = 0; i < MIDIChannelCount; i++)
+            {
+                SendPerformancePart(i);
+            }
+        }
+
+        // MIDI Commander Send Song Data
+        public void SendSongData()
+        {
+            performanceCommon.SendData(commander);
+            for (int i = 0; i < SongChannelCount; i++)
+            {
+                performancePartList[i].SendData(commander);
+            }
+        }
+
+        // MIDI Commander Send Fast Data
+        public void SendQuickData()
+        {
+            for (int i = SongChannelCount; i < FastChannelCount; i++)
             {
                 performancePartList[i].SendData(commander);
             }
@@ -70,55 +104,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        // Detect target of message
-        private int DetectTarget(SystemExclusiveBaseClass msg)
-        {
-            int result = -1;
-
-            uint addr = msg.GetAddressFromArray();
-            if ((addr >= performanceCommon.SegmentAddress) && (addr < performanceCommon.SegmentAddress + performanceCommon.Length))
-            {
-                byte[] buf = performanceCommon.Data;
-                uint off = msg.GetAddressFromArray() - performanceCommon.SegmentAddress;
-
-                SetDataInBuffer(buf, off, msg.GetDataFromArray());
-
-                performanceCommon.CopyDataToStructure(buf);
-
-                result = 16;
-            }
-            else
-            {
-                for (int i = 0; i < performancePartList.Count; i++)
-                {
-                    if ((addr >= performancePartList[i].SegmentAddress) && (addr < performancePartList[i].SegmentAddress + performancePartList[i].Length))
-                    {
-                        byte[] buf = performancePartList[i].Data;
-                        uint off = msg.GetAddressFromArray() - performancePartList[i].SegmentAddress;
-
-                        SetDataInBuffer(buf, off, msg.GetDataFromArray());
-
-                        performancePartList[i].CopyDataToStructure(buf);
-
-                        result = i;
-                        break;
-                    }
-                }
-            }
-
-            return result;  // 16 - Performance Common, 0-15 - Performance Part (1-16), -1 - no result;
-        }
-
-        // Set Data in Buffer
-        private void SetDataInBuffer(byte[] buffer, uint offset, byte[] data)
-        {
-            for (int i = 0; i < data.Length; i++)
-            {
-                buffer[offset + i] = data[i];
-            }
-        }
-
-        //====================================  CALLBACKS  ====================================================
+        //====================================  RECEIVE  CALLBACKS  ===========================================
         private void Commander_OnSysExRquestedDataEvent(object sender, MIDIEvents.SysExEventArgs e)
         {
             SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
@@ -173,6 +159,114 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 //    break;
             }
         }
+
+        // Detect target of message
+        private int DetectTarget(SystemExclusiveBaseClass msg)
+        {
+            int result = -1;
+
+            uint addr = msg.GetAddressFromArray();
+            if ((addr >= performanceCommon.SegmentAddress) && (addr < performanceCommon.SegmentAddress + performanceCommon.Length))
+            {
+                byte[] buf = performanceCommon.Data;
+                uint off = msg.GetAddressFromArray() - performanceCommon.SegmentAddress;
+
+                SetDataInBuffer(buf, off, msg.GetDataFromArray());
+
+                performanceCommon.CopyDataToStructure(buf);
+
+                result = 16;
+            }
+            else
+            {
+                for (int i = 0; i < performancePartList.Count; i++)
+                {
+                    if ((addr >= performancePartList[i].SegmentAddress) && (addr < performancePartList[i].SegmentAddress + performancePartList[i].Length))
+                    {
+                        byte[] buf = performancePartList[i].Data;
+                        uint off = msg.GetAddressFromArray() - performancePartList[i].SegmentAddress;
+
+                        SetDataInBuffer(buf, off, msg.GetDataFromArray());
+
+                        performancePartList[i].CopyDataToStructure(buf);
+
+                        result = i;
+                        break;
+                    }
+                }
+            }
+
+            return result;  // 16 - Performance Common, 0-15 - Performance Part (1-16), -1 - no result;
+        }
+
+        // Set Data in Buffer
+        private void SetDataInBuffer(byte[] buffer, uint offset, byte[] data)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                buffer[offset + i] = data[i];
+            }
+        }
+
+        //--------------------------  Set/Get data to/from perfopmance methods  ---------------------------------
+        // Set Performance Common
+        public void SetPerformanceCommon(byte[] buffer)
+        {
+            performanceCommon.CopyDataToStructure(buffer);
+        }
+
+        // Set Performance Part #channel
+        public void SetPerformancePart(byte[] buffer, int channel)
+        {
+            performancePartList[channel].CopyDataToStructure(buffer);
+        }
+
+        // Get Performance Common
+        public byte[] GetPerformanceCommon()
+        {
+            return performanceCommon.Data;
+        }
+
+        // Get Performance Part #channel
+        public byte[] GetPerformancePaart(int channel)
+        {
+            return performancePartList[channel].Data;
+        }
+
+        // Set Song Data
+        public void SetSongData(byte[] buffer)
+        {
+            int index = 0;
+            byte[] perfData = new byte[performanceCommon.Length];
+            Array.Copy(buffer, index, perfData, 0, performanceCommon.Length);
+            //TestClass.PrintBuffer(perfData);              // Test
+            index += (int)performanceCommon.Length;
+            for (int i = 0; i < SongChannelCount; i++)
+            {
+                byte[] partData = new byte[performancePartList[i].Length];
+                Array.Copy(buffer, index, partData, 0, performancePartList[i].Length);
+                //TestClass.PrintBuffer(partData);              // Test
+                index += (int)performancePartList[i].Length;
+            }
+        }
+
+        //// Get Song Data
+        //public byte[] GetSongData()
+        //{
+
+        //}
+
+        //// Set Fast Data
+        //public void SetFastData(byte[] buffer)
+        //{
+
+        //}
+
+        //// Get FAst Data
+        //public byte[] GetFAstData()
+        //{
+
+        //}
     }
 
 
