@@ -11,7 +11,7 @@ namespace SynthLiveMidiController
         private readonly MidiInOutDialog dlg = new MidiInOutDialog();       // Select Midi In/Out Device Dialog
         private int midiInDevice = -1;                                      // Midi In Device Index
         private int midiOutDevice = -1;                                     // Midi Out Device Index
-        private PerformanceCommandsClass perfCommands = null;               // Command module
+        private PerformanceCommandsClass perfCommander = null;               // Command module
         private InstrumentMIDIMessages messages = null;                     // Message options
         private RolandXP50Class roland = null;                              // Roland XP50 
         private RolandXP50Performance mainPerformance;
@@ -31,15 +31,15 @@ namespace SynthLiveMidiController
             roland = new RolandXP50Class();                                 // Use Roland XP50 
             messages = new InstrumentMIDIMessages(roland);                  // Use Roland XP50 message options
 
-            perfCommands = new PerformanceCommandsClass(mainMidiDevice, messages);    // Command module
+            perfCommander = new PerformanceCommandsClass(mainMidiDevice, messages);    // Command module
 
-            mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommands);
+            mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
         }
 
         // Form closing...
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            perfCommands.Stop();
+            perfCommander.Stop();
             mainMidiDevice?.CloseDevices();                                 // close MIDI Device
         }
 
@@ -62,17 +62,32 @@ namespace SynthLiveMidiController
             while ((midiInDevice < 0) || (midiOutDevice < 0));
         }
 
-        //---------------------------------------  TEST  --------------------------------------------
+      //---------------------------------------  TEST  --------------------------------------------
+        byte[] songBuffer;
+        byte[] fastBuffer;
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            mainPerformance.RequestPerformance();
+        }
+
         private void Button1_Click(object sender, EventArgs e)
         {
-            //mainPerformance.PrintAddresses();
-            //mainPerformance.RequestPerformance();
-            //mainPerformance.SetPerformanceCommon()
+            songBuffer = mainPerformance.GetSongData();
+            fastBuffer = mainPerformance.GetFastData();
+
+            TestClass.PrintBuffer(songBuffer, "Song:");
+            TestClass.PrintBuffer(fastBuffer, "Fast:");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //mainPerformance.SendPerformance();
+            RolandXP50Performance secondPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
+            secondPerformance.SetSongData(songBuffer);
+            secondPerformance.SetFastdata(fastBuffer);
+            secondPerformance.SendPerformance();
         }
+
+
     }
 }

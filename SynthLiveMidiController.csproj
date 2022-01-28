@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstrumentList\IInstrimentCommandInterface.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\RolandXP50PatchesClass.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50PatchNamesClass.cs" />
     <Compile Include="MIDIMessages\IPerformanceMIDIInOutInterface.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Performance.cs" />
     <Compile Include="InstrumentList\Roland\XP50\XP50Data.cs" />

@@ -13,7 +13,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // -------------------------------------------  Static fields  ----------------------------------------
         public static int MIDIChannelCount = 16;
         public static int SongChannelCount = 10;
-        public static int FastChannelCount = 6;
+        public static int FastChannelCount = MIDIChannelCount - SongChannelCount;
         public static uint TemporaryPerformanceAddress = 0x01000000;
         public static uint[] USERPerformanceAddresses = {
                 0x10000000, 0x10010000, 0x10020000, 0x10030000, 0x10040000, 0x10050000, 0x10060000, 0x10070000, 
@@ -104,6 +104,25 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
+        // MIDI Commander Request Song Data
+        public void RequestSongData()
+        {
+            performanceCommon.RequestData(commander);
+            for (int i = 0; i < SongChannelCount; i++)
+            {
+                performancePartList[i].RequestData(commander);
+            }
+        }
+
+        // MIDI Commander Request Fast Data
+        public void RequestQuickData()
+        {
+            for (int i = SongChannelCount; i < FastChannelCount; i++)
+            {
+                performancePartList[i].RequestData(commander);
+            }
+        }
+
         //====================================  RECEIVE  CALLBACKS  ===========================================
         private void Commander_OnSysExRquestedDataEvent(object sender, MIDIEvents.SysExEventArgs e)
         {
@@ -174,6 +193,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 SetDataInBuffer(buf, off, msg.GetDataFromArray());
 
                 performanceCommon.CopyDataToStructure(buf);
+                //performanceCommon.Requested = false;
 
                 result = 16;
             }
@@ -189,6 +209,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                         SetDataInBuffer(buf, off, msg.GetDataFromArray());
 
                         performancePartList[i].CopyDataToStructure(buf);
+                        //performancePartList[i].Requested = false;
 
                         result = i;
                         break;
@@ -224,12 +245,14 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Get Performance Common
         public byte[] GetPerformanceCommon()
         {
+            //while (performanceCommon.Requested) { };
             return performanceCommon.Data;
         }
 
         // Get Performance Part #channel
-        public byte[] GetPerformancePaart(int channel)
+        public byte[] GetPerformancePart(int channel)
         {
+            //while (performanceCommon.Requested) { };
             return performancePartList[channel].Data;
         }
 
@@ -237,36 +260,70 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public void SetSongData(byte[] buffer)
         {
             int index = 0;
+
             byte[] perfData = new byte[performanceCommon.Length];
             Array.Copy(buffer, index, perfData, 0, performanceCommon.Length);
-            //TestClass.PrintBuffer(perfData);              // Test
+            SetPerformanceCommon(perfData);
+
             index += (int)performanceCommon.Length;
+
             for (int i = 0; i < SongChannelCount; i++)
             {
                 byte[] partData = new byte[performancePartList[i].Length];
                 Array.Copy(buffer, index, partData, 0, performancePartList[i].Length);
-                //TestClass.PrintBuffer(partData);              // Test
+                SetPerformancePart(partData, i);
+
                 index += (int)performancePartList[i].Length;
             }
         }
 
-        //// Get Song Data
-        //public byte[] GetSongData()
-        //{
+        // Get Song Data
+        public byte[] GetSongData()
+        {
+            byte[] buffer = new byte[performanceCommon.Length + performancePartList[0].Length * SongChannelCount];
+            int index = 0;
 
-        //}
+            Array.Copy(GetPerformanceCommon(), 0, buffer, index, performanceCommon.Length);
+            index += (int)performanceCommon.Length;
 
-        //// Set Fast Data
-        //public void SetFastData(byte[] buffer)
-        //{
+            for (int i = 0; i < SongChannelCount; i++)
+            {
+                Array.Copy(GetPerformancePart(i), 0, buffer, index, performancePartList[i].Length);
+                index += (int)performancePartList[i].Length;
+            }
 
-        //}
+            return buffer;
+        }
 
-        //// Get FAst Data
-        //public byte[] GetFAstData()
-        //{
+        // set fast data
+        public void SetFastdata(byte[] buffer)
+        {
+            int index = 0;
 
-        //}
+            for (int i = SongChannelCount; i < MIDIChannelCount; i++)
+            {
+                byte[] partData = new byte[performancePartList[i].Length];
+                Array.Copy(buffer, index, partData, 0, performancePartList[i].Length);
+                SetPerformancePart(partData, i);
+
+                index += (int)performancePartList[i].Length;
+            }
+        }
+
+        // Get FAst Data
+        public byte[] GetFastData()
+        {
+            byte[] buffer = new byte[performancePartList[0].Length * (MIDIChannelCount - SongChannelCount)];
+            int index = 0;
+
+            for (int i = SongChannelCount; i < MIDIChannelCount; i++)
+            {
+                Array.Copy(GetPerformancePart(i), 0, buffer, index, performancePartList[i].Length);
+                index += (int)performancePartList[i].Length;
+            }
+
+            return buffer;
+        }
     }
 
 
@@ -275,6 +332,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     {
         protected readonly uint segmentAddress;                         // Main Segment Address
         public uint SegmentAddress { get { return segmentAddress; } }   // Main segment address getter
+
+        //protected bool requested = false;
+        //public bool Requested { get { return requested; } set { requested = value; } }
 
         // Base Constructor
         protected DataSegmentClass(uint addr)
@@ -337,6 +397,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Request
         public override void RequestData(IPerformanceMIDIInOutInterface commander)
         {
+            //requested = true;
             commander.RequestData(segmentAddress, Length);
         }
     }
@@ -392,6 +453,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Request
         public override void RequestData(IPerformanceMIDIInOutInterface commander)
         {
+            //requested = true;
             commander.RequestData(segmentAddress, Length);
         }
     }
