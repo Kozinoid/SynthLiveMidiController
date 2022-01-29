@@ -1,5 +1,4 @@
-﻿using SynthLiveMidiController.Instrument;
-using System.Collections.Generic;
+﻿using SynthLiveMidiController.MIDIMessages;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {

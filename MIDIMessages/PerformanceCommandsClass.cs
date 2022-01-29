@@ -1,11 +1,10 @@
 ﻿using SynthLiveMidiController.MIDIEvents;
-using SynthLiveMidiController.MIDIMessages;
 
-namespace SynthLiveMidiController.InstrumentList.Roland.XP50
+namespace SynthLiveMidiController.MIDIMessages
 {
-    class PerformanceCommandsClass : IPerformanceMIDIInOutInterface
+    class RolandXP50PerformanceCommandsClass : IPerformanceMIDIInOutInterface
     {
-        private readonly MIDIDevice.IMidiInOutInterface mainMidiDevice;
+        //private readonly MIDIDevice.IMidiInOutInterface mainMidiDevice;
         private readonly MIDIMessageProcessor processor = null;                              // Message queue processor
         private readonly InstrumentMIDIMessages messages;
 
@@ -13,9 +12,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public event SysExHandler OnSysExEditDataEvent;
         public event ChannelHandler OnChannelEvent;
 
-        public PerformanceCommandsClass(MIDIDevice.IMidiInOutInterface dev, InstrumentMIDIMessages mes)
+        public RolandXP50PerformanceCommandsClass(MIDIDevice.IMidiInOutInterface dev, InstrumentMIDIMessages mes)
         {
-            mainMidiDevice = dev;
+            //mainMidiDevice = dev;
             processor = new MIDIMessageProcessor(dev);           // Create message queue processor
             messages = mes;
 

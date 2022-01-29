@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using SynthLiveMidiController.MIDIMessages;
 using SynthLiveMidiController.InstrumentList.Roland.XP50;
+using System.Collections.Generic;
 
 namespace SynthLiveMidiController
 {
@@ -11,7 +12,7 @@ namespace SynthLiveMidiController
         private readonly MidiInOutDialog dlg = new MidiInOutDialog();       // Select Midi In/Out Device Dialog
         private int midiInDevice = -1;                                      // Midi In Device Index
         private int midiOutDevice = -1;                                     // Midi Out Device Index
-        private PerformanceCommandsClass perfCommander = null;               // Command module
+        private RolandXP50PerformanceCommandsClass perfCommander = null;               // Command module
         private InstrumentMIDIMessages messages = null;                     // Message options
         private RolandXP50Class roland = null;                              // Roland XP50 
         private RolandXP50Performance mainPerformance;
@@ -31,7 +32,7 @@ namespace SynthLiveMidiController
             roland = new RolandXP50Class();                                 // Use Roland XP50 
             messages = new InstrumentMIDIMessages(roland);                  // Use Roland XP50 message options
 
-            perfCommander = new PerformanceCommandsClass(mainMidiDevice, messages);    // Command module
+            perfCommander = new RolandXP50PerformanceCommandsClass(mainMidiDevice, messages);    // Command module
 
             mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
         }
@@ -62,30 +63,41 @@ namespace SynthLiveMidiController
             while ((midiInDevice < 0) || (midiOutDevice < 0));
         }
 
-      //---------------------------------------  TEST  --------------------------------------------
-        byte[] songBuffer;
-        byte[] fastBuffer;
+        //---------------------------------------  TEST  --------------------------------------------
+        //-------------------------  TEST 1  -------------------------------
+        //byte[] songBuffer;
+        //byte[] fastBuffer;
+
+        //-------------------------  TEST2  -------------------------------
+
 
         private void button3_Click(object sender, EventArgs e)
         {
-            mainPerformance.RequestPerformance();
+            //-------------------------  TEST 1  -------------------------------
+            //mainPerformance.RequestPerformance();
+
+            //-------------------------  TEST2  -------------------------------
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            songBuffer = mainPerformance.GetSongData();
-            fastBuffer = mainPerformance.GetFastData();
+            //-------------------------  TEST 1  -------------------------------
+            //songBuffer = mainPerformance.GetSongData();
+            //fastBuffer = mainPerformance.GetFastData();
 
-            TestClass.PrintBuffer(songBuffer, "Song:");
-            TestClass.PrintBuffer(fastBuffer, "Fast:");
+            //TestClass.PrintBuffer(songBuffer, "Song:");
+            //TestClass.PrintBuffer(fastBuffer, "Fast:");
+
+            //-------------------------  TEST2  -------------------------------
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            RolandXP50Performance secondPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
-            secondPerformance.SetSongData(songBuffer);
-            secondPerformance.SetFastdata(fastBuffer);
-            secondPerformance.SendPerformance();
+            //-------------------------  TEST 1  -------------------------------
+            //RolandXP50Performance secondPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
+            //secondPerformance.SetSongData(songBuffer);
+            //secondPerformance.SetFastdata(fastBuffer);
+            //secondPerformance.SendPerformance();
         }
 
 

@@ -1,4 +1,4 @@
-﻿namespace SynthLiveMidiController.Instrument
+﻿namespace SynthLiveMidiController.MIDIMessages
 {
     interface IInstrumentCommandInterface
     {

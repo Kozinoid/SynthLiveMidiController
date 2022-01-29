@@ -76,11 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InstrumentList\IInstrimentCommandInterface.cs" />
+    <Compile Include="MIDIMessages\IInstrimentCommandInterface.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50ChannelCommandClass.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50PatchNamesClass.cs" />
     <Compile Include="MIDIMessages\IPerformanceMIDIInOutInterface.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Performance.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\XP50Data.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50Data.cs" />
     <Compile Include="MIDIMessages\InstrumentMIDIMessages.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Class.cs" />
     <Compile Include="Form1.cs">
@@ -99,7 +100,7 @@
     </Compile>
     <Compile Include="MIDIMessages\MIDIMessageProcessor.cs" />
     <Compile Include="MIDIMessages\MIDIMessages.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\PerformanceCommandsClass.cs" />
+    <Compile Include="MIDIMessages\PerformanceCommandsClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MIDIDevice\SanfordMidiDevice.cs" />

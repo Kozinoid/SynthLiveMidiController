@@ -59,10 +59,10 @@ namespace SynthLiveMidiController.MIDIMessages
             if (lastAddress == msg.GetAddressFromArray())
             {
                 // ......................................  Requested data recieved  .....................................
-                OnSysExRquestedDataEvent?.Invoke(sender, e);
-
                 requestSending = false;
                 lastAddress = uint.MaxValue;
+
+                OnSysExRquestedDataEvent?.Invoke(sender, e);
             }
             else
             {
@@ -91,7 +91,7 @@ namespace SynthLiveMidiController.MIDIMessages
                     if (message.GetType() == typeof(ChannelMessageClass))
                     {
                         ChannelMessageClass msg = (ChannelMessageClass)message;
-                        if ((msg.Command == MIDIEvents.ChannelCommand.ChannelPressure) ||(msg.Command == MIDIEvents.ChannelCommand.ProgramChange))
+                        if ((msg.Command == ChannelCommand.ChannelPressure) ||(msg.Command == ChannelCommand.ProgramChange))
                         {
                             SendShortChannelMessage(msg);
                         }

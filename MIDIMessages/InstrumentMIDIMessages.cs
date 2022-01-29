@@ -1,6 +1,4 @@
-﻿using SynthLiveMidiController.Instrument;
-
-namespace SynthLiveMidiController.MIDIMessages
+﻿namespace SynthLiveMidiController.MIDIMessages
 {
     class InstrumentMIDIMessages
     {
