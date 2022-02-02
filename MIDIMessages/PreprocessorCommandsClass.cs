@@ -2,9 +2,8 @@
 
 namespace SynthLiveMidiController.MIDIMessages
 {
-    class RolandXP50PerformanceCommandsClass : IPerformanceMIDIInOutInterface
+    class PreprocessorCommandsClass : IPerformanceMIDIInOutInterface
     {
-        //private readonly MIDIDevice.IMidiInOutInterface mainMidiDevice;
         private readonly MIDIMessageProcessor processor = null;                              // Message queue processor
         private readonly InstrumentMIDIMessages messages;
 
@@ -12,9 +11,8 @@ namespace SynthLiveMidiController.MIDIMessages
         public event SysExHandler OnSysExEditDataEvent;
         public event ChannelHandler OnChannelEvent;
 
-        public RolandXP50PerformanceCommandsClass(MIDIDevice.IMidiInOutInterface dev, InstrumentMIDIMessages mes)
+        public PreprocessorCommandsClass(MIDIDevice.IMidiInOutInterface dev, InstrumentMIDIMessages mes)
         {
-            //mainMidiDevice = dev;
             processor = new MIDIMessageProcessor(dev);           // Create message queue processor
             messages = mes;
 
@@ -29,17 +27,17 @@ namespace SynthLiveMidiController.MIDIMessages
         }
 
         //======================================================  CALLBACKS  ==============================================================
-        private void Processor_OnSysExRquestedDataEvent(object sender, MIDIEvents.SysExEventArgs e)
+        private void Processor_OnSysExRquestedDataEvent(object sender, SysExEventArgs e)
         {
             OnSysExRquestedDataEvent?.Invoke(sender, e);
         }
 
-        private void Processor_OnSysExEditDataEvent(object sender, MIDIEvents.SysExEventArgs e)
+        private void Processor_OnSysExEditDataEvent(object sender, SysExEventArgs e)
         {
             OnSysExEditDataEvent?.Invoke(sender, e);
         }
 
-        private void Processor_OnChannelEvent(object sender, MIDIEvents.ChannelEventArgs e)
+        private void Processor_OnChannelEvent(object sender, ChannelEventArgs e)
         {
             OnChannelEvent?.Invoke(sender, e);
         }

@@ -12,10 +12,12 @@ namespace SynthLiveMidiController
         private readonly MidiInOutDialog dlg = new MidiInOutDialog();       // Select Midi In/Out Device Dialog
         private int midiInDevice = -1;                                      // Midi In Device Index
         private int midiOutDevice = -1;                                     // Midi Out Device Index
-        private RolandXP50PerformanceCommandsClass perfCommander = null;               // Command module
+        private PreprocessorCommandsClass perfCommander = null;             // Command module
         private InstrumentMIDIMessages messages = null;                     // Message options
         private RolandXP50Class roland = null;                              // Roland XP50 
-        private RolandXP50Performance mainPerformance;
+        private RolandXP50Performance mainPerformance;                      // Main Performance
+        private RolandXP50SongPresetList songList;                          // Song Presets List
+        private RolandXP50FastPresetList fastList;                          // Fast Presets List
 
         public Form1()
         {
@@ -32,9 +34,11 @@ namespace SynthLiveMidiController
             roland = new RolandXP50Class();                                 // Use Roland XP50 
             messages = new InstrumentMIDIMessages(roland);                  // Use Roland XP50 message options
 
-            perfCommander = new RolandXP50PerformanceCommandsClass(mainMidiDevice, messages);    // Command module
+            perfCommander = new PreprocessorCommandsClass(mainMidiDevice, messages);    // Command module
 
             mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
+            songList = new RolandXP50SongPresetList(mainPerformance);
+            fastList = new RolandXP50FastPresetList(mainPerformance);
         }
 
         // Form closing...
@@ -64,42 +68,32 @@ namespace SynthLiveMidiController
         }
 
         //---------------------------------------  TEST  --------------------------------------------
-        //-------------------------  TEST 1  -------------------------------
-        //byte[] songBuffer;
-        //byte[] fastBuffer;
-
-        //-------------------------  TEST2  -------------------------------
-
-
-        private void button3_Click(object sender, EventArgs e)
+        private void bt_act1_Click(object sender, EventArgs e)
         {
-            //-------------------------  TEST 1  -------------------------------
             //mainPerformance.RequestPerformance();
-
-            //-------------------------  TEST2  -------------------------------
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void bt_act2_Click(object sender, EventArgs e)
         {
-            //-------------------------  TEST 1  -------------------------------
-            //songBuffer = mainPerformance.GetSongData();
-            //fastBuffer = mainPerformance.GetFastData();
-
-            //TestClass.PrintBuffer(songBuffer, "Song:");
-            //TestClass.PrintBuffer(fastBuffer, "Fast:");
-
-            //-------------------------  TEST2  -------------------------------
+            //songList.GetData();
+            //fastList.GetData();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void bt_act3_Click(object sender, EventArgs e)
         {
-            //-------------------------  TEST 1  -------------------------------
-            //RolandXP50Performance secondPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
-            //secondPerformance.SetSongData(songBuffer);
-            //secondPerformance.SetFastdata(fastBuffer);
-            //secondPerformance.SendPerformance();
+            //songList.PrintData();
+            //fastList.PrintData();
         }
 
+        private void bt_act4_Click(object sender, EventArgs e)
+        {
+            //songList.SetData();
+            //fastList.SetData();
+        }
 
+        private void bt_act5_Click(object sender, EventArgs e)
+        {
+            //mainPerformance.SendPerformance();
+        }
     }
 }

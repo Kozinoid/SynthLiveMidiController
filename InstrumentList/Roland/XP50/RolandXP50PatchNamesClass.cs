@@ -1,11 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
-    //********************************************************************************************************
+    //-----------------------------  Static class containing all names of banks and patches  --------------------------------
     public static class BankNameConvertor
     {
+        // TXt Filenames
+        private static string defaultPath = "";
+        private const string bankUserFileName = "USER.txt";
+        private const string bankAFileName = "Bank A.txt";
+        private const string bankBFileName = "Bank B.txt";
+        private const string bankCFileName = "Bank C.txt";
+        private const string bankGMFileName = "GM.txt";
+        private const string bankExpAFileName = "Bank EXP-A.txt";
+        private const string bankExpBFileName = "Bank Exp-B.txt";
+        // Banknames
         private static BankNames bankUser;
         private static BankNames bankA;
         private static BankNames bankB;
@@ -13,10 +24,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         private static BankNames bankGM;
         private static BankNames bankExpA;
         private static BankNames bankExpB;
-
+        // Patchname MATRIX
         private static readonly string[] bankNamesArray = new string[7];
         private static readonly string[][] namesArray = new string[7][];
-
         public static string[] BankNamesArray
         {
             get
@@ -32,17 +42,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-
-        public static void LoadData(
-            string defaultPath,
-            string bankUserFileName,
-            string bankAFileName,
-            string bankBFileName,
-            string bankCFileName,
-            string bankGMFileName,
-            string bankExpAFileName,
-            string bankExpBFileName)
+        // Load data from files and prepare name matrix
+        public static void LoadData()
         {
+            defaultPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "InstrumentList\\Roland\\XP50\\Txt");
+
             bankNamesArray[0] = "USER";
             bankNamesArray[1] = "A";
             bankNamesArray[2] = "B";
@@ -75,7 +79,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             FillBankByNames(5, bankExpA);
             FillBankByNames(6, bankExpB);
         }
-
+        // Fill patchname matrix
         private static void FillBankByNames(int bankIndex, BankNames bank)
         {
             int count = bank.Count;
@@ -85,12 +89,12 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 namesArray[bankIndex][i] = string.Format("{0:000} ", (i + 1)) + bank[i];
             }
         }
-
+        // Reload User Bank names
         public static void ReloadUserBank(string defaultPath, string bankUserFileName)
         {
             bankUser.Load(Path.Combine(defaultPath, bankUserFileName));
         }
-
+        // Get Patch name 1
         public static string GetPatchName(int MSB, int LSB, int patchIndex)
         {
             string bankName = "";
@@ -152,7 +156,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 
             return bankName;
         }
-
+        // Get Patch name 2
         public static string GetPatchName(byte[] buffer)
         {
             string bankName = "";
@@ -205,7 +209,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 
             return bankName;
         }
-
+        // MSB, LSB, patchIndex -> byte[]
         public static byte[] ChannelCommandToBuffer(int MSB, int LSB, int patchIndex)
         {
             byte[] buf = new byte[4];
@@ -290,35 +294,46 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
     }
 
+    //---------------------------------  Class containing bank name and patch names  ----------------------------------------
     public class BankNames
     {
+        // Patch Name List
         private readonly List<string> names = new List<string>();
+
+        // Bank Name
         private readonly string bankName = "";
 
+        // Indexator
         public string this[int index]
         {
             get { return names[index]; }
         }
 
+        // Patch count in Bank
         public int Count
         {
             get { return names.Count; }
         }
+
+        // Receive Bank Name
         public string BankName
         {
             get { return bankName; }
         }
 
+        // Patch names -> String Array
         public string[] ToStringArray()
         {
             return names.ToArray();
         }
 
+        // Constructor
         public BankNames(string name)
         {
             bankName = name;
         }
 
+        // Load Data from File
         public void Load(string filename)
         {
             names.Clear();

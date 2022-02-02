@@ -76,8 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstrumentList\Roland\XP50\IRolandXP50CommandsEditInterface.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50DataSegmentClass.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50FastPresetList.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50SongPresetList.cs" />
     <Compile Include="MIDIMessages\IInstrimentCommandInterface.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\RolandXP50ChannelCommandClass.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50SongFastCommandClass.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50PatchNamesClass.cs" />
     <Compile Include="MIDIMessages\IPerformanceMIDIInOutInterface.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Performance.cs" />
@@ -100,7 +104,7 @@
     </Compile>
     <Compile Include="MIDIMessages\MIDIMessageProcessor.cs" />
     <Compile Include="MIDIMessages\MIDIMessages.cs" />
-    <Compile Include="MIDIMessages\PerformanceCommandsClass.cs" />
+    <Compile Include="MIDIMessages\PreprocessorCommandsClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MIDIDevice\SanfordMidiDevice.cs" />

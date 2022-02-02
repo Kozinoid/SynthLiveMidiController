@@ -1,14 +1,11 @@
-﻿using SynthLiveMidiController.MIDIMessages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
+using SynthLiveMidiController.MIDIMessages;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
     // **********************************************************  ALL PERFORMANCE DATA CLASS  ***************************************************************
-    class RolandXP50Performance
+    class RolandXP50Performance : ISongListStorageSectionInterface, IFastListStorageSectionInterface, ISongListEditorSectionInterface, IFastListEditorSectionInterface
     {
         // -------------------------------------------  Static fields  ----------------------------------------
         public static int MIDIChannelCount = 16;
@@ -27,16 +24,12 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         private readonly List<PerformancePartClass> performancePartList;    // Performance part list [16]
         private readonly uint performanceAddress;                           // Main performance address
         private readonly IPerformanceMIDIInOutInterface commander;          // Command Collection
-        private readonly string defaultPath = "";
-        private readonly string txtPath = "";
+        private readonly RolandXP50SongCommandSet songCommandSet;           // Song command set
+        private readonly RolandXP50FastCommandSet fastCommandSet;           // FAst command set
 
         // Constructor
         public RolandXP50Performance(uint perfAddr, IPerformanceMIDIInOutInterface comm)                         // Constructor
         {
-            defaultPath = Path.GetDirectoryName(Application.ExecutablePath);
-            txtPath = Path.Combine(defaultPath, "InstrumentList\\Roland\\XP50\\Txt");
-            BankNameConvertor.LoadData(txtPath, "USER.txt", "Bank A.txt", "Bank B.txt", "Bank C.txt", "GM.txt", "Bank EXP-A.txt", "Bank Exp-B.txt");
-
             performanceAddress = perfAddr;
             performanceCommon = new PerformanceCommonClass(performanceAddress);
             performancePartList = new List<PerformancePartClass>();
@@ -45,27 +38,32 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 performancePartList.Add(new PerformancePartClass(performanceAddress + 0x1000u + 0x100u * (uint)i));
             }
 
+            songCommandSet = new RolandXP50SongCommandSet();
+            fastCommandSet = new RolandXP50FastCommandSet();
+
             commander = comm;
 
-            commander.OnChannelEvent += Commander_OnChannelEvent;
+            //commander.OnChannelEvent += Commander_OnChannelEvent;
             commander.OnSysExEditDataEvent += Commander_OnSysExEditDataEvent;
             commander.OnSysExRquestedDataEvent += Commander_OnSysExRquestedDataEvent;
         }
 
-        //---------------------------------- Send/Request Methods  ---------------------------------------------
-        // MIDI Commander Send Performance Common
+        //|                                                     PERFORMANCE DATA SECTION                                                        |
+        //======================================================================================================================================|
+        //|                                                  <<< MIDI COMMANDER COMMANDS >>>                                                    |          
+        // MIDI Commander: Send Performance Common
         public void SendPerformanceCommon()
         {
             performanceCommon.SendData(commander);
         }
 
-        // MIDI Commander Sent Performance Part #cannel
+        // MIDI Commander: Send Performance Part #cannel
         public void SendPerformancePart(int channel)
         {
             performancePartList[channel].SendData(commander);
         }
 
-        // MIDI Commander Send Data
+        // MIDI Commander: Send Data
         public void SendPerformance()
         {
             SendPerformanceCommon();
@@ -75,26 +73,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        // MIDI Commander Send Song Data
-        public void SendSongData()
-        {
-            performanceCommon.SendData(commander);
-            for (int i = 0; i < SongChannelCount; i++)
-            {
-                performancePartList[i].SendData(commander);
-            }
-        }
-
-        // MIDI Commander Send Fast Data
-        public void SendQuickData()
-        {
-            for (int i = SongChannelCount; i < FastChannelCount; i++)
-            {
-                performancePartList[i].SendData(commander);
-            }
-        }
-
-        // MIDI Commander Request Data
+        // MIDI Commander: Request Data
         public void RequestPerformance()
         {
             performanceCommon.RequestData(commander);
@@ -104,7 +83,26 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        // MIDI Commander Request Song Data
+        // MIDI Commander: Send Song Data
+        public void SendSongData()
+        {
+            performanceCommon.SendData(commander);
+            for (int i = 0; i < SongChannelCount; i++)
+            {
+                performancePartList[i].SendData(commander);
+            }
+        }
+
+        // MIDI Commander: Send Fast Data
+        public void SendFastData()
+        {
+            for (int i = SongChannelCount; i < FastChannelCount; i++)
+            {
+                performancePartList[i].SendData(commander);
+            }
+        }
+
+        // MIDI Commander: Request Song Data
         public void RequestSongData()
         {
             performanceCommon.RequestData(commander);
@@ -114,8 +112,8 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        // MIDI Commander Request Fast Data
-        public void RequestQuickData()
+        // MIDI Commander: Request Fast Data
+        public void RequestFastData()
         {
             for (int i = SongChannelCount; i < FastChannelCount; i++)
             {
@@ -123,60 +121,106 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        //====================================  RECEIVE  CALLBACKS  ===========================================
+
+        //|                                                    SONG/FAST COMMAND SECTION                                                        |
+        //======================================================================================================================================|
+        //|                                                  <<< MIDI COMMANDER COMMANDS >>>                                                    |
+        // MIDI Commander: Send Song Command
+        public void SendSongCommand(int commandIndex)
+        {
+            songCommandSet.SendCommand(commandIndex, commander);
+        }
+
+        // MIDI Commander: Send Fast Command
+        public void SendFastCommand(int commandIndex)
+        {
+            fastCommandSet.SendCommand(commandIndex, commander);
+        }
+
+        // MIDI Commander: Request Song Command
+        public void RequestSongCommand(int commandIndex)
+        {
+            songCommandSet[commandIndex].efxSource = performanceCommon.EfxSource;
+            for (int i = 0; i < SongChannelCount; i++)
+            {
+                songCommandSet[commandIndex][i].localSwitch = performancePartList[i].LocSwitch;
+            }
+        }
+
+        // MIDi Commander: Request Fast Command
+        public void RequestFastCommand(int commandIndex)
+        {
+            for (int i = SongChannelCount; i < FastChannelCount; i++)
+            {
+                songCommandSet[commandIndex][i - SongChannelCount].localSwitch = performancePartList[i].LocSwitch;
+            }
+        }
+
+        //|                                                        CALLBACK SECTION                                                             |
+        //=======================================================================================================================================
+        //|                                                        CALLBACK SECTION                                                             |
+        //---------------------------------------------------------------------------------------------------------------------------------------
+
+        // ----  Variables for last received data storing  ----
+        //int msb = -1;       // Most significant byte
+        //int lsb = -1;       // Least significant byte
+        //int patch = -1;     // Patch number
+
+        //// Channel message received
+        //private void Commander_OnChannelEvent(object sender, MIDIEvents.ChannelEventArgs e)
+        //{
+        //    switch (e.Command)
+        //    {
+        //        case MIDIEvents.ChannelCommand.Controller:
+        //            if (e.Data1 == 0x00)
+        //            {
+        //                msb = e.Data2;
+        //            }
+        //            else if (e.Data1 == 0x20)
+        //            {
+        //                lsb = e.Data2;
+        //            }
+        //            //else
+        //            //{
+        //            //    // _____________________________  Other Control change  _________________________________
+        //            //}
+        //            break;
+
+        //        case MIDIEvents.ChannelCommand.ProgramChange:
+        //            patch = e.Data1;
+        //            //string name = BankNameConvertor.GetPatchName(BankNameConvertor.ChannelCommandToBuffer(msb, lsb, patch));
+        //            //Console.WriteLine(name);
+        //            break;
+
+        //            //case MIDIEvents.ChannelCommand.NoteOn:
+        //            //    break;
+
+        //            //case MIDIEvents.ChannelCommand.NoteOff:
+        //            //    break;
+
+        //            //case MIDIEvents.ChannelCommand.PitchWheel:
+        //            //    break;
+
+        //            //case MIDIEvents.ChannelCommand.PolyPressure:
+        //            //    break;
+
+        //            //case MIDIEvents.ChannelCommand.ChannelPressure:
+        //            //    break;
+        //    }
+        //}
+
+        // System exclusive: Requested data received
         private void Commander_OnSysExRquestedDataEvent(object sender, MIDIEvents.SysExEventArgs e)
         {
             SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
             int target = DetectTarget(msg);
         }
 
+        // System exclusive: Data for edit received
         private void Commander_OnSysExEditDataEvent(object sender, MIDIEvents.SysExEventArgs e)
         {
             SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
             int target = DetectTarget(msg);
-        }
-
-        int msb = -1, lsb = -1, patch = -1;
-        private void Commander_OnChannelEvent(object sender, MIDIEvents.ChannelEventArgs e)
-        {
-            switch(e.Command)
-            {
-                case MIDIEvents.ChannelCommand.Controller:
-                    if (e.Data1 == 0x00)
-                    {
-                        msb = e.Data2;
-                    }
-                    else if (e.Data1 == 0x20)
-                    {
-                        lsb = e.Data2;
-                    }
-                    //else
-                    //{
-                    //    // _____________________________  Other Control change  _________________________________
-                    //}
-                    break;
-
-                case MIDIEvents.ChannelCommand.ProgramChange:
-                    patch = e.Data1;
-                    string name = BankNameConvertor.GetPatchName(BankNameConvertor.ChannelCommandToBuffer(msb, lsb, patch));
-                    //Console.WriteLine(name);
-                    break;
-
-                //case MIDIEvents.ChannelCommand.NoteOn:
-                //    break;
-
-                //case MIDIEvents.ChannelCommand.NoteOff:
-                //    break;
-
-                //case MIDIEvents.ChannelCommand.PitchWheel:
-                //    break;
-
-                //case MIDIEvents.ChannelCommand.PolyPressure:
-                //    break;
-
-                //case MIDIEvents.ChannelCommand.ChannelPressure:
-                //    break;
-            }
         }
 
         // Detect target of message
@@ -187,7 +231,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             uint addr = msg.GetAddressFromArray();
             if ((addr >= performanceCommon.SegmentAddress) && (addr < performanceCommon.SegmentAddress + performanceCommon.Length))
             {
-                byte[] buf = performanceCommon.Data;
+                byte[] buf = performanceCommon.ToByteArray();
                 uint off = msg.GetAddressFromArray() - performanceCommon.SegmentAddress;
 
                 SetDataInBuffer(buf, off, msg.GetDataFromArray());
@@ -203,7 +247,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 {
                     if ((addr >= performancePartList[i].SegmentAddress) && (addr < performancePartList[i].SegmentAddress + performancePartList[i].Length))
                     {
-                        byte[] buf = performancePartList[i].Data;
+                        byte[] buf = performancePartList[i].ToByteArray();
                         uint off = msg.GetAddressFromArray() - performancePartList[i].SegmentAddress;
 
                         SetDataInBuffer(buf, off, msg.GetDataFromArray());
@@ -229,40 +273,61 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        //--------------------------  Set/Get data to/from perfopmance methods  ---------------------------------
+        //|                                                          INTERFACES SECTION                                                         |
+        //======================================================================================================================================|
+        //-----------------------------------------------------------------  Additional  -------------------------------------------------------|
         // Set Performance Common
-        public void SetPerformanceCommon(byte[] buffer)
+        private void SetPerformanceCommon(byte[] data)
         {
-            performanceCommon.CopyDataToStructure(buffer);
+            performanceCommon.CopyDataToStructure(data);
         }
 
         // Set Performance Part #channel
-        public void SetPerformancePart(byte[] buffer, int channel)
+        private void SetPerformancePart(byte[] data, int channel)
         {
-            performancePartList[channel].CopyDataToStructure(buffer);
+            performancePartList[channel].CopyDataToStructure(data);
         }
 
         // Get Performance Common
-        public byte[] GetPerformanceCommon()
+        private byte[] GetPerformanceCommon()
         {
             //while (performanceCommon.Requested) { };
-            return performanceCommon.Data;
+            return performanceCommon.ToByteArray();
         }
 
         // Get Performance Part #channel
-        public byte[] GetPerformancePart(int channel)
+        private byte[] GetPerformancePart(int channel)
         {
             //while (performanceCommon.Requested) { };
-            return performancePartList[channel].Data;
+            return performancePartList[channel].ToByteArray();
         }
 
-        // Set Song Data
-        public void SetSongData(byte[] buffer)
+        
+
+        //--------------------------------------------------  ISongListStorageSectionInterface  ------------------------------------------------|
+
+        string ISongPresetName.PresetName 
+        {
+            get => songCommandSet.PresetName;
+            set => songCommandSet.PresetName = value; 
+        }
+        public string Singer 
+        { 
+            get => songCommandSet.Singer;
+            set => songCommandSet.Singer = value; 
+        }
+        public string Key 
+        {
+            get => songCommandSet.Key;
+            set => songCommandSet.Key = value;
+        }
+
+        public void SetSongData(byte[] data)
         {
             int index = 0;
 
             byte[] perfData = new byte[performanceCommon.Length];
-            Array.Copy(buffer, index, perfData, 0, performanceCommon.Length);
+            Array.Copy(data, index, perfData, 0, performanceCommon.Length);
             SetPerformanceCommon(perfData);
 
             index += (int)performanceCommon.Length;
@@ -270,14 +335,13 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             for (int i = 0; i < SongChannelCount; i++)
             {
                 byte[] partData = new byte[performancePartList[i].Length];
-                Array.Copy(buffer, index, partData, 0, performancePartList[i].Length);
+                Array.Copy(data, index, partData, 0, performancePartList[i].Length);
                 SetPerformancePart(partData, i);
 
                 index += (int)performancePartList[i].Length;
             }
         }
 
-        // Get Song Data
         public byte[] GetSongData()
         {
             byte[] buffer = new byte[performanceCommon.Length + performancePartList[0].Length * SongChannelCount];
@@ -295,22 +359,47 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return buffer;
         }
 
-        // set fast data
-        public void SetFastdata(byte[] buffer)
+        string ISongPresetName.GetCommandName(int comNumber)
+        {
+            return songCommandSet.GetCommandName(comNumber);
+        }
+
+        void ISongPresetName.SetCommandName(int comNumber, string name)
+        {
+            songCommandSet.SetCommandName(comNumber, name);
+        }
+
+        public void SetSongCommandSection(byte[] data)
+        {
+            songCommandSet.FromByteArray(data);
+        }
+
+        public byte[] GetSongCommandSection()
+        {
+            return songCommandSet.ToByteArray();
+        }
+
+        //-------------------------------------------------  IFastListStorageSectionInterface  -------------------------------------------------|
+        string IFastPresetName.PresetName
+        {
+            get => fastCommandSet.PresetName;
+            set => fastCommandSet.PresetName = value;
+        }
+        
+        public void SetFastData(byte[] data)
         {
             int index = 0;
 
             for (int i = SongChannelCount; i < MIDIChannelCount; i++)
             {
                 byte[] partData = new byte[performancePartList[i].Length];
-                Array.Copy(buffer, index, partData, 0, performancePartList[i].Length);
+                Array.Copy(data, index, partData, 0, performancePartList[i].Length);
                 SetPerformancePart(partData, i);
 
                 index += (int)performancePartList[i].Length;
             }
         }
 
-        // Get FAst Data
         public byte[] GetFastData()
         {
             byte[] buffer = new byte[performancePartList[0].Length * (MIDIChannelCount - SongChannelCount)];
@@ -324,137 +413,164 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 
             return buffer;
         }
-    }
 
-
-    // -----------------------------------------------  Data Segment Base Class  ---------------------------------------------------------------------
-    abstract class DataSegmentClass
-    {
-        protected readonly uint segmentAddress;                         // Main Segment Address
-        public uint SegmentAddress { get { return segmentAddress; } }   // Main segment address getter
-
-        //protected bool requested = false;
-        //public bool Requested { get { return requested; } set { requested = value; } }
-
-        // Base Constructor
-        protected DataSegmentClass(uint addr)
+        string IFastPresetName.GetCommandName(int comNumber)
         {
-            segmentAddress = addr;
+            return fastCommandSet.GetCommandName(comNumber);
         }
 
-        public abstract void SendData(IPerformanceMIDIInOutInterface commander);
-        public abstract void RequestData(IPerformanceMIDIInOutInterface commander);
-    }
-
-    // ---------------------------------------------  Performance Common Data Class  -----------------------------------------------------------------
-    class PerformanceCommonClass : DataSegmentClass
-    {
-        // Structure
-        PERFORMANCE_COMMON performanceCommonData;
-
-        // Structure -> Data Array
-        public byte[] Data
+        void IFastPresetName.SetCommandName(int comNumber, string name)
         {
-            get
-            {
-                int rawsize = Marshal.SizeOf(performanceCommonData);
-                IntPtr buffer = Marshal.AllocHGlobal(rawsize);
-                Marshal.StructureToPtr(performanceCommonData, buffer, false);
-                byte[] rawdata = new byte[rawsize];
-                Marshal.Copy(buffer, rawdata, 0, rawsize);
-                Marshal.FreeHGlobal(buffer);
-                return rawdata;
-            }
+            fastCommandSet.SetCommandName(comNumber, name);
         }
 
-        // Structure Length
-        public uint Length
+        public void SetFastCommandSection(byte[] data)
         {
-            get { return (uint)Marshal.SizeOf(performanceCommonData); }
+            fastCommandSet.FromByteArray(data);
         }
 
-        // Constructor
-        public PerformanceCommonClass(uint segAddr) : base(segAddr)
+        public byte[] GetFastCommandSection()
         {
-            performanceCommonData = new PERFORMANCE_COMMON();
+            return fastCommandSet.ToByteArray();
         }
 
-        // Data Array -> Structure
-        public void CopyDataToStructure(byte[] data)
+        //-------------------------------------------------  ISongListEditorSectionInterface  --------------------------------------------------|
+        public string PerformanceTitle 
         {
-            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            PERFORMANCE_COMMON temp = (PERFORMANCE_COMMON)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(PERFORMANCE_COMMON));
-            handle.Free();
-            performanceCommonData = temp;
+            get => performanceCommon.PerformanceName;
+            set => performanceCommon.PerformanceName = value; 
         }
 
-        // Send
-        public override void SendData(IPerformanceMIDIInOutInterface commander)
+        public byte Tempo 
         {
-            commander.SendData(segmentAddress, Data);
+            get => performanceCommon.Tempo;
+            set => performanceCommon.Tempo = value; 
         }
 
-        // Request
-        public override void RequestData(IPerformanceMIDIInOutInterface commander)
+        EFXSource ISongCommandsEditInterface.GetCommandEFXSource(int comNumber)
         {
-            //requested = true;
-            commander.RequestData(segmentAddress, Length);
-        }
-    }
-
-    // -------------------------------------------------  Performance Part Data Class  ---------------------------------------------------------------
-    class PerformancePartClass : DataSegmentClass
-    {
-        // Structure
-        PERFORMANCE_PART performancePartData;
-
-        // Structure -> Data Array
-        public byte[] Data
-        {
-            get
-            {
-                int rawsize = Marshal.SizeOf(performancePartData);
-                IntPtr buffer = Marshal.AllocHGlobal(rawsize);
-                Marshal.StructureToPtr(performancePartData, buffer, false);
-                byte[] rawdata = new byte[rawsize];
-                Marshal.Copy(buffer, rawdata, 0, rawsize);
-                Marshal.FreeHGlobal(buffer);
-                return rawdata;
-            }
+            return songCommandSet.GetCommandEFXSource(comNumber);
         }
 
-        // Structure Length
-        public uint Length
+        void ISongCommandsEditInterface.SetCommandEFXSource(int comNumber, EFXSource src)
         {
-            get { return (uint)Marshal.SizeOf(performancePartData); }
+            songCommandSet.SetCommandEFXSource(comNumber, src);
         }
 
-        // Constructor
-        public PerformancePartClass(uint segAddr) : base(segAddr)
+        LocalSwitch ISongCommandsEditInterface.GetCommandLocalSwitch(int comNumber, int midichannel)
         {
-            performancePartData = new PERFORMANCE_PART();
+            int channel = midichannel;
+            return songCommandSet.GetCommandLocalSwitch(comNumber, channel);
         }
 
-        // Data Array -> Structure
-        public void CopyDataToStructure(byte[] data)
+        void ISongCommandsEditInterface.SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw)
         {
-            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            PERFORMANCE_PART temp = (PERFORMANCE_PART)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(PERFORMANCE_PART));
-            handle.Free();
-            performancePartData = temp;
+            int channel = midichannel;
+            songCommandSet.SetCommandLocalSwitch(comNumber, channel, lcSw);
         }
 
-        // Send
-        public override void SendData(IPerformanceMIDIInOutInterface commander)
+        //-------------------------------------------------  IFastListEditorSectionInterface  --------------------------------------------------|
+        EFXSource IFastCommandsEditInterface.GetCommandEFXSource(int comNumber)
         {
-            commander.SendData(segmentAddress, Data);
+            return fastCommandSet.GetCommandEFXSource(comNumber);
         }
 
-        // Request
-        public override void RequestData(IPerformanceMIDIInOutInterface commander)
+        void IFastCommandsEditInterface.SetCommandEFXSource(int comNumber, EFXSource src)
         {
-            //requested = true;
-            commander.RequestData(segmentAddress, Length);
+            fastCommandSet.SetCommandEFXSource(comNumber, src);
+        }
+
+        LocalSwitch IFastCommandsEditInterface.GetCommandLocalSwitch(int comNumber, int midichannel)
+        {
+            int channel = midichannel - SongChannelCount;
+            return fastCommandSet.GetCommandLocalSwitch(comNumber, channel);
+        }
+
+        void IFastCommandsEditInterface.SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw)
+        {
+            int channel = midichannel - SongChannelCount;
+            fastCommandSet.SetCommandLocalSwitch(comNumber, channel, lcSw);
+        }
+
+        //----------------------------------------------------  IPerformancePartInterface  -----------------------------------------------------|
+        public RecieveHold1Switch GetRecieveHold1Switch(int channel)
+        {
+            return performancePartList[channel].Hold1Switch;
+        }
+
+        public void SetRecieveHold1Switch(int channel, RecieveHold1Switch hold)
+        {
+            performancePartList[channel].Hold1Switch = hold;
+        }
+
+        public byte GetLowerKey(int channel)
+        {
+            return performancePartList[channel].LowerKey;
+        }
+
+        public void SetLowerKey(int channel, byte key)
+        {
+            performancePartList[channel].LowerKey = key;
+        }
+
+        public byte GetUpperKey(int channel)
+        {
+            return performancePartList[channel].UpperKey;
+        }
+
+        public void SetUpperKey(int channel, byte key)
+        {
+            performancePartList[channel].UpperKey = key;
+        }
+
+        public byte GetVolume(int channel)
+        {
+            return performancePartList[channel].Volume;
+        }
+
+        public void SetVolume(int channel, byte val)
+        {
+            performancePartList[channel].Volume = val;
+        }
+
+        public byte GetPan(int channel)
+        {
+            return performancePartList[channel].Pan;
+        }
+
+        public void SetPan(int channel, byte val)
+        {
+            performancePartList[channel].Pan = val;
+        }
+
+        public byte GetReverb(int channel)
+        {
+            return performancePartList[channel].Reverb;
+        }
+
+        public void SetReverb(int channel, byte val)
+        {
+            performancePartList[channel].Reverb = val;
+        }
+
+        public byte GetChorus(int channel)
+        {
+            return performancePartList[channel].Chorus;
+        }
+
+        public void SetChorus(int channel, byte val)
+        {
+            performancePartList[channel].Chorus = val;
+        }
+
+        public byte[] GetPatch(int channel)
+        {
+            return performancePartList[channel].PatchCommandArray;
+        }
+
+        public void SetPatch(int channel, byte[] data)
+        {
+            performancePartList[channel].PatchCommandArray = data;
         }
     }
 }

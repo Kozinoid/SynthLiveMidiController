@@ -29,49 +29,73 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.bt_act2 = new System.Windows.Forms.Button();
+            this.bt_act3 = new System.Windows.Forms.Button();
+            this.bt_act1 = new System.Windows.Forms.Button();
+            this.bt_act4 = new System.Windows.Forms.Button();
+            this.bt_act5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // bt_act2
             // 
-            this.button1.Location = new System.Drawing.Point(350, 360);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Get";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.bt_act2.Location = new System.Drawing.Point(12, 41);
+            this.bt_act2.Name = "bt_act2";
+            this.bt_act2.Size = new System.Drawing.Size(131, 23);
+            this.bt_act2.TabIndex = 0;
+            this.bt_act2.Text = "Get to Storage";
+            this.bt_act2.UseVisualStyleBackColor = true;
+            this.bt_act2.Click += new System.EventHandler(this.bt_act2_Click);
             // 
-            // button2
+            // bt_act3
             // 
-            this.button2.Location = new System.Drawing.Point(559, 360);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Send";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.bt_act3.Location = new System.Drawing.Point(12, 70);
+            this.bt_act3.Name = "bt_act3";
+            this.bt_act3.Size = new System.Drawing.Size(131, 23);
+            this.bt_act3.TabIndex = 1;
+            this.bt_act3.Text = "Print Daa";
+            this.bt_act3.UseVisualStyleBackColor = true;
+            this.bt_act3.Click += new System.EventHandler(this.bt_act3_Click);
             // 
-            // button3
+            // bt_act1
             // 
-            this.button3.Location = new System.Drawing.Point(141, 360);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Request";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.bt_act1.Location = new System.Drawing.Point(12, 12);
+            this.bt_act1.Name = "bt_act1";
+            this.bt_act1.Size = new System.Drawing.Size(131, 23);
+            this.bt_act1.TabIndex = 2;
+            this.bt_act1.Text = "Request Performance";
+            this.bt_act1.UseVisualStyleBackColor = true;
+            this.bt_act1.Click += new System.EventHandler(this.bt_act1_Click);
+            // 
+            // bt_act4
+            // 
+            this.bt_act4.Location = new System.Drawing.Point(12, 99);
+            this.bt_act4.Name = "bt_act4";
+            this.bt_act4.Size = new System.Drawing.Size(131, 23);
+            this.bt_act4.TabIndex = 3;
+            this.bt_act4.Text = "Set from Storage";
+            this.bt_act4.UseVisualStyleBackColor = true;
+            this.bt_act4.Click += new System.EventHandler(this.bt_act4_Click);
+            // 
+            // bt_act5
+            // 
+            this.bt_act5.Location = new System.Drawing.Point(12, 128);
+            this.bt_act5.Name = "bt_act5";
+            this.bt_act5.Size = new System.Drawing.Size(131, 23);
+            this.bt_act5.TabIndex = 4;
+            this.bt_act5.Text = "Send Performance";
+            this.bt_act5.UseVisualStyleBackColor = true;
+            this.bt_act5.Click += new System.EventHandler(this.bt_act5_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(159, 450);
+            this.Controls.Add(this.bt_act5);
+            this.Controls.Add(this.bt_act4);
+            this.Controls.Add(this.bt_act1);
+            this.Controls.Add(this.bt_act3);
+            this.Controls.Add(this.bt_act2);
             this.Name = "Form1";
             this.Text = "Synth Live MIDI Controller";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -82,9 +106,11 @@ namespace SynthLiveMidiController
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button bt_act2;
+        private System.Windows.Forms.Button bt_act3;
+        private System.Windows.Forms.Button bt_act1;
+        private System.Windows.Forms.Button bt_act4;
+        private System.Windows.Forms.Button bt_act5;
     }
 }
 
