@@ -42,7 +42,7 @@ namespace SynthLiveMidiController
             this.bt_act2.Name = "bt_act2";
             this.bt_act2.Size = new System.Drawing.Size(131, 23);
             this.bt_act2.TabIndex = 0;
-            this.bt_act2.Text = "Get to Storage";
+            this.bt_act2.Text = "Get and Print";
             this.bt_act2.UseVisualStyleBackColor = true;
             this.bt_act2.Click += new System.EventHandler(this.bt_act2_Click);
             // 
@@ -52,7 +52,7 @@ namespace SynthLiveMidiController
             this.bt_act3.Name = "bt_act3";
             this.bt_act3.Size = new System.Drawing.Size(131, 23);
             this.bt_act3.TabIndex = 1;
-            this.bt_act3.Text = "Print Daa";
+            this.bt_act3.Text = "Store Data";
             this.bt_act3.UseVisualStyleBackColor = true;
             this.bt_act3.Click += new System.EventHandler(this.bt_act3_Click);
             // 
@@ -72,7 +72,7 @@ namespace SynthLiveMidiController
             this.bt_act4.Name = "bt_act4";
             this.bt_act4.Size = new System.Drawing.Size(131, 23);
             this.bt_act4.TabIndex = 3;
-            this.bt_act4.Text = "Set from Storage";
+            this.bt_act4.Text = "Load Data";
             this.bt_act4.UseVisualStyleBackColor = true;
             this.bt_act4.Click += new System.EventHandler(this.bt_act4_Click);
             // 

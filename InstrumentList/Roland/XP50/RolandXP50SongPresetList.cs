@@ -1,39 +1,104 @@
 ﻿using System;
+using System.IO;
+using System.Windows.Forms;
 using System.Collections.Generic;
+using SynthLiveMidiController.File;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
     //--------------------------------------------  Song Preset List Class  ----------------------------------------------------------
     class RolandXP50SongPresetList
     {
-        private readonly ISongListStorageSectionInterface instrument;
-        private readonly List<RolandXP50SongPreset> songPresetList = new List<RolandXP50SongPreset>();
+        // Fields
+        private readonly ISongListStorageSectionInterface instrument;                                   // Main Performance&Command Object
+        private readonly List<RolandXP50SongPreset> songPresetList = new List<RolandXP50SongPreset>();  // Song Preset List
+        private RolandXP50SongPreset temporarySongPreset;                                               // Temporary Preset
+        private RolandXP50SongPreset templateSongPreset;                                                // Template Preset
+        private string templateFileName = "";                                                           // Default path
 
+        // Constructor
         public RolandXP50SongPresetList(ISongListStorageSectionInterface dev)
         {
             instrument = dev;
             songPresetList = new List<RolandXP50SongPreset>();
+            templateSongPreset = new RolandXP50SongPreset();
+            temporarySongPreset = new RolandXP50SongPreset();
+
+            templateFileName = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Templates\\NewSongTemplate");
 
             // Load New Song Template
+            LoadNewSongTemplate();
+            LoadTemporaryFromTemplate();
 
             // Load Song List data
 
         }
 
-        public void GetData() 
+        // Load New Song Template
+        public void LoadNewSongTemplate()
         {
-            
+            MultiDataFileStream mdfs = new MultiDataFileStream(templateFileName, FileMode.Open, FileAccess.Read);
+            templateSongPreset.LoadPreset(mdfs);
+            mdfs.Close();
         }
 
-        public void SetData()
+        // Save New Song Template
+        public void SaveNewSongTemplate()
         {
-            
+            MultiDataFileStream mdfs = new MultiDataFileStream(templateFileName, FileMode.OpenOrCreate, FileAccess.Write);
+            templateSongPreset.SavePreset(mdfs);
+            mdfs.Close();
+        }
+
+        // Template -> Temporary
+        public void LoadTemporaryFromTemplate()
+        {
+            temporarySongPreset = (RolandXP50SongPreset)templateSongPreset.Clone();
+        }
+
+        // Temporary -> Template
+        public void StoreTemporaryToTemplate()
+        {
+            templateSongPreset = (RolandXP50SongPreset)temporarySongPreset.Clone();
+        }
+
+        // Add preset to List
+        public void AddNewPreset()
+        {
+            // Add to List
+        }
+
+        // Insert preset to List at <index> position
+        public void InsertPresetAt(int index)
+        {
+            // Insert into List
+        }
+
+        // Delete preset from List at <index> position
+        public void DeletePresetAt(int index)
+        {
+
+        }
+
+        // Get Temporary Data from Performance object
+        public void GetTemporaryDataFromPerformance() 
+        {
+            temporarySongPreset.GetDataFromPerformance(instrument);
+        }
+
+        // Set Temporary Data to Performance object
+        public void SetTemporaryDataToPerformance()
+        {
+            temporarySongPreset.SetDataToPerformance(instrument);
         }
 
         //------------------- TEST -----------------------
         public void PrintData()
         {
-            
+            Console.WriteLine("TEMPORARY SONG");
+            temporarySongPreset.PrintData();
+            Console.WriteLine("TEMPLATE SONG");
+            templateSongPreset.PrintData();
         }
     }
 
@@ -47,6 +112,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public string[] CommandNames { get; set; }
         public byte[] SongCommandSection { get; set; }
 
+        // Constructor
         public RolandXP50SongPreset()
         {
             PresetName = "";
@@ -55,6 +121,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             CommandNames = new string[RolandXP50CommandSet.SongCommandCount];
         }
 
+        // Clone Preset Object
         public object Clone()
         {
             RolandXP50SongPreset obj = new RolandXP50SongPreset();
@@ -73,7 +140,8 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return obj;
         }
 
-        public void GetData(ISongListStorageSectionInterface dev)
+        // Get Data From Performance
+        public void GetDataFromPerformance(ISongListStorageSectionInterface dev)
         {
             PresetName = dev.PresetName;
             Singer = dev.Singer;
@@ -86,7 +154,8 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             SongCommandSection = dev.GetSongCommandSection();
         }
 
-        public void SetData(ISongListStorageSectionInterface dev)
+        // Set Data To Performance
+        public void SetDataToPerformance(ISongListStorageSectionInterface dev)
         {
             dev.PresetName = PresetName;
             dev.Singer = Singer;
@@ -97,6 +166,34 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 dev.SetCommandName(i, CommandNames[i]);
             }
             dev.SetSongCommandSection(SongCommandSection);
+        }
+
+        // Save Preset To File
+        public void SavePreset(MultiDataFileStream mdfs)
+        {
+            mdfs.WriteString(PresetName);
+            mdfs.WriteString(Singer);
+            mdfs.WriteString(Key);
+            mdfs.WriteByteArray(SongData);
+            for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
+            {
+                mdfs.WriteString(CommandNames[i]);
+            }
+            mdfs.WriteByteArray(SongCommandSection);
+        }
+
+        // Load Preset To File
+        public void LoadPreset(MultiDataFileStream mdfs)
+        {
+            PresetName = mdfs.ReadString();
+            Singer = mdfs.ReadString();
+            Key = mdfs.ReadString();
+            SongData = mdfs.ReadByteArray();
+            for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
+            {
+                CommandNames[i] = mdfs.ReadString();
+            }
+            SongCommandSection = mdfs.ReadByteArray();
         }
 
         //------------------- TEST -----------------------

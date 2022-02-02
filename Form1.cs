@@ -70,30 +70,42 @@ namespace SynthLiveMidiController
         //---------------------------------------  TEST  --------------------------------------------
         private void bt_act1_Click(object sender, EventArgs e)
         {
-            //mainPerformance.RequestPerformance();
+            mainPerformance.RequestPerformance();
         }
 
         private void bt_act2_Click(object sender, EventArgs e)
         {
-            //songList.GetData();
-            //fastList.GetData();
+            songList.GetTemporaryDataFromPerformance();
+            fastList.GetTemporaryDataFromPerformance();
+
+            songList.StoreTemporaryToTemplate();
+            fastList.StoreTemporaryToTemplate();
+
+            songList.PrintData();
+            fastList.PrintData();
         }
 
         private void bt_act3_Click(object sender, EventArgs e)
         {
-            //songList.PrintData();
-            //fastList.PrintData();
+            songList.SaveNewSongTemplate();
+            fastList.SaveNewFastTemplate();
         }
 
         private void bt_act4_Click(object sender, EventArgs e)
         {
-            //songList.SetData();
-            //fastList.SetData();
+            songList.LoadNewSongTemplate();
+            fastList.LoadNewFastTemplate();
+
+            songList.LoadTemporaryFromTemplate();
+            fastList.LoadTemporaryFromTemplate();
         }
 
         private void bt_act5_Click(object sender, EventArgs e)
         {
-            //mainPerformance.SendPerformance();
+            songList.SetTemporaryDataToPerformance();
+            fastList.SetTemporaryDataToPerformance();
+
+            mainPerformance.SendPerformance();
         }
     }
 }
