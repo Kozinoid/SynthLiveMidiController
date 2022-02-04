@@ -572,5 +572,15 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             performancePartList[channel].PatchCommandArray = data;
         }
+
+        public byte GetOctaveShift(int channel)
+        {
+            return performancePartList[channel].OctaveShift;
+        }
+
+        public void SetOctaveShift(int channel, byte val)
+        {
+            performancePartList[channel].OctaveShift = val;
+        }
     }
 }

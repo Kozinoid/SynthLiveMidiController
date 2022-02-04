@@ -39,6 +39,9 @@ namespace SynthLiveMidiController
             mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);
             songList = new RolandXP50SongPresetList(mainPerformance);
             fastList = new RolandXP50FastPresetList(mainPerformance);
+
+            //----------------------------------  TEST  ---------------------------------------------
+            TestFillSongSheet();
         }
 
         // Form closing...
@@ -67,7 +70,23 @@ namespace SynthLiveMidiController
             while ((midiInDevice < 0) || (midiOutDevice < 0));
         }
 
+        // ---------------------------------------------------------  BUTTONS  ------------------------------------------------------------------
+        // OPTOINS Button
+        private void bt_Options_Click(object sender, EventArgs e)
+        {
+            SongPresetEditor frm = new SongPresetEditor();
+            frm.ShowDialog();
+        }
+
         //---------------------------------------  TEST  --------------------------------------------
+        public void TestFillSongSheet()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                dgv_SongListView.Rows.Add(i.ToString(), string.Format("Song Name {0}", i), string.Format("Singer {0}", i), "F#m", "120");
+            }
+        }
+
         private void bt_act1_Click(object sender, EventArgs e)
         {
             mainPerformance.RequestPerformance();

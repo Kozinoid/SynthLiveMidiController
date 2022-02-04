@@ -59,6 +59,9 @@
         // Patch
         byte[] GetPatch(int channel);
         void SetPatch(int channel, byte[] data);
+        // Octave
+        byte GetOctaveShift(int channel);
+        void SetOctaveShift(int channel, byte val);
     }
 
     // Interface for Storing SongList Data  (+)

@@ -109,6 +109,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MIDIDevice\SanfordMidiDevice.cs" />
+    <Compile Include="SongPresetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SongPresetEditor.Designer.cs">
+      <DependentUpon>SongPresetEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestClass.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -124,7 +130,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SongPresetEditor.resx">
+      <DependentUpon>SongPresetEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -152,6 +162,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Graphics\MainWindow.bmp" />
     <Content Include="InstrumentList\InstrumentList.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

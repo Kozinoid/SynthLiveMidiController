@@ -220,6 +220,19 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
+        // Octave
+        public byte OctaveShift
+        {
+            get
+            {
+                return performancePartData.OctaveShift;
+            }
+            set
+            {
+                performancePartData.OctaveShift = value;
+            }
+        }
+
         // Reverb
         public byte Reverb
         {
