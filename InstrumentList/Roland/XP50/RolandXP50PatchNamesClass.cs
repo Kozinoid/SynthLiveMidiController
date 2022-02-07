@@ -102,23 +102,23 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             switch (MSB)
             {
                 case 0x50:
-                    if (LSB == 0) bankName = "USER:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankUser[patchIndex] + ")";
+                    if (LSB == 0) bankName = "[USER] " + string.Format("{0:000}", patchIndex + 1) + " (" + bankUser[patchIndex] + ")";
                     break;
 
                 case 0x51:
                     switch (LSB)
                     {
                         case 0x00:
-                            bankName = "A:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankA[patchIndex] + ")";
+                            bankName = "A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankA[patchIndex] + ")";
                             break;
                         case 0x01:
-                            bankName = "B:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankB[patchIndex] + ")";
+                            bankName = "B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankB[patchIndex] + ")";
                             break;
                         case 0x02:
-                            bankName = "C:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankC[patchIndex] + ")";
+                            bankName = "C" + string.Format("{0:000}", patchIndex + 1) + " (" + bankC[patchIndex] + ")";
                             break;
                         case 0x03:
-                            bankName = "GM:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankGM[patchIndex] + ")";
+                            bankName = "GM" + string.Format("{0:000}", patchIndex + 1) + " (" + bankGM[patchIndex] + ")";
                             break;
                     }
                     break;
@@ -127,28 +127,28 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                     switch (LSB)
                     {
                         case 0x00:
-                            bankName = "Exp-A:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankExpA[patchIndex] + ")";
+                            bankName = "Exp-A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpA[patchIndex] + ")";
                             break;
                         case 0x01:
-                            bankName = "Exp-A:" + string.Format("{0:000}", patchIndex + 129) + "(" + bankExpA[patchIndex + 128] + ")";
+                            bankName = "Exp-A" + string.Format("{0:000}", patchIndex + 129) + " (" + bankExpA[patchIndex + 128] + ")";
                             break;
                         case 0x02:
-                            bankName = "Exp-B:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankExpB[patchIndex] + ")";
+                            bankName = "Exp-B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpB[patchIndex] + ")";
                             break;
                         case 0x03:
-                            bankName = "Exp-B:" + string.Format("{0:000}", patchIndex + 129) + "(" + bankExpB[patchIndex + 128] + ")";
+                            bankName = "Exp-B" + string.Format("{0:000}", patchIndex + 129) + " (" + bankExpB[patchIndex + 128] + ")";
                             break;
                         case 0x04:
-                            bankName = "Exp-C:" + string.Format("{0:000}", patchIndex + 1);
+                            bankName = "Exp-C" + string.Format("{0:000}", patchIndex + 1);
                             break;
                         case 0x05:
-                            bankName = "Exp-C:" + string.Format("{0:000}", patchIndex + 129);
+                            bankName = "Exp-C" + string.Format("{0:000}", patchIndex + 129);
                             break;
                         case 0x06:
-                            bankName = "Exp-D:" + string.Format("{0:000}", patchIndex + 1);
+                            bankName = "Exp-D" + string.Format("{0:000}", patchIndex + 1);
                             break;
                         case 0x07:
-                            bankName = "Exp-D:" + string.Format("{0:000}", patchIndex + 129);
+                            bankName = "Exp-D" + string.Format("{0:000}", patchIndex + 129);
                             break;
                     }
                     break;
@@ -168,23 +168,23 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                     switch (buffer[1])
                     {
                         case 1:
-                            bankName = "USER:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankUser[patchIndex] + ")";
+                            bankName = "USER" + string.Format("{0:000}", patchIndex + 1) + " (" + bankUser[patchIndex] + ")";
                             break;
 
                         case 3:
-                            bankName = "A:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankA[patchIndex] + ")";
+                            bankName = "A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankA[patchIndex] + ")";
                             break;
 
                         case 4:
-                            bankName = "B:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankB[patchIndex] + ")";
+                            bankName = "B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankB[patchIndex] + ")";
                             break;
 
                         case 5:
-                            bankName = "C:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankC[patchIndex] + ")";
+                            bankName = "C" + string.Format("{0:000}", patchIndex + 1) + " (" + bankC[patchIndex] + ")";
                             break;
 
                         case 6:
-                            bankName = "GM:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankGM[patchIndex] + ")";
+                            bankName = "GM" + string.Format("{0:000}", patchIndex + 1) + " (" + bankGM[patchIndex] + ")";
                             break;
                     }
                     break;
@@ -193,17 +193,17 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                     switch (buffer[1])
                     {
                         case 1:
-                            bankName = "Exp-A:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankExpA[patchIndex] + ")";
+                            bankName = "Exp-A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpA[patchIndex] + ")";
                             break;
 
                         case 4:
-                            bankName = "Exp-B:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankExpB[patchIndex] + ")";
+                            bankName = "Exp-B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpB[patchIndex] + ")";
                             break;
                     }
                     break;
 
                 default:
-                    bankName = "Unknown:" + string.Format("{0:000}", patchIndex + 1) + "(" + bankExpB[patchIndex] + ")";
+                    bankName = "Unknown" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpB[patchIndex] + ")";
                     break;
             }
 

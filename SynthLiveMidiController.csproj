@@ -76,11 +76,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckBoxControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CheckBoxControl.Designer.cs">
+      <DependentUpon>CheckBoxControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FastListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FastListControl.Designer.cs">
+      <DependentUpon>FastListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FastPresetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FastPresetEditor.Designer.cs">
+      <DependentUpon>FastPresetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstrumentList\Roland\XP50\SelectPatchDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstrumentList\Roland\XP50\SelectPatchDialog.Designer.cs">
+      <DependentUpon>SelectPatchDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyRangeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="KeyRangeControl.Designer.cs">
+      <DependentUpon>KeyRangeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NoteKeyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NoteKeyControl.Designer.cs">
+      <DependentUpon>NoteKeyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OneChannelParametersEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OneChannelParametersEditor.Designer.cs">
+      <DependentUpon>OneChannelParametersEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PatchControl.Designer.cs">
+      <DependentUpon>PatchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Picrutes\KeyboardPicture.cs" />
     <Compile Include="InstrumentList\Roland\XP50\IRolandXP50CommandsEditInterface.cs" />
     <Compile Include="File\MultiDataFileStream.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50DataSegmentClass.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\RolandXP50FastPresetList.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\RolandXP50SongPresetList.cs" />
     <Compile Include="MIDIMessages\IInstrimentCommandInterface.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50SongFastCommandClass.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50PatchNamesClass.cs" />
@@ -106,9 +153,22 @@
     <Compile Include="MIDIMessages\MIDIMessageProcessor.cs" />
     <Compile Include="MIDIMessages\MIDIMessages.cs" />
     <Compile Include="MIDIMessages\PreprocessorCommandsClass.cs" />
+    <Compile Include="Picrutes\VisualOptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MIDIDevice\SanfordMidiDevice.cs" />
+    <Compile Include="ShiftControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ShiftControl.Designer.cs">
+      <DependentUpon>ShiftControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SongListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SongListControl.Designer.cs">
+      <DependentUpon>SongListControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SongPresetEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,11 +176,41 @@
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="TestClass.cs" />
+    <Compile Include="ValueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ValueControl.Designer.cs">
+      <DependentUpon>ValueControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CheckBoxControl.resx">
+      <DependentUpon>CheckBoxControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FastListControl.resx">
+      <DependentUpon>FastListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FastPresetEditor.resx">
+      <DependentUpon>FastPresetEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InstrumentList\Roland\XP50\SelectPatchDialog.resx">
+      <DependentUpon>SelectPatchDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyRangeControl.resx">
+      <DependentUpon>KeyRangeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MidiInOutDialog.resx">
       <DependentUpon>MidiInOutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoteKeyControl.resx">
+      <DependentUpon>NoteKeyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OneChannelParametersEditor.resx">
+      <DependentUpon>OneChannelParametersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatchControl.resx">
+      <DependentUpon>PatchControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -132,8 +222,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ShiftControl.resx">
+      <DependentUpon>ShiftControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SongListControl.resx">
+      <DependentUpon>SongListControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SongPresetEditor.resx">
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValueControl.resx">
+      <DependentUpon>ValueControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -162,7 +261,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Graphics\MainWindow.bmp" />
+    <None Include="Picrutes\MainWindow.bmp" />
     <Content Include="InstrumentList\InstrumentList.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

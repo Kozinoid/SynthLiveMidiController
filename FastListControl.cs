@@ -1,26 +1,60 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
+using System.Drawing;
 using SynthLiveMidiController.File;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
+using SynthLiveMidiController.Picrutes;
 
-namespace SynthLiveMidiController.InstrumentList.Roland.XP50
+namespace SynthLiveMidiController
 {
-    //--------------------------------------------  Fast Preset List Class  ----------------------------------------------------------
-    class RolandXP50FastPresetList
+    public partial class FastListControl : UserControl
     {
         // Fields
-        private readonly IFastListStorageSectionInterface instrument;                                   // Main Performance&Command Object
-        private readonly List<RolandXP50FastPreset> fastPresetList = new List<RolandXP50FastPreset>();  // Song Preset List
-        private RolandXP50FastPreset temporaryFastPreset;                                               // Temporary Preset
-        private RolandXP50FastPreset templateFastPreset;                                                // Template Preset
-        private string templateFileName = "";                                                           // Default path
+        private IFastListStorageSectionInterface instrument;            // Main Performance&Command Object
+
+        private RolandXP50FastPreset temporaryFastPreset;               // Temporary Preset
+        private RolandXP50FastPreset templateFastPreset;                // Template Preset
+        private string templateFileName = "";                           // Default path
 
         // Constructor
-        public RolandXP50FastPresetList(IFastListStorageSectionInterface dev)
+        public FastListControl()
+        {
+            InitializeComponent();
+        }
+
+        // -------------------------------------------  Visual Options  ------------------------------------------------------
+        // Fore Color
+        private void FastListControl_ForeColorChanged(object sender, EventArgs e)
+        {
+            ChangeCellStyle();
+        }
+
+        // Back Color
+        private void FastListControl_BackColorChanged(object sender, EventArgs e)
+        {
+            ChangeCellStyle();
+        }
+
+        // Change cell style
+        private void ChangeCellStyle()
+        {
+            DataGridViewCellStyle cellStyle = new DataGridViewCellStyle
+            {
+                ForeColor = VisualOptions.mainTextColor,
+                SelectionForeColor = VisualOptions.selTextColor,
+                BackColor = VisualOptions.backgroundColor,
+                SelectionBackColor = VisualOptions.selBackgroundColor,
+                Font = VisualOptions.mainFont
+            };
+            dgv_FastListView.ColumnHeadersDefaultCellStyle = cellStyle;
+            dgv_FastListView.DefaultCellStyle = cellStyle;
+        }
+
+        // Load Template and Temporary Data
+        public void LoadData(IFastListStorageSectionInterface dev)
         {
             instrument = dev;
-            fastPresetList = new List<RolandXP50FastPreset>();
             templateFastPreset = new RolandXP50FastPreset();
             temporaryFastPreset = new RolandXP50FastPreset();
 
@@ -31,7 +65,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             LoadTemporaryFromTemplate();
 
             // Load Fast List data
-
+            TestFillSongSheet(); // Test
         }
 
         // Load New Song Template
@@ -66,18 +100,30 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public void AddNewPreset()
         {
             // Add to List
+            int i = dgv_FastListView.Rows.Count;
+            dgv_FastListView.Rows.Add(i.ToString(), string.Format("Song Name {0}", i), "Ctl+D1");
+
+            // Tag
         }
 
         // Insert preset to List at <index> position
         public void InsertPresetAt(int index)
         {
             // Insert into List
+            int i = dgv_FastListView.Rows.Count;
+            dgv_FastListView.Rows.Insert(index, i.ToString(), string.Format("Song Name {0}", i),  "Ctl+D1");
+
+            //Tag
         }
 
         // Delete preset from List at <index> position
         public void DeletePresetAt(int index)
         {
+            // Tag
+            dgv_FastListView.Rows[index].Tag = null;
 
+            // Remove
+            dgv_FastListView.Rows.RemoveAt(index);
         }
 
         // Get Temporary Data from Performance object
@@ -100,6 +146,15 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             Console.WriteLine("TEMPLATE FAST");
             templateFastPreset.PrintData();
         }
+
+        // Fill List
+        public void TestFillSongSheet()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                AddNewPreset();
+            }
+        }
     }
 
     //--------------------------------------------  Fast Preset Class  ---------------------------------------------------------------
@@ -120,9 +175,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Clone Preset Object
         public object Clone()
         {
-            RolandXP50FastPreset obj = new RolandXP50FastPreset();
-            obj.PresetName = PresetName;
-            obj.FastData = new byte[FastData.Length];
+            RolandXP50FastPreset obj = new RolandXP50FastPreset
+            {
+                PresetName = PresetName,
+                FastData = new byte[FastData.Length]
+            };
             Array.Copy(FastData, obj.FastData, FastData.Length);
             for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
             {

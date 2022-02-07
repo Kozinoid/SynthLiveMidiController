@@ -1,26 +1,61 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
+using System.Drawing;
 using SynthLiveMidiController.File;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
+using SynthLiveMidiController.Picrutes;
 
-namespace SynthLiveMidiController.InstrumentList.Roland.XP50
+namespace SynthLiveMidiController
 {
-    //--------------------------------------------  Song Preset List Class  ----------------------------------------------------------
-    class RolandXP50SongPresetList
+    public partial class SongListControl : UserControl
     {
         // Fields
-        private readonly ISongListStorageSectionInterface instrument;                                   // Main Performance&Command Object
-        private readonly List<RolandXP50SongPreset> songPresetList = new List<RolandXP50SongPreset>();  // Song Preset List
-        private RolandXP50SongPreset temporarySongPreset;                                               // Temporary Preset
-        private RolandXP50SongPreset templateSongPreset;                                                // Template Preset
-        private string templateFileName = "";                                                           // Default path
+        private ISongListStorageSectionInterface instrument;            // Main Performance&Command Object
+
+        private RolandXP50SongPreset temporarySongPreset;               // Temporary Preset
+        private RolandXP50SongPreset templateSongPreset;                // Template Preset
+        private string templateFileName = "";                           // Default path
 
         // Constructor
-        public RolandXP50SongPresetList(ISongListStorageSectionInterface dev)
+        public SongListControl()
+        {
+            InitializeComponent();
+        }
+
+        // -------------------------------------------  Visual Options  ------------------------------------------------------
+        // Fore Color
+        private void SongListControl_ForeColorChanged(object sender, EventArgs e)
+        {
+            ChangeCellStyle();
+        }
+
+        // Back Color
+        private void SongListControl_BackColorChanged(object sender, EventArgs e)
+        {
+            ChangeCellStyle();
+        }
+
+        // Change cell style
+        private void ChangeCellStyle()
+        {
+            DataGridViewCellStyle cellStyle = new DataGridViewCellStyle
+            {
+                ForeColor = VisualOptions.mainTextColor,
+                SelectionForeColor = VisualOptions.selTextColor,
+                BackColor = VisualOptions.backgroundColor,
+                SelectionBackColor = VisualOptions.selBackgroundColor,
+                Font = VisualOptions.mainFont
+            };
+            dgv_SongListView.ColumnHeadersDefaultCellStyle = cellStyle;
+            dgv_SongListView.DefaultCellStyle = cellStyle;
+        }
+
+        // -----------------------------------------  Methods  ---------------------------------------------------------------
+        // Load Template and Temporary Data
+        public void LoadData(ISongListStorageSectionInterface dev)
         {
             instrument = dev;
-            songPresetList = new List<RolandXP50SongPreset>();
             templateSongPreset = new RolandXP50SongPreset();
             temporarySongPreset = new RolandXP50SongPreset();
 
@@ -31,7 +66,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             LoadTemporaryFromTemplate();
 
             // Load Song List data
-
+            TestFillSongSheet(); // Test
         }
 
         // Load New Song Template
@@ -66,22 +101,34 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public void AddNewPreset()
         {
             // Add to List
+            int i = dgv_SongListView.Rows.Count;
+            dgv_SongListView.Rows.Add(i.ToString(), string.Format("Song Name {0}", i), string.Format("Singer {0}", i), "F#m", "120");
+
+            // Tag
         }
 
         // Insert preset to List at <index> position
         public void InsertPresetAt(int index)
         {
             // Insert into List
+            int i = dgv_SongListView.Rows.Count;
+            dgv_SongListView.Rows.Insert(index, i.ToString(), string.Format("Song Name {0}", i), string.Format("Singer {0}", i), "F#m", "120");
+
+            //Tag
         }
 
         // Delete preset from List at <index> position
-        public void DeletePresetAt(int index)
+        public void RemovePresetAt(int index)
         {
+            // Tag
+            dgv_SongListView.Rows[index].Tag = null;
 
+            // Remove
+            dgv_SongListView.Rows.RemoveAt(index);
         }
 
         // Get Temporary Data from Performance object
-        public void GetTemporaryDataFromPerformance() 
+        public void GetTemporaryDataFromPerformance()
         {
             temporarySongPreset.GetDataFromPerformance(instrument);
         }
@@ -99,6 +146,15 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             temporarySongPreset.PrintData();
             Console.WriteLine("TEMPLATE SONG");
             templateSongPreset.PrintData();
+        }
+
+        // Fill List
+        public void TestFillSongSheet()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                AddNewPreset();
+            }
         }
     }
 
@@ -124,11 +180,13 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Clone Preset Object
         public object Clone()
         {
-            RolandXP50SongPreset obj = new RolandXP50SongPreset();
-            obj.PresetName = PresetName;
-            obj.Singer = Singer;
-            obj.Key = Key;
-            obj.SongData = new byte[SongData.Length];
+            RolandXP50SongPreset obj = new RolandXP50SongPreset
+            {
+                PresetName = PresetName,
+                Singer = Singer,
+                Key = Key,
+                SongData = new byte[SongData.Length]
+            };
             Array.Copy(SongData, obj.SongData, SongData.Length);
             for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
             {

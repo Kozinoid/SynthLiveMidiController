@@ -29,26 +29,19 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bt_act2 = new System.Windows.Forms.Button();
             this.bt_act3 = new System.Windows.Forms.Button();
             this.bt_act1 = new System.Windows.Forms.Button();
             this.bt_act4 = new System.Windows.Forms.Button();
             this.bt_act5 = new System.Windows.Forms.Button();
             this.pn_LeftPanel = new System.Windows.Forms.Panel();
-            this.dgv_SongListView = new System.Windows.Forms.DataGridView();
-            this.cl1_Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl2_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl3_Singer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl4_Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl5_Tempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tab_Control = new System.Windows.Forms.TabControl();
+            this.tab_SongList = new System.Windows.Forms.TabPage();
+            this.songListControl = new SynthLiveMidiController.SongListControl();
+            this.tab_TrackList = new System.Windows.Forms.TabPage();
+            this.trackListControl = new SynthLiveMidiController.SongListControl();
+            this.tab_FastPresets = new System.Windows.Forms.TabPage();
+            this.fastListControl = new SynthLiveMidiController.FastListControl();
             this.pn_ButtonPanel = new System.Windows.Forms.Panel();
             this.gb_Controls = new System.Windows.Forms.GroupBox();
             this.bt_Options = new System.Windows.Forms.Button();
@@ -76,7 +69,10 @@ namespace SynthLiveMidiController
             this.bt_S1 = new System.Windows.Forms.Button();
             this.pn_PicturePanel = new System.Windows.Forms.Panel();
             this.pn_LeftPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_SongListView)).BeginInit();
+            this.tab_Control.SuspendLayout();
+            this.tab_SongList.SuspendLayout();
+            this.tab_TrackList.SuspendLayout();
+            this.tab_FastPresets.SuspendLayout();
             this.pn_ButtonPanel.SuspendLayout();
             this.gb_Controls.SuspendLayout();
             this.pn_PicturePanel.SuspendLayout();
@@ -139,7 +135,7 @@ namespace SynthLiveMidiController
             // 
             // pn_LeftPanel
             // 
-            this.pn_LeftPanel.Controls.Add(this.dgv_SongListView);
+            this.pn_LeftPanel.Controls.Add(this.tab_Control);
             this.pn_LeftPanel.Controls.Add(this.pn_ButtonPanel);
             this.pn_LeftPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.pn_LeftPanel.Location = new System.Drawing.Point(0, 0);
@@ -147,129 +143,83 @@ namespace SynthLiveMidiController
             this.pn_LeftPanel.Size = new System.Drawing.Size(496, 801);
             this.pn_LeftPanel.TabIndex = 5;
             // 
-            // dgv_SongListView
+            // tab_Control
             // 
-            this.dgv_SongListView.AllowUserToAddRows = false;
-            this.dgv_SongListView.AllowUserToDeleteRows = false;
-            this.dgv_SongListView.AllowUserToResizeColumns = false;
-            this.dgv_SongListView.AllowUserToResizeRows = false;
-            this.dgv_SongListView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.dgv_SongListView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgv_SongListView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgv_SongListView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_SongListView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgv_SongListView.ColumnHeadersHeight = 24;
-            this.dgv_SongListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgv_SongListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cl1_Num,
-            this.cl2_Name,
-            this.cl3_Singer,
-            this.cl4_Key,
-            this.cl5_Tempo});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_SongListView.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dgv_SongListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_SongListView.EnableHeadersVisualStyles = false;
-            this.dgv_SongListView.Location = new System.Drawing.Point(0, 0);
-            this.dgv_SongListView.MultiSelect = false;
-            this.dgv_SongListView.Name = "dgv_SongListView";
-            this.dgv_SongListView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_SongListView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dgv_SongListView.RowHeadersVisible = false;
-            this.dgv_SongListView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_SongListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_SongListView.Size = new System.Drawing.Size(496, 677);
-            this.dgv_SongListView.TabIndex = 1;
+            this.tab_Control.Controls.Add(this.tab_SongList);
+            this.tab_Control.Controls.Add(this.tab_TrackList);
+            this.tab_Control.Controls.Add(this.tab_FastPresets);
+            this.tab_Control.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tab_Control.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tab_Control.Location = new System.Drawing.Point(0, 0);
+            this.tab_Control.Margin = new System.Windows.Forms.Padding(0);
+            this.tab_Control.Name = "tab_Control";
+            this.tab_Control.Padding = new System.Drawing.Point(0, 0);
+            this.tab_Control.SelectedIndex = 0;
+            this.tab_Control.Size = new System.Drawing.Size(496, 677);
+            this.tab_Control.TabIndex = 1;
+            this.tab_Control.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tab_Control_DrawItem);
             // 
-            // cl1_Num
+            // tab_SongList
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            this.cl1_Num.DefaultCellStyle = dataGridViewCellStyle2;
-            this.cl1_Num.HeaderText = "№";
-            this.cl1_Num.MinimumWidth = 6;
-            this.cl1_Num.Name = "cl1_Num";
-            this.cl1_Num.ReadOnly = true;
-            this.cl1_Num.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.cl1_Num.Width = 35;
+            this.tab_SongList.AutoScroll = true;
+            this.tab_SongList.Controls.Add(this.songListControl);
+            this.tab_SongList.Location = new System.Drawing.Point(4, 22);
+            this.tab_SongList.Margin = new System.Windows.Forms.Padding(0);
+            this.tab_SongList.Name = "tab_SongList";
+            this.tab_SongList.Size = new System.Drawing.Size(488, 651);
+            this.tab_SongList.TabIndex = 0;
+            this.tab_SongList.Text = "Писок песен";
+            this.tab_SongList.UseVisualStyleBackColor = true;
             // 
-            // cl2_Name
+            // songListControl
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            this.cl2_Name.DefaultCellStyle = dataGridViewCellStyle3;
-            this.cl2_Name.HeaderText = "Название";
-            this.cl2_Name.MinimumWidth = 6;
-            this.cl2_Name.Name = "cl2_Name";
-            this.cl2_Name.ReadOnly = true;
-            this.cl2_Name.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.cl2_Name.Width = 210;
+            this.songListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.songListControl.Location = new System.Drawing.Point(0, 0);
+            this.songListControl.Margin = new System.Windows.Forms.Padding(0);
+            this.songListControl.Name = "songListControl";
+            this.songListControl.Size = new System.Drawing.Size(488, 651);
+            this.songListControl.TabIndex = 1;
             // 
-            // cl3_Singer
+            // tab_TrackList
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            this.cl3_Singer.DefaultCellStyle = dataGridViewCellStyle4;
-            this.cl3_Singer.HeaderText = "Исполнитель/Автор";
-            this.cl3_Singer.MinimumWidth = 6;
-            this.cl3_Singer.Name = "cl3_Singer";
-            this.cl3_Singer.ReadOnly = true;
-            this.cl3_Singer.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.cl3_Singer.Width = 150;
+            this.tab_TrackList.AutoScroll = true;
+            this.tab_TrackList.Controls.Add(this.trackListControl);
+            this.tab_TrackList.Location = new System.Drawing.Point(4, 22);
+            this.tab_TrackList.Margin = new System.Windows.Forms.Padding(0);
+            this.tab_TrackList.Name = "tab_TrackList";
+            this.tab_TrackList.Size = new System.Drawing.Size(488, 651);
+            this.tab_TrackList.TabIndex = 1;
+            this.tab_TrackList.Text = "Трэклист";
+            this.tab_TrackList.UseVisualStyleBackColor = true;
             // 
-            // cl4_Key
+            // trackListControl
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            this.cl4_Key.DefaultCellStyle = dataGridViewCellStyle5;
-            this.cl4_Key.HeaderText = "Тон";
-            this.cl4_Key.MinimumWidth = 6;
-            this.cl4_Key.Name = "cl4_Key";
-            this.cl4_Key.ReadOnly = true;
-            this.cl4_Key.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.cl4_Key.Width = 40;
+            this.trackListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackListControl.Location = new System.Drawing.Point(0, 0);
+            this.trackListControl.Margin = new System.Windows.Forms.Padding(0);
+            this.trackListControl.Name = "trackListControl";
+            this.trackListControl.Size = new System.Drawing.Size(488, 651);
+            this.trackListControl.TabIndex = 0;
             // 
-            // cl5_Tempo
+            // tab_FastPresets
             // 
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.GreenYellow;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.GreenYellow;
-            this.cl5_Tempo.DefaultCellStyle = dataGridViewCellStyle6;
-            this.cl5_Tempo.HeaderText = "Темп";
-            this.cl5_Tempo.MinimumWidth = 6;
-            this.cl5_Tempo.Name = "cl5_Tempo";
-            this.cl5_Tempo.ReadOnly = true;
-            this.cl5_Tempo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.cl5_Tempo.Width = 40;
+            this.tab_FastPresets.AutoScroll = true;
+            this.tab_FastPresets.Controls.Add(this.fastListControl);
+            this.tab_FastPresets.Location = new System.Drawing.Point(4, 22);
+            this.tab_FastPresets.Margin = new System.Windows.Forms.Padding(0);
+            this.tab_FastPresets.Name = "tab_FastPresets";
+            this.tab_FastPresets.Size = new System.Drawing.Size(488, 651);
+            this.tab_FastPresets.TabIndex = 2;
+            this.tab_FastPresets.Text = "Быстрые клавиши";
+            this.tab_FastPresets.UseVisualStyleBackColor = true;
+            // 
+            // fastListControl
+            // 
+            this.fastListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastListControl.Location = new System.Drawing.Point(0, 0);
+            this.fastListControl.Name = "fastListControl";
+            this.fastListControl.Size = new System.Drawing.Size(488, 651);
+            this.fastListControl.TabIndex = 0;
             // 
             // pn_ButtonPanel
             // 
@@ -306,7 +256,6 @@ namespace SynthLiveMidiController
             this.gb_Controls.Controls.Add(this.lb_Tempo);
             this.gb_Controls.Controls.Add(this.lb_CommandName);
             this.gb_Controls.Controls.Add(this.lb_SongName);
-            this.gb_Controls.ForeColor = System.Drawing.Color.GreenYellow;
             this.gb_Controls.Location = new System.Drawing.Point(10, 2);
             this.gb_Controls.Name = "gb_Controls";
             this.gb_Controls.Size = new System.Drawing.Size(354, 79);
@@ -356,7 +305,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N9
             // 
-            this.bt_N9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N9.Location = new System.Drawing.Point(450, 8);
             this.bt_N9.Name = "bt_N9";
@@ -367,7 +315,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N3
             // 
-            this.bt_N3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N3.Location = new System.Drawing.Point(450, 87);
             this.bt_N3.Name = "bt_N3";
@@ -378,7 +325,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N2
             // 
-            this.bt_N2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N2.Location = new System.Drawing.Point(414, 87);
             this.bt_N2.Name = "bt_N2";
@@ -389,7 +335,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N8
             // 
-            this.bt_N8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N8.Location = new System.Drawing.Point(414, 8);
             this.bt_N8.Name = "bt_N8";
@@ -400,7 +345,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N7
             // 
-            this.bt_N7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N7.Location = new System.Drawing.Point(378, 8);
             this.bt_N7.Name = "bt_N7";
@@ -411,7 +355,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N6
             // 
-            this.bt_N6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N6.Location = new System.Drawing.Point(450, 47);
             this.bt_N6.Name = "bt_N6";
@@ -422,7 +365,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N1
             // 
-            this.bt_N1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N1.Location = new System.Drawing.Point(378, 86);
             this.bt_N1.Name = "bt_N1";
@@ -433,7 +375,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S10
             // 
-            this.bt_S10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S10.Location = new System.Drawing.Point(334, 87);
             this.bt_S10.Name = "bt_S10";
@@ -444,7 +385,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N4
             // 
-            this.bt_N4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N4.Location = new System.Drawing.Point(378, 47);
             this.bt_N4.Name = "bt_N4";
@@ -455,7 +395,6 @@ namespace SynthLiveMidiController
             // 
             // bt_N5
             // 
-            this.bt_N5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_N5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_N5.Location = new System.Drawing.Point(414, 47);
             this.bt_N5.Name = "bt_N5";
@@ -466,7 +405,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S9
             // 
-            this.bt_S9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S9.Location = new System.Drawing.Point(298, 87);
             this.bt_S9.Name = "bt_S9";
@@ -477,7 +415,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S8
             // 
-            this.bt_S8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S8.Location = new System.Drawing.Point(262, 87);
             this.bt_S8.Name = "bt_S8";
@@ -488,7 +425,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S7
             // 
-            this.bt_S7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S7.Location = new System.Drawing.Point(226, 87);
             this.bt_S7.Name = "bt_S7";
@@ -499,7 +435,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S6
             // 
-            this.bt_S6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S6.Location = new System.Drawing.Point(190, 87);
             this.bt_S6.Name = "bt_S6";
@@ -510,7 +445,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S5
             // 
-            this.bt_S5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S5.Location = new System.Drawing.Point(154, 87);
             this.bt_S5.Name = "bt_S5";
@@ -521,7 +455,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S4
             // 
-            this.bt_S4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S4.Location = new System.Drawing.Point(118, 87);
             this.bt_S4.Name = "bt_S4";
@@ -532,7 +465,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S3
             // 
-            this.bt_S3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S3.Location = new System.Drawing.Point(82, 87);
             this.bt_S3.Name = "bt_S3";
@@ -543,7 +475,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S2
             // 
-            this.bt_S2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S2.Location = new System.Drawing.Point(46, 87);
             this.bt_S2.Name = "bt_S2";
@@ -554,7 +485,6 @@ namespace SynthLiveMidiController
             // 
             // bt_S1
             // 
-            this.bt_S1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.bt_S1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_S1.Location = new System.Drawing.Point(10, 87);
             this.bt_S1.Name = "bt_S1";
@@ -592,7 +522,10 @@ namespace SynthLiveMidiController
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pn_LeftPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_SongListView)).EndInit();
+            this.tab_Control.ResumeLayout(false);
+            this.tab_SongList.ResumeLayout(false);
+            this.tab_TrackList.ResumeLayout(false);
+            this.tab_FastPresets.ResumeLayout(false);
             this.pn_ButtonPanel.ResumeLayout(false);
             this.gb_Controls.ResumeLayout(false);
             this.gb_Controls.PerformLayout();
@@ -635,12 +568,13 @@ namespace SynthLiveMidiController
         private System.Windows.Forms.Label lb_Tempo;
         private System.Windows.Forms.Label lb_CommandName;
         private System.Windows.Forms.Label lb_SongName;
-        private System.Windows.Forms.DataGridView dgv_SongListView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cl1_Num;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cl2_Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cl3_Singer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cl4_Key;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cl5_Tempo;
+        private SongListControl songListControl;
+        private System.Windows.Forms.TabControl tab_Control;
+        private System.Windows.Forms.TabPage tab_SongList;
+        private System.Windows.Forms.TabPage tab_TrackList;
+        private System.Windows.Forms.TabPage tab_FastPresets;
+        private SongListControl trackListControl;
+        private FastListControl fastListControl;
     }
 }
 

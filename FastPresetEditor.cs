@@ -4,28 +4,28 @@ using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
 namespace SynthLiveMidiController
 {
-    public partial class SongPresetEditor : Form
+    public partial class FastPresetEditor : Form
     {
         // TEST
         readonly KeyboardPicture kbdPicture = new KeyboardPicture();
 
         // Constructor
-        public SongPresetEditor()
+        public FastPresetEditor()
         {
             InitializeComponent();
         }
 
         // Show Editor
-        public DialogResult ShowEditor(ISongListEditorSectionInterface parameters)
+        public DialogResult ShowEditor(IFastListEditorSectionInterface parameters)
         {
             return ShowDialog();
         }
 
         //------------------------------------------------------------------------------------
         // TEST
-        private void SongPresetEditor_Paint(object sender, PaintEventArgs e)
+        private void FastPresetEditor_Paint(object sender, PaintEventArgs e)
         {
-            kbdPicture.DrawKeyboard(e.Graphics, 0, 0);
+            kbdPicture.DrawKeyboard(e.Graphics, 100, 100);
         }
     }
 }

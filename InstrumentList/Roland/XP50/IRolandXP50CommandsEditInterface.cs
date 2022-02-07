@@ -1,17 +1,17 @@
 ﻿namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
     //===============================  COMPLEX INTERFACES  ==============================
-    interface ISongListStorageSectionInterface : ISongListStoreData, ISongPresetName, IAdditionalSongTitle { }
+    public interface ISongListStorageSectionInterface : ISongListStoreData, ISongPresetName, IAdditionalSongTitle { }
 
-    interface IFastListStorageSectionInterface : IFastListStoreData, IFastPresetName { }
+    public interface IFastListStorageSectionInterface : IFastListStoreData, IFastPresetName { }
 
-    interface ISongListEditorSectionInterface : ISongCommandsEditInterface, IPerformancePartData, ISongPresetName, IPerformanceEditInterface, IAdditionalSongTitle { }
+    public interface ISongListEditorSectionInterface : ISongCommandsEditInterface, IPerformancePartData, ISongPresetName, IPerformanceEditInterface, IAdditionalSongTitle { }
 
-    interface IFastListEditorSectionInterface : IFastCommandsEditInterface, IPerformancePartData, IFastPresetName { }
+    public interface IFastListEditorSectionInterface : IFastCommandsEditInterface, IPerformancePartData, IFastPresetName { }
 
     //===============================  BASE INTERFACES  =================================
     // Interface for Song Edition data
-    interface ISongCommandsEditInterface
+    public interface ISongCommandsEditInterface
     {
         // Command EFXSource
         EFXSource GetCommandEFXSource(int comNumber);
@@ -22,7 +22,7 @@
       }
 
     // Interface for Fast Edition data
-    interface IFastCommandsEditInterface
+    public interface IFastCommandsEditInterface
     {
         // Command EFXSource
         EFXSource GetCommandEFXSource(int comNumber);
@@ -33,7 +33,7 @@
     }
 
     // Performance Part List Interface
-    interface IPerformancePartData
+    public interface IPerformancePartData
     {
         // Preset Receive Hold Parameter
         RecieveHold1Switch GetRecieveHold1Switch(int channel);
@@ -65,7 +65,7 @@
     }
 
     // Interface for Storing SongList Data  (+)
-    interface ISongListStoreData
+    public interface ISongListStoreData
     {
         void SetSongData(byte[] data);
         byte[] GetSongData();
@@ -74,7 +74,7 @@
     }
 
     // Interface for Storing FastList Data  (+)
-    interface IFastListStoreData
+    public interface IFastListStoreData
     {
         void SetFastData(byte[] data);
         byte[] GetFastData();
@@ -83,7 +83,7 @@
     }
 
     // Song Preset and Commands name
-    interface ISongPresetName
+    public interface ISongPresetName
     {
         // Preset or Song Name
         string PresetName { get; set; }
@@ -93,7 +93,7 @@
     }
 
     // Fast Preset and Commands name
-    interface IFastPresetName
+    public interface IFastPresetName
     {
         // Preset or Song Name
         string PresetName { get; set; }
@@ -103,14 +103,14 @@
     }
 
     // Additional parameters for Edition Performance Common (Song Section)
-    interface IPerformanceEditInterface
+    public interface IPerformanceEditInterface
     {
         string PerformanceTitle { get; set; }
         byte Tempo { get; set; }
     }
 
     // Addition Song Parameters for Song Section (Edit and Store)
-    interface IAdditionalSongTitle
+    public interface IAdditionalSongTitle
     {
         // Singer or Athor name
         string Singer { get; set; }
