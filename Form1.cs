@@ -101,8 +101,14 @@ namespace SynthLiveMidiController
         public Form1()
         {
             InitializeComponent();
-
+            LoadPatchNames();
             PrepareButtonGroups();
+        }
+
+        // Load Patch Names
+        private void LoadPatchNames()
+        {
+            BankNameConvertor.LoadData();
         }
 
         // Prepare Button Groups

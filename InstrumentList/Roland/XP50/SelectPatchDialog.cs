@@ -42,7 +42,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Closing...
         private void SelectPatchDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
+            //e.Cancel = true;
             this.Hide();
         }
 

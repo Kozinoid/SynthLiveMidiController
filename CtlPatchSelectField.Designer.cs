@@ -1,7 +1,7 @@
 ﻿
 namespace SynthLiveMidiController
 {
-    partial class CheckBoxControl
+    partial class CtlPatchSelectField
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,37 +29,24 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
-            this.lb_Caption = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // lb_Caption
-            // 
-            this.lb_Caption.AutoSize = true;
-            this.lb_Caption.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lb_Caption.Location = new System.Drawing.Point(0, 0);
-            this.lb_Caption.Name = "lb_Caption";
-            this.lb_Caption.Size = new System.Drawing.Size(38, 13);
-            this.lb_Caption.TabIndex = 0;
-            this.lb_Caption.Text = "Check";
-            // 
-            // CheckBoxControl
+            // CtlPatchSelectField
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lb_Caption);
-            this.Name = "CheckBoxControl";
-            this.Size = new System.Drawing.Size(54, 16);
-            this.BackColorChanged += new System.EventHandler(this.CheckBoxControl_BackColorChanged);
-            this.ForeColorChanged += new System.EventHandler(this.CheckBoxControl_ForeColorChanged);
-            this.Click += new System.EventHandler(this.CheckBoxControl_Click);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CheckBoxControl_Paint);
+            this.DoubleBuffered = true;
+            this.Name = "CtlPatchSelectField";
+            this.Size = new System.Drawing.Size(198, 22);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlPatchSelectField_Paint);
+            this.DoubleClick += new System.EventHandler(this.CtlPatchSelectField_DoubleClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlPatchSelectField_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlPatchSelectField_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlPatchSelectField_MouseUp);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lb_Caption;
     }
 }

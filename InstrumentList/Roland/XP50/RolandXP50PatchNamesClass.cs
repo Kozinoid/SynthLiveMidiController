@@ -4,10 +4,23 @@ using System.Windows.Forms;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
+    public struct Program
+    {
+        public int bank;
+        public int patch;
+
+        public Program(int b, int p)
+        {
+            bank = b;
+            patch = p;
+        }
+    }
+
     //-----------------------------  Static class containing all names of banks and patches  --------------------------------
     public static class BankNameConvertor
     {
         // TXt Filenames
+        private static bool loaded = false;
         private static string defaultPath = "";
         private const string bankUserFileName = "USER.txt";
         private const string bankAFileName = "Bank A.txt";
@@ -78,6 +91,8 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             FillBankByNames(4, bankGM);
             FillBankByNames(5, bankExpA);
             FillBankByNames(6, bankExpB);
+
+            loaded = true;
         }
         // Fill patchname matrix
         private static void FillBankByNames(int bankIndex, BankNames bank)
@@ -94,31 +109,33 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             bankUser.Load(Path.Combine(defaultPath, bankUserFileName));
         }
-        // Get Patch name 1
-        public static string GetPatchName(int MSB, int LSB, int patchIndex)
+
+        // Get Patch Program From MSB, LSB, Patch
+        public static Program GetPatchProgram(int MSB, int LSB, int patchIndex)
         {
-            string bankName = "";
+            int bank = 0;
+            int patch = patchIndex;
 
             switch (MSB)
             {
                 case 0x50:
-                    if (LSB == 0) bankName = "[USER] " + string.Format("{0:000}", patchIndex + 1) + " (" + bankUser[patchIndex] + ")";
+                    if (LSB == 0) bank = 0;
                     break;
 
                 case 0x51:
                     switch (LSB)
                     {
                         case 0x00:
-                            bankName = "A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankA[patchIndex] + ")";
+                            bank = 1;
                             break;
                         case 0x01:
-                            bankName = "B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankB[patchIndex] + ")";
+                            bank = 2;
                             break;
                         case 0x02:
-                            bankName = "C" + string.Format("{0:000}", patchIndex + 1) + " (" + bankC[patchIndex] + ")";
+                            bank = 3;
                             break;
                         case 0x03:
-                            bankName = "GM" + string.Format("{0:000}", patchIndex + 1) + " (" + bankGM[patchIndex] + ")";
+                            bank = 4;
                             break;
                     }
                     break;
@@ -127,40 +144,44 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                     switch (LSB)
                     {
                         case 0x00:
-                            bankName = "Exp-A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpA[patchIndex] + ")";
+                            bank = 5;
                             break;
                         case 0x01:
-                            bankName = "Exp-A" + string.Format("{0:000}", patchIndex + 129) + " (" + bankExpA[patchIndex + 128] + ")";
+                            bank = 5;
+                            patch += 128;
                             break;
                         case 0x02:
-                            bankName = "Exp-B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpB[patchIndex] + ")";
+                            bank = 6;
                             break;
                         case 0x03:
-                            bankName = "Exp-B" + string.Format("{0:000}", patchIndex + 129) + " (" + bankExpB[patchIndex + 128] + ")";
+                            bank = 6;
+                            patch += 128;
                             break;
                         case 0x04:
-                            bankName = "Exp-C" + string.Format("{0:000}", patchIndex + 1);
+                            bank = 7;
                             break;
                         case 0x05:
-                            bankName = "Exp-C" + string.Format("{0:000}", patchIndex + 129);
+                            bank = 7;
+                            patch += 128;
                             break;
                         case 0x06:
-                            bankName = "Exp-D" + string.Format("{0:000}", patchIndex + 1);
+                            bank = 8;
                             break;
                         case 0x07:
-                            bankName = "Exp-D" + string.Format("{0:000}", patchIndex + 129);
+                            bank = 8;
+                            patch += 128;
                             break;
                     }
                     break;
             }
 
-            return bankName;
+            return new Program(bank, patch);
         }
-        // Get Patch name 2
-        public static string GetPatchName(byte[] buffer)
+        // Get Patch Program From byte[]
+        public static Program GetPatchProgram(byte[] buffer)
         {
-            string bankName = "";
             int patchIndex = (buffer[2] << 4) + buffer[3];
+            int bank = 0;
 
             switch (buffer[0])
             {
@@ -168,23 +189,23 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                     switch (buffer[1])
                     {
                         case 1:
-                            bankName = "USER" + string.Format("{0:000}", patchIndex + 1) + " (" + bankUser[patchIndex] + ")";
+                            bank = 0;
                             break;
 
                         case 3:
-                            bankName = "A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankA[patchIndex] + ")";
+                            bank = 1;
                             break;
 
                         case 4:
-                            bankName = "B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankB[patchIndex] + ")";
+                            bank = 2;
                             break;
 
                         case 5:
-                            bankName = "C" + string.Format("{0:000}", patchIndex + 1) + " (" + bankC[patchIndex] + ")";
+                            bank = 3;
                             break;
 
                         case 6:
-                            bankName = "GM" + string.Format("{0:000}", patchIndex + 1) + " (" + bankGM[patchIndex] + ")";
+                            bank = 4;
                             break;
                     }
                     break;
@@ -193,22 +214,127 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                     switch (buffer[1])
                     {
                         case 1:
-                            bankName = "Exp-A" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpA[patchIndex] + ")";
+                            bank = 5;
                             break;
 
                         case 4:
-                            bankName = "Exp-B" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpB[patchIndex] + ")";
+                            bank = 6;
                             break;
                     }
                     break;
 
                 default:
-                    bankName = "Unknown" + string.Format("{0:000}", patchIndex + 1) + " (" + bankExpB[patchIndex] + ")";
+                    bank = 0;
                     break;
             }
 
-            return bankName;
+            return new Program(bank, patchIndex);
         }
+
+        // Get Patch Name From MSB, LSB, Patch
+        public static string GetPatchName(int MSB, int LSB, int patchIndex)
+        {
+            return GetPatchName(GetPatchProgram(MSB, LSB, patchIndex));
+        }
+        // Get Patch Name From byte[]
+        public static string GetPatchName(byte[] buffer)
+        {
+            return GetPatchName(GetPatchProgram(buffer));
+        }
+        // Get Patch Name From Program Structure
+        public static string GetPatchName(Program program)
+        {
+            return GetPatchName(program.bank, program.patch);
+        }
+        // Get Patch Name From Indexes
+        public static string GetPatchName(int bank, int patch)
+        {
+            return string.Format("{0}{1:000} ({2})", BankNamesArray[bank], patch + 1, namesArray[bank][patch]);
+        }
+
+        // Next Program
+        public static Program NextProgram(byte[] buffer)
+        {
+            Program program = GetPatchProgram(buffer);
+            if (program.patch < BankNameConvertor.namesArray[program.bank].Length - 1)
+            {
+                program.patch++;
+            }
+            else if (program.bank < BankNameConvertor.namesArray.Length - 1)
+            {
+                program.bank++;
+                program.patch = 0;
+            }
+            return program;
+        }
+        // Prev  Program
+        public static Program PrevProgram(byte[] buffer)
+        {
+            Program program = GetPatchProgram(buffer);
+            if (program.patch > 0)
+            {
+                program.patch--;
+            }
+            else if (program.bank > 0)
+            {
+                program.bank--;
+                program.patch = BankNameConvertor.namesArray[program.bank].Length - 1;
+            }
+            return program;
+        }
+
+        // Program -> byte[]
+        public static byte[] GetBufferFromProgram(Program program)
+        {
+            byte[] buf = new byte[4];
+            byte patch = (byte)program.patch;
+            buf[3] = (byte)(patch & 0x0F);
+            buf[2] = (byte)((patch & 0xF0) >> 4);
+            switch (program.bank)
+            {
+                case 0:
+                    buf[1] = 1;
+                    buf[0] = 0;
+                    break;
+                case 1:
+                    buf[1] = 3;
+                    buf[0] = 0;
+                    break;
+                case 2:
+                    buf[1] = 4;
+                    buf[0] = 0;
+                    break;
+                case 3:
+                    buf[1] = 5;
+                    buf[0] = 0;
+                    break;
+                case 4:
+                    buf[1] = 6;
+                    buf[0] = 0;
+                    break;
+                case 5:
+                    buf[1] = 1;
+                    buf[0] = 2;
+                    break;
+                case 6:
+                    buf[1] = 4;
+                    buf[0] = 2;
+                    break;
+            }
+
+            return buf;
+        }
+        // Next
+        public static byte[] Next(byte[] buffer)
+        {
+            return GetBufferFromProgram(NextProgram(buffer));
+        }
+        // Prev
+        public static byte[] Prev(byte[] buffer)
+        {
+            return GetBufferFromProgram(PrevProgram(buffer));
+        }
+
         // MSB, LSB, patchIndex -> byte[]
         public static byte[] ChannelCommandToBuffer(int MSB, int LSB, int patchIndex)
         {
@@ -291,6 +417,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             buf[3] = (byte)(patchIndex & 0xF);
 
             return buf;
+        }
+        // Is Loaded
+        public static bool IsLoaded
+        {
+            get { return loaded; }
         }
     }
 

@@ -29,26 +29,49 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
-            this.valueControl1 = new SynthLiveMidiController.ValueControl();
+            this.ctlOneChannelParameters1 = new SynthLiveMidiController.CtlOneChannelParameters();
+            this.ctlOneChannelParameters2 = new SynthLiveMidiController.CtlOneChannelParameters();
+            this.ctlOneChannelParameters3 = new SynthLiveMidiController.CtlOneChannelParameters();
+            this.ctlOneChannelParameters4 = new SynthLiveMidiController.CtlOneChannelParameters();
             this.SuspendLayout();
             // 
-            // valueControl1
+            // ctlOneChannelParameters1
             // 
-            this.valueControl1.Caption = "Value";
-            this.valueControl1.Location = new System.Drawing.Point(136, 301);
-            this.valueControl1.MaxValue = ((byte)(127));
-            this.valueControl1.Name = "valueControl1";
-            this.valueControl1.ShiftValue = ((byte)(0));
-            this.valueControl1.Size = new System.Drawing.Size(76, 16);
-            this.valueControl1.TabIndex = 0;
-            this.valueControl1.Value = ((byte)(127));
+            this.ctlOneChannelParameters1.Location = new System.Drawing.Point(3, 12);
+            this.ctlOneChannelParameters1.Name = "ctlOneChannelParameters1";
+            this.ctlOneChannelParameters1.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters1.TabIndex = 0;
+            // 
+            // ctlOneChannelParameters2
+            // 
+            this.ctlOneChannelParameters2.Location = new System.Drawing.Point(3, 76);
+            this.ctlOneChannelParameters2.Name = "ctlOneChannelParameters2";
+            this.ctlOneChannelParameters2.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters2.TabIndex = 1;
+            // 
+            // ctlOneChannelParameters3
+            // 
+            this.ctlOneChannelParameters3.Location = new System.Drawing.Point(3, 140);
+            this.ctlOneChannelParameters3.Name = "ctlOneChannelParameters3";
+            this.ctlOneChannelParameters3.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters3.TabIndex = 2;
+            // 
+            // ctlOneChannelParameters4
+            // 
+            this.ctlOneChannelParameters4.Location = new System.Drawing.Point(3, 204);
+            this.ctlOneChannelParameters4.Name = "ctlOneChannelParameters4";
+            this.ctlOneChannelParameters4.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters4.TabIndex = 3;
             // 
             // SongPresetEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
-            this.Controls.Add(this.valueControl1);
+            this.Controls.Add(this.ctlOneChannelParameters4);
+            this.Controls.Add(this.ctlOneChannelParameters3);
+            this.Controls.Add(this.ctlOneChannelParameters2);
+            this.Controls.Add(this.ctlOneChannelParameters1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -56,13 +79,15 @@ namespace SynthLiveMidiController
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Song Preset Editor";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SongPresetEditor_Paint);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private ValueControl valueControl1;
+        private CtlOneChannelParameters ctlOneChannelParameters1;
+        private CtlOneChannelParameters ctlOneChannelParameters2;
+        private CtlOneChannelParameters ctlOneChannelParameters3;
+        private CtlOneChannelParameters ctlOneChannelParameters4;
     }
 }

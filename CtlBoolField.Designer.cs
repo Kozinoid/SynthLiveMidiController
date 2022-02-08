@@ -1,7 +1,7 @@
 ﻿
 namespace SynthLiveMidiController
 {
-    partial class ShiftControl
+    partial class CtlBoolField
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,35 +29,21 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
-            this.lb_Caption = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // lb_Caption
-            // 
-            this.lb_Caption.AutoSize = true;
-            this.lb_Caption.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lb_Caption.Location = new System.Drawing.Point(0, 0);
-            this.lb_Caption.Name = "lb_Caption";
-            this.lb_Caption.Size = new System.Drawing.Size(34, 13);
-            this.lb_Caption.TabIndex = 1;
-            this.lb_Caption.Text = "Value";
-            // 
-            // ShiftControl
+            // CtlBoolField
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lb_Caption);
-            this.Name = "ShiftControl";
-            this.Size = new System.Drawing.Size(76, 16);
-            this.BackColorChanged += new System.EventHandler(this.ShiftControl_BackColorChanged);
-            this.ForeColorChanged += new System.EventHandler(this.ShiftControl_ForeColorChanged);
+            this.DoubleBuffered = true;
+            this.Name = "CtlBoolField";
+            this.Size = new System.Drawing.Size(70, 22);
+            this.Click += new System.EventHandler(this.CtlBoolField_Click);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlBoolField_Paint);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lb_Caption;
     }
 }
