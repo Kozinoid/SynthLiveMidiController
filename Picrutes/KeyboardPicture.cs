@@ -5,10 +5,10 @@ namespace SynthLiveMidiController.Pictures
 {
     public class KeyboardPicture
     {
-        private const int up_width = 7;
-        private const int dn_width = 12;
-        private const int up_height = 30;
-        private const int all_height = 50;
+        public const int up_width = 7;
+        public const int dn_width = 12;
+        public const int up_height = 33;
+        public const int all_height = 56;
         private readonly Pen kbdPen = new Pen(Color.Black);
         private readonly Brush kbdWhiteBrush = Brushes.White;
         private readonly Brush kbdBlackBrush = Brushes.DarkSlateGray;

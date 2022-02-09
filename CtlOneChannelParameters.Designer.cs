@@ -30,7 +30,7 @@ namespace SynthLiveMidiController
         private void InitializeComponent()
         {
             this.pn_Parameters = new System.Windows.Forms.Panel();
-            this.pnZone = new System.Windows.Forms.Panel();
+            this.ctlKeyzoneField1 = new SynthLiveMidiController.CtlKeyzoneField();
             this.ctlChorus = new SynthLiveMidiController.CtlByteField();
             this.ctlReverb = new SynthLiveMidiController.CtlByteField();
             this.ctlPatch = new SynthLiveMidiController.CtlPatchSelectField();
@@ -62,14 +62,13 @@ namespace SynthLiveMidiController
             this.pn_Parameters.Size = new System.Drawing.Size(459, 56);
             this.pn_Parameters.TabIndex = 0;
             // 
-            // pnZone
+            // ctlKeyzoneField1
             // 
-            this.pnZone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnZone.Location = new System.Drawing.Point(459, 0);
-            this.pnZone.Name = "pnZone";
-            this.pnZone.Size = new System.Drawing.Size(443, 56);
-            this.pnZone.TabIndex = 1;
-            this.pnZone.Paint += new System.Windows.Forms.PaintEventHandler(this.pnZone_Paint);
+            this.ctlKeyzoneField1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlKeyzoneField1.Location = new System.Drawing.Point(459, 0);
+            this.ctlKeyzoneField1.Name = "ctlKeyzoneField1";
+            this.ctlKeyzoneField1.Size = new System.Drawing.Size(435, 56);
+            this.ctlKeyzoneField1.TabIndex = 1;
             // 
             // ctlChorus
             // 
@@ -126,13 +125,13 @@ namespace SynthLiveMidiController
             // 
             // ctlKeyDown
             // 
-            this.ctlKeyDown.ByteValue = ((byte)(127));
+            this.ctlKeyDown.ByteValue = ((byte)(0));
             this.ctlKeyDown.Caption = "Down:";
             this.ctlKeyDown.Location = new System.Drawing.Point(231, 3);
             this.ctlKeyDown.Name = "ctlKeyDown";
             this.ctlKeyDown.Size = new System.Drawing.Size(70, 22);
             this.ctlKeyDown.TabIndex = 4;
-            this.ctlKeyDown.Value = 127;
+            this.ctlKeyDown.Value = 0;
             // 
             // ctlPan
             // 
@@ -178,11 +177,11 @@ namespace SynthLiveMidiController
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.pnZone);
+            this.Controls.Add(this.ctlKeyzoneField1);
             this.Controls.Add(this.pn_Parameters);
             this.DoubleBuffered = true;
             this.Name = "CtlOneChannelParameters";
-            this.Size = new System.Drawing.Size(902, 56);
+            this.Size = new System.Drawing.Size(894, 56);
             this.pn_Parameters.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -201,6 +200,6 @@ namespace SynthLiveMidiController
         private CtlByteField ctlVolume;
         private CtlBoolField ctlHold;
         private CtlChannelField ctlChannel;
-        private System.Windows.Forms.Panel pnZone;
+        private CtlKeyzoneField ctlKeyzoneField1;
     }
 }

@@ -33,41 +33,55 @@ namespace SynthLiveMidiController
             this.ctlOneChannelParameters2 = new SynthLiveMidiController.CtlOneChannelParameters();
             this.ctlOneChannelParameters3 = new SynthLiveMidiController.CtlOneChannelParameters();
             this.ctlOneChannelParameters4 = new SynthLiveMidiController.CtlOneChannelParameters();
+            this.ctlOneChannelParameters5 = new SynthLiveMidiController.CtlOneChannelParameters();
             this.SuspendLayout();
             // 
             // ctlOneChannelParameters1
             // 
-            this.ctlOneChannelParameters1.Location = new System.Drawing.Point(3, 12);
+            this.ctlOneChannelParameters1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ctlOneChannelParameters1.Location = new System.Drawing.Point(12, 12);
             this.ctlOneChannelParameters1.Name = "ctlOneChannelParameters1";
-            this.ctlOneChannelParameters1.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters1.Size = new System.Drawing.Size(894, 56);
             this.ctlOneChannelParameters1.TabIndex = 0;
             // 
             // ctlOneChannelParameters2
             // 
-            this.ctlOneChannelParameters2.Location = new System.Drawing.Point(3, 76);
+            this.ctlOneChannelParameters2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ctlOneChannelParameters2.Location = new System.Drawing.Point(12, 74);
             this.ctlOneChannelParameters2.Name = "ctlOneChannelParameters2";
-            this.ctlOneChannelParameters2.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters2.Size = new System.Drawing.Size(894, 56);
             this.ctlOneChannelParameters2.TabIndex = 1;
             // 
             // ctlOneChannelParameters3
             // 
-            this.ctlOneChannelParameters3.Location = new System.Drawing.Point(3, 140);
+            this.ctlOneChannelParameters3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ctlOneChannelParameters3.Location = new System.Drawing.Point(12, 136);
             this.ctlOneChannelParameters3.Name = "ctlOneChannelParameters3";
-            this.ctlOneChannelParameters3.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters3.Size = new System.Drawing.Size(894, 56);
             this.ctlOneChannelParameters3.TabIndex = 2;
             // 
             // ctlOneChannelParameters4
             // 
-            this.ctlOneChannelParameters4.Location = new System.Drawing.Point(3, 204);
+            this.ctlOneChannelParameters4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ctlOneChannelParameters4.Location = new System.Drawing.Point(12, 198);
             this.ctlOneChannelParameters4.Name = "ctlOneChannelParameters4";
-            this.ctlOneChannelParameters4.Size = new System.Drawing.Size(904, 58);
+            this.ctlOneChannelParameters4.Size = new System.Drawing.Size(894, 56);
             this.ctlOneChannelParameters4.TabIndex = 3;
+            // 
+            // ctlOneChannelParameters5
+            // 
+            this.ctlOneChannelParameters5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ctlOneChannelParameters5.Location = new System.Drawing.Point(12, 260);
+            this.ctlOneChannelParameters5.Name = "ctlOneChannelParameters5";
+            this.ctlOneChannelParameters5.Size = new System.Drawing.Size(894, 56);
+            this.ctlOneChannelParameters5.TabIndex = 4;
             // 
             // SongPresetEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.ctlOneChannelParameters5);
             this.Controls.Add(this.ctlOneChannelParameters4);
             this.Controls.Add(this.ctlOneChannelParameters3);
             this.Controls.Add(this.ctlOneChannelParameters2);
@@ -89,5 +103,6 @@ namespace SynthLiveMidiController
         private CtlOneChannelParameters ctlOneChannelParameters2;
         private CtlOneChannelParameters ctlOneChannelParameters3;
         private CtlOneChannelParameters ctlOneChannelParameters4;
+        private CtlOneChannelParameters ctlOneChannelParameters5;
     }
 }

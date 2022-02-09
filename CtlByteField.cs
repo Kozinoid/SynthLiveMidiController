@@ -120,7 +120,7 @@ namespace SynthLiveMidiController
         //-------------------------------------------------------------------------------------------------------------------------------
 
         // Validate value
-        protected int ValidateValue(int argument)
+        protected virtual int ValidateValue(int argument)
         {
             int res = argument;
             if (res < min) res = min;
@@ -163,7 +163,7 @@ namespace SynthLiveMidiController
         {
             if (e.KeyCode == Keys.Enter)
             {
-                int res = 0;
+                int res;
                 try
                 {
                     res = int.Parse(tbEnter.Text);

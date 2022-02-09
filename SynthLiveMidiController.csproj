@@ -106,6 +106,12 @@
     <Compile Include="CtlKeyField.Designer.cs">
       <DependentUpon>CtlKeyField.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlKeyzoneField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlKeyzoneField.Designer.cs">
+      <DependentUpon>CtlKeyzoneField.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtlOctaveField.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CtlByteField.resx">
       <DependentUpon>CtlByteField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlKeyzoneField.resx">
+      <DependentUpon>CtlKeyzoneField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CtlOneChannelParameters.resx">
       <DependentUpon>CtlOneChannelParameters.cs</DependentUpon>
