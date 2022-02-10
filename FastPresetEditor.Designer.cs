@@ -43,7 +43,6 @@ namespace SynthLiveMidiController
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fast Preset Editor";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FastPresetEditor_Paint);
             this.ResumeLayout(false);
 
         }

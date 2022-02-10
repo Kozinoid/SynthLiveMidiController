@@ -20,12 +20,5 @@ namespace SynthLiveMidiController
         {
             return ShowDialog();
         }
-
-        //------------------------------------------------------------------------------------
-        // TEST
-        private void FastPresetEditor_Paint(object sender, PaintEventArgs e)
-        {
-            kbdPicture.DrawKeyboard(e.Graphics, 100, 100);
-        }
     }
 }
