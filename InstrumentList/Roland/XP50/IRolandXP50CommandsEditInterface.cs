@@ -19,7 +19,9 @@
         // Command&Channel Local Switch
         LocalSwitch GetCommandLocalSwitch(int comNumber, int midichannel);
         void SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw);
-      }
+        // CallBack
+        event SegmentDataReceivedHandler SongDataReceived;
+    }
 
     // Interface for Fast Edition data
     public interface IFastCommandsEditInterface
@@ -30,6 +32,8 @@
         // Command&Channel Local Switch
         LocalSwitch GetCommandLocalSwitch(int comNumber, int midichannel);
         void SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw);
+        // CallBack
+        event SegmentDataReceivedHandler FastDataReceived;
     }
 
     // Performance Part List Interface
@@ -62,6 +66,7 @@
         // Octave
         byte GetOctaveShift(int channel);
         void SetOctaveShift(int channel, byte val);
+        
     }
 
     // Interface for Storing SongList Data  (+)

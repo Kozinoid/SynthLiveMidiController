@@ -19,8 +19,8 @@ namespace SynthLiveMidiController
         private InstrumentMIDIMessages messages = null;                     // Message options
         private RolandXP50Class roland = null;                              // Roland XP50 
         private RolandXP50Performance mainPerformance;                      // Main Performance
-        private readonly SongPresetEditor songPresetEditor = new SongPresetEditor(); // Song Preset Editor
-        private readonly FastPresetEditor fastPresetEditor = new FastPresetEditor(); // Fast Preset Editor
+        private SongPresetEditor songPresetEditor = new SongPresetEditor(); // Song Preset Editor
+        private FastPresetEditor fastPresetEditor = new FastPresetEditor(); // Fast Preset Editor
 
         //------------------------------------------  BUTTON GROUP CLASS  ----------------------------------------------
         class ButtonGroup 
@@ -41,11 +41,6 @@ namespace SynthLiveMidiController
                 backColor = back;
                 selBackColor = selBack;
             }
-
-            //Button this[int index]
-            //{
-            //    get { return bt_List[index]; }
-            //}
 
             public void Add(Button bt)
             {
@@ -203,6 +198,9 @@ namespace SynthLiveMidiController
             songListControl.LoadData(mainPerformance);      // Song List    
             trackListControl.LoadData(mainPerformance);     // Track List (Loading manually!!!!!!!!)
             fastListControl.LoadData(mainPerformance);      // Fast List
+            songPresetEditor.SetInterface(mainPerformance); // Attach Performance to Song Editor
+            fastPresetEditor.SetInterface(mainPerformance); // Attach Performance to Fast Editor
+
         }
 
         // Form closing...
@@ -260,34 +258,34 @@ namespace SynthLiveMidiController
         private void bt_act2_Click(object sender, EventArgs e)
         {
             songListControl.GetTemporaryDataFromPerformance();
-            //fastList.GetTemporaryDataFromPerformance();
+            fastListControl.GetTemporaryDataFromPerformance();
 
             songListControl.StoreTemporaryToTemplate();
-            //fastList.StoreTemporaryToTemplate();
+            fastListControl.StoreTemporaryToTemplate();
 
             songListControl.PrintData();
-            //fastList.PrintData();
+            fastListControl.PrintData();
         }
 
         private void bt_act3_Click(object sender, EventArgs e)
         {
             songListControl.SaveNewSongTemplate();
-            //fastList.SaveNewFastTemplate();
+            fastListControl.SaveNewFastTemplate();
         }
 
         private void bt_act4_Click(object sender, EventArgs e)
         {
             songListControl.LoadNewSongTemplate();
-            //fastList.LoadNewFastTemplate();
+            fastListControl.LoadNewFastTemplate();
 
             songListControl.LoadTemporaryFromTemplate();
-            //fastList.LoadTemporaryFromTemplate();
+            fastListControl.LoadTemporaryFromTemplate();
         }
 
         private void bt_act5_Click(object sender, EventArgs e)
         {
             songListControl.SetTemporaryDataToPerformance();
-            //fastList.SetTemporaryDataToPerformance();
+            fastListControl.SetTemporaryDataToPerformance();
 
             mainPerformance.SendPerformance();
         }

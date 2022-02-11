@@ -7,6 +7,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     // **********************************************************  ALL PERFORMANCE DATA CLASS  ***************************************************************
     class RolandXP50Performance : ISongListStorageSectionInterface, IFastListStorageSectionInterface, ISongListEditorSectionInterface, IFastListEditorSectionInterface
     {
+        public event SegmentDataReceivedHandler SongDataReceived;
+        public event SegmentDataReceivedHandler FastDataReceived;
+
         // -------------------------------------------  Static fields  ----------------------------------------
         public static int MIDIChannelCount = 16;
         public static int SongChannelCount = 10;
@@ -214,6 +217,14 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
             int target = DetectTarget(msg);
+            if ((target >= 0) && (target < SongChannelCount) || (target == 16)) SongDataReceived?.Invoke(sender, new SegmentDataReceivedEvendArgs(target));
+            else if ((target >= SongChannelCount) && (target < SongChannelCount + FastChannelCount)) FastDataReceived?.Invoke(sender, new SegmentDataReceivedEvendArgs(target));
+            else
+            {
+                // Other Segment
+                //Console.WriteLine("Other segment");
+            }
+
         }
 
         // System exclusive: Data for edit received
@@ -221,6 +232,13 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
             int target = DetectTarget(msg);
+            if ((target >= 0) && (target < SongChannelCount) || (target == 16)) SongDataReceived?.Invoke(sender, new SegmentDataReceivedEvendArgs(target));
+            else if ((target >= SongChannelCount) && (target < SongChannelCount + FastChannelCount)) FastDataReceived?.Invoke(sender, new SegmentDataReceivedEvendArgs(target));
+            else
+            {
+                // Other Segment
+                //Console.WriteLine("Other segment");
+            }
         }
 
         // Detect target of message
@@ -301,8 +319,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             //while (performanceCommon.Requested) { };
             return performancePartList[channel].ToByteArray();
         }
-
-        
 
         //--------------------------------------------------  ISongListStorageSectionInterface  ------------------------------------------------|
 
@@ -583,4 +599,15 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             performancePartList[channel].OctaveShift = val;
         }
     }
+
+    public class SegmentDataReceivedEvendArgs : EventArgs
+    {
+        public int segment = 0;
+
+        public SegmentDataReceivedEvendArgs(int num)
+        {
+            segment = num;
+        }
+    }
+    public delegate void SegmentDataReceivedHandler(object sender, SegmentDataReceivedEvendArgs ea);
 }
