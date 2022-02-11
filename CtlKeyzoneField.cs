@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SynthLiveMidiController.Pictures;
 
@@ -15,12 +9,134 @@ namespace SynthLiveMidiController
 {
     public partial class CtlKeyzoneField : UserControl
     {
-        //private static readonly KeyboardPicture picture = new KeyboardPicture();
+        public event EventHandler KeyRangeChanged = null;
+
         private readonly Keyboard kbd = new Keyboard();
+        private bool left = false;
+        private bool right = false;
+        public int LowerKey
+        {
+            get { return kbd.LowerKey; }
+            set
+            {
+                kbd.LowerKey = value;
+                this.Invalidate();
+            }
+        }
+        public int UpperKey
+        {
+            get { return kbd.UpperKey; }
+            set
+            {
+                kbd.UpperKey = value;
+                this.Invalidate();
+            }
+        }
 
-        private int lowerX = 0;
-        private int upperX = 0;
+        public CtlKeyzoneField()
+        {
+            InitializeComponent();
+        }
 
+        private void CtlKeyzoneField_Paint(object sender, PaintEventArgs e)
+        {
+            kbd.Draw(e.Graphics);
+        }
+
+        private void CtlKeyzoneField_MouseDown(object sender, MouseEventArgs e)
+        {
+            int num = kbd.GetKeyNumber(e.X, e.Y);
+            if (num >= 0)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    left = true;
+                    LowerKey = num;
+                    KeyRangeChanged?.Invoke(sender, e);
+                }
+
+                if (e.Button == MouseButtons.Right)
+                {
+                    right = true;
+                    UpperKey = num;
+                    KeyRangeChanged?.Invoke(sender, e);
+                }
+            }
+        }
+
+        private void CtlKeyzoneField_MouseUp(object sender, MouseEventArgs e)
+        {
+            left = false;
+            right = false;
+        }
+
+        private void CtlKeyzoneField_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (left || right)
+            {
+                int num = kbd.GetKeyNumber(e.X, e.Y);
+                if (left)
+                {
+                    LowerKey = num;
+                    KeyRangeChanged?.Invoke(sender, e);
+                }
+                if (right)
+                {
+                    UpperKey = num;
+                    KeyRangeChanged?.Invoke(sender, e);
+                }
+            }
+        }
+    }
+
+    public class NoteKey
+    {
+        private readonly Point[] pointsArray;
+        private readonly Rectangle[] rectsArray;
+        private readonly Brush fillBrush;
+        private readonly Pen borderPen;
+        public static LinearGradientBrush selBrush = new LinearGradientBrush(
+            new PointF(0, 0), 
+            new PointF(0, KeyboardPicture.all_height), 
+            Color.FromArgb(128, Picrutes.VisualOptions.mainTextColor), 
+            Color.FromArgb(128, Picrutes.VisualOptions.backgroundColor));
+
+        public NoteKey(Point[] points, Rectangle[] rects, Brush brushColor, Pen penColor)
+        {
+            pointsArray = points;
+            rectsArray = rects;
+            fillBrush = brushColor;
+            borderPen = penColor;
+        }
+
+        public void Draw(Graphics gr, bool selected)
+        {
+            gr.FillPolygon(fillBrush, pointsArray);
+
+            if (selected)
+            {
+                gr.FillPolygon(selBrush, pointsArray);
+            }
+
+            gr.DrawPolygon(borderPen, pointsArray);
+        }
+
+        public bool IsInside(int x, int y)
+        {
+            bool res = false;
+            for (int i = 0; i < rectsArray.Length; i++)
+            {
+                if (rectsArray[i].Contains(x, y))
+                {
+                    res = true;
+                }
+            }
+            return res;
+        }
+    }
+
+    public class Keyboard
+    {
         private const int minKey = 0;
         private const int maxKey = 60;
         private int lowerKey = minKey;
@@ -34,8 +150,6 @@ namespace SynthLiveMidiController
                 if (lowerKey < minKey) lowerKey = minKey;
                 if (lowerKey > maxKey) lowerKey = maxKey;
                 if (lowerKey > upperKey) upperKey = lowerKey;
-                CalculateBounds();
-                this.Invalidate();
             }
         }
         public int UpperKey
@@ -47,102 +161,27 @@ namespace SynthLiveMidiController
                 if (upperKey > maxKey) upperKey = maxKey;
                 if (upperKey < minKey) upperKey = minKey;
                 if (upperKey < lowerKey) lowerKey = upperKey;
-                CalculateBounds();
-                this.Invalidate();
             }
         }
-
-        public CtlKeyzoneField()
-        {
-            InitializeComponent();
-            CalculateBounds();
-        }
-
-        private void CalculateBounds()
-        {
-            lowerX = lowerKey * KeyboardPicture.up_width + KeyboardPicture.up_width / 2 + 1;
-            upperX = upperKey * KeyboardPicture.up_width + KeyboardPicture.up_width / 2 + 1;
-        }
-
-        private void CtlKeyzoneField_Paint(object sender, PaintEventArgs e)
-        {
-            ImageAttributes ia = new ImageAttributes();
-
-            ia.SetWrapMode(WrapMode.TileFlipXY, Color.Red);
-
-            Point[] points = {
-                new Point(lowerX, 0),
-                new Point(upperX, 0),
-                new Point(upperX, KeyboardPicture.all_height),
-                new Point(lowerX, KeyboardPicture.all_height)
-            };
-
-            LinearGradientBrush brush = new LinearGradientBrush(new PointF(0, 0), new PointF(0, KeyboardPicture.all_height), Color.FromArgb(128, ForeColor), Color.FromArgb(128, BackColor));
-
-            //picture.DrawKeyboard(e.Graphics, new Point(0, 0));
-            kbd.Draw(e.Graphics);
-            //e.Graphics.FillPolygon(brush, points, FillMode.Winding);
-        }
-    }
-
-    public class NoteKey
-    {
-        readonly Point[] pointsArray;
-        readonly Color fillBrushColor;
-        readonly Color borderPenColor;
-
-        public NoteKey(Point[] points, Color brushColor, Color penColor)
-        {
-            pointsArray = points;
-            fillBrushColor = brushColor;
-            borderPenColor = penColor;
-        }
-
-        public void Draw(Graphics gr, bool selected)
-        {
-            Brush brush = new SolidBrush(fillBrushColor);
-            gr.FillPolygon(brush, pointsArray);
-
-            if (selected)
-            {
-                Brush brushSel = new SolidBrush(Color.FromArgb(64, Color.Blue));
-                gr.FillPolygon(brushSel, pointsArray);
-            }
-
-            Pen pen = new Pen(borderPenColor);
-            gr.DrawPolygon(pen, pointsArray);
-        }
-    }
-
-    public class Keyboard
-    {
-        private readonly Pen kbdPen = new Pen(Color.Black);
-        private readonly Brush kbdWhiteBrush = Brushes.White;
-        private readonly Brush kbdBlackBrush = Brushes.DarkSlateGray;
-
-        public const int min = 0;
-        public const int max = 60;
-        private readonly int lower = 34;
-        private readonly int upper = 52;
 
         private readonly List<NoteKey> keyList = new List<NoteKey>();
         private readonly KeyboardPicture  picture = new KeyboardPicture();
 
         public Keyboard()
         {
-            for (int i = min; i < max; i++)
+            for (int i = minKey; i <= maxKey; i++)
             {
-                NoteKey key = new NoteKey(picture.GetKeyPoints(i), GetBrushColor(i), Color.Black);
+                NoteKey key = new NoteKey(picture.GetKeyPoints(i), picture.GetKeyRectangles(i), new SolidBrush(GetBrushColor(i)), new Pen(Color.Black));
                 keyList.Add(key);
             }
         }
 
         public void Draw(Graphics gr)
         {
-            for (int i = min; i < max; i++)
+            for (int i = minKey; i <= maxKey; i++)
             {
                 bool sel = false;
-                if ((i >= lower) && (i <= upper)) sel = true;
+                if ((i >= lowerKey) && (i <= upperKey)) sel = true;
                 keyList[i].Draw(gr, sel);
             }
         }
@@ -168,6 +207,24 @@ namespace SynthLiveMidiController
                 default:
                     return Color.DarkSlateGray;
             }
+        }
+
+        public int GetKeyNumber(int x, int y)
+        {
+            int number = -1;
+
+            //---------------------------
+            for (int i = minKey; i <= maxKey; i++)
+            {
+                if (keyList[i].IsInside(x, y))
+                {
+                    number = i;
+                    break;
+                }
+            }
+            //---------------------------
+
+            return number;
         }
     }
 }

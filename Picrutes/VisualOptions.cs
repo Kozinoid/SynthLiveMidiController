@@ -2,7 +2,7 @@
 
 namespace SynthLiveMidiController.Picrutes
 {
-    class VisualOptions
+    static class VisualOptions
     {
         public static Font mainFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
         public static Font displayNameFont = new Font("Calibri", 14.25f, FontStyle.Regular); //new Font("Calibri", 14.25f, FontStyle.Regular);

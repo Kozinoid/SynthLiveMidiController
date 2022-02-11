@@ -39,6 +39,9 @@ namespace SynthLiveMidiController
             this.Name = "CtlKeyzoneField";
             this.Size = new System.Drawing.Size(440, 56);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlKeyzoneField_Paint);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlKeyzoneField_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlKeyzoneField_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlKeyzoneField_MouseUp);
             this.ResumeLayout(false);
 
         }
