@@ -94,6 +94,30 @@
     <Compile Include="CtlChannelField.Designer.cs">
       <DependentUpon>CtlChannelField.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlChannelParametersListEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlChannelParametersListEditor.Designer.cs">
+      <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlFastCommandEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlFastCommandEditor.Designer.cs">
+      <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlPerformanceNameField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlPerformanceNameField.Designer.cs">
+      <DependentUpon>CtlPerformanceNameField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlSongCommandEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlSongCommandEditor.Designer.cs">
+      <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtlEFXSourceField.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -135,6 +159,18 @@
     </Compile>
     <Compile Include="CtlPatchSelectField.Designer.cs">
       <DependentUpon>CtlPatchSelectField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlStringField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlStringField.Designer.cs">
+      <DependentUpon>CtlStringField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlTempoField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlTempoField.Designer.cs">
+      <DependentUpon>CtlTempoField.cs</DependentUpon>
     </Compile>
     <Compile Include="FastListControl.cs">
       <SubType>UserControl</SubType>
@@ -206,6 +242,15 @@
     <EmbeddedResource Include="CtlByteField.resx">
       <DependentUpon>CtlByteField.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CtlChannelParametersListEditor.resx">
+      <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlFastCommandEditor.resx">
+      <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlSongCommandEditor.resx">
+      <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CtlKeyzoneField.resx">
       <DependentUpon>CtlKeyzoneField.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CtlPatchSelectField.resx">
       <DependentUpon>CtlPatchSelectField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlStringField.resx">
+      <DependentUpon>CtlStringField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FastListControl.resx">
       <DependentUpon>FastListControl.cs</DependentUpon>

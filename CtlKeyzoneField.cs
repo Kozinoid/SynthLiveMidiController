@@ -75,15 +75,18 @@ namespace SynthLiveMidiController
             if (left || right)
             {
                 int num = kbd.GetKeyNumber(e.X, e.Y);
-                if (left)
+                if (num >= 0)
                 {
-                    LowerKey = num;
-                    KeyRangeChanged?.Invoke(sender, e);
-                }
-                if (right)
-                {
-                    UpperKey = num;
-                    KeyRangeChanged?.Invoke(sender, e);
+                    if (left)
+                    {
+                        LowerKey = num;
+                        KeyRangeChanged?.Invoke(sender, e);
+                    }
+                    if (right)
+                    {
+                        UpperKey = num;
+                        KeyRangeChanged?.Invoke(sender, e);
+                    }
                 }
             }
         }

@@ -32,5 +32,21 @@ namespace SynthLiveMidiController
         {
             return ShowDialog();
         }
+
+        //--------------------------------------------------------------------------------
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //ctlChannelParametersListEditor1.AddNew();
+        }
+
+        private void bt_Del_Click(object sender, EventArgs e)
+        {
+           // ctlChannelParametersListEditor1.RemoveSelected();
+        }
+
+        private void bt_Clear_Click(object sender, EventArgs e)
+        {
+            //ctlChannelParametersListEditor1.Clear();
+        }
     }
 }

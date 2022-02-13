@@ -1,11 +1,43 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using SynthLiveMidiController.Pictures;
 
 namespace SynthLiveMidiController
 {
     public partial class CtlOneChannelParameters : UserControl
     {
+        // -----------------------------------  Events  ----------------------------------------------------
+        public event EventHandler SelectedChange = null;
+        public event EventHandler ItemDropped = null;
+
+        // -------------------------------------  Fields  --------------------------------------------------
+        private bool selected = false;
+        private readonly Color selColor = Picrutes.VisualOptions.selBackgroundColor;
+        private readonly Color backColor = Picrutes.VisualOptions.backgroundColor;
+
+        // ------------------------------------------  Drag&Drop  ------------------------------------------
+        static CtlOneChannelParameters dragItem;
+        static bool msDown = false;
+        static bool dragging = false;
+        static int drX = 0;
+        static int drY = 0;
+
+        // -------------------------------------  Properties  ----------------------------------------------
+        public bool Selected
+        {
+            get { return selected; }
+            set 
+            {
+                selected = value; ;
+                BackColor = (selected) ? selColor : backColor;
+                this.Invalidate();
+            }
+        }
+
+        //--------------------------------------------------------------------------------------------------
+        // Constructor
         public CtlOneChannelParameters()
         {
             InitializeComponent();
@@ -89,5 +121,58 @@ namespace SynthLiveMidiController
             // Send Keyzone
         }
         //---------------------------------------------------------------------------------------------------------
+        // Select
+        private void pn_Select_MouseDown(object sender, MouseEventArgs e)
+        {
+            SelectedChange?.Invoke(this, e);
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                dragItem = this;
+                msDown = true;
+                drX = e.X;
+                drY = e.Y;
+            }
+        }
+
+        //-----------------------------------------  Drag & Drop  -------------------------------------------------
+        private void pn_Select_DragDrop(object sender, DragEventArgs e)
+        {
+            dragging = false;
+
+            if (e.Data.GetDataPresent(typeof(CtlOneChannelParameters))) 
+            {
+                msDown = false;
+                dragging = false;
+
+                ItemDropped?.Invoke(this, e);
+            }
+        }
+
+        private void pn_Select_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void pn_Select_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!msDown) return;
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                if ((Math.Abs(drX - e.X) > 5) || (Math.Abs(drY - e.Y) > 5))
+                {
+                    dragging = true;
+
+                    // Proceed with the drag and drop, passing in the list item.                    
+                    DragDropEffects dropEffect = this.DoDragDrop(dragItem, DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void pn_Select_MouseUp(object sender, MouseEventArgs e)
+        {
+            msDown = false;
+            dragging = false;
+        }
     }
 }
