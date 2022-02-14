@@ -106,6 +106,12 @@
     <Compile Include="CtlFastCommandEditor.Designer.cs">
       <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlFastCommandListField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlFastCommandListField.Designer.cs">
+      <DependentUpon>CtlFastCommandListField.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtlPerformanceNameField.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,6 +166,12 @@
     <Compile Include="CtlPatchSelectField.Designer.cs">
       <DependentUpon>CtlPatchSelectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlSongCommandListField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlSongCommandListField.Designer.cs">
+      <DependentUpon>CtlSongCommandListField.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtlStringField.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,6 +184,12 @@
     <Compile Include="CtlTempoField.Designer.cs">
       <DependentUpon>CtlTempoField.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlUniversalComboBoxField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlUniversalComboBoxField.Designer.cs">
+      <DependentUpon>CtlUniversalComboBoxField.cs</DependentUpon>
+    </Compile>
     <Compile Include="FastListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,12 +201,6 @@
     </Compile>
     <Compile Include="FastPresetEditor.Designer.cs">
       <DependentUpon>FastPresetEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="InstrumentList\Roland\XP50\CtlComboBoxField.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="InstrumentList\Roland\XP50\CtlComboBoxField.Designer.cs">
-      <DependentUpon>CtlComboBoxField.cs</DependentUpon>
     </Compile>
     <Compile Include="InstrumentList\Roland\XP50\SelectPatchDialog.cs">
       <SubType>Form</SubType>
@@ -269,6 +281,9 @@
     <EmbeddedResource Include="CtlStringField.resx">
       <DependentUpon>CtlStringField.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CtlUniversalComboBoxField.resx">
+      <DependentUpon>CtlUniversalComboBoxField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FastListControl.resx">
       <DependentUpon>FastListControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -277,9 +292,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InstrumentList\Roland\XP50\CtlComboBoxField.resx">
-      <DependentUpon>CtlComboBoxField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InstrumentList\Roland\XP50\SelectPatchDialog.resx">
       <DependentUpon>SelectPatchDialog.cs</DependentUpon>

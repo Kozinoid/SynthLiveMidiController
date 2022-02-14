@@ -95,8 +95,15 @@ namespace SynthLiveMidiController
         //------------------------------------------------  Mouse Drag Control  ---------------------------------------------------------
         private void CtlByteField_MouseDown(object sender, MouseEventArgs e)
         {
-            y = e.Y;
-            pushed = true;
+            if (e.Button == MouseButtons.Left)
+            {
+                y = e.Y;
+                pushed = true;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                RightClick(sender, e);
+            }
         }
 
         private void CtlByteField_MouseUp(object sender, MouseEventArgs e)
@@ -152,6 +159,12 @@ namespace SynthLiveMidiController
         // Double Click
         private void CtlByteField_DoubleClick(object sender, EventArgs e)
         {
+            BeginEdit();
+        }
+
+        // Dbl click Override
+        public virtual void BeginEdit()
+        {
             tbEnter.Text = _value.ToString();
             tbEnter.Location = rect.Location;
             this.Controls.Add(tbEnter);
@@ -163,22 +176,34 @@ namespace SynthLiveMidiController
         {
             if (e.KeyCode == Keys.Enter)
             {
-                int res;
-                try
-                {
-                    res = int.Parse(tbEnter.Text);
-
-                    this.Controls.Remove(tbEnter);
-                    _value = ValidateValue(res);
-                    this.Invalidate();
-                    e.Handled = true;
-                    ValueChanged?.Invoke(sender, e);
-                }
-                catch
-                {
-                    MessageBox.Show("Value is not valid!");
-                }
+                EndEdit(sender, e);
             }
+        }
+
+        // Enter
+        public virtual void EndEdit(object sender, KeyEventArgs e)
+        {
+            int res;
+            try
+            {
+                res = int.Parse(tbEnter.Text);
+
+                this.Controls.Remove(tbEnter);
+                _value = ValidateValue(res);
+                this.Invalidate();
+                e.Handled = true;
+                ValueChanged?.Invoke(sender, e);
+            }
+            catch
+            {
+                MessageBox.Show("Value is not valid!");
+            }
+        }
+
+        // SelectCommand()
+        public virtual void RightClick(object sender, MouseEventArgs e)
+        {
+            
         }
     }
 }
