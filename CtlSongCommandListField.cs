@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using SynthLiveMidiController.InstrumentList.Roland.XP50;
+﻿using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
 namespace SynthLiveMidiController
 {

@@ -46,7 +46,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 
             commander = comm;
 
-            //commander.OnChannelEvent += Commander_OnChannelEvent;
+            commander.OnChannelEvent += Commander_OnChannelEvent;
             commander.OnSysExEditDataEvent += Commander_OnSysExEditDataEvent;
             commander.OnSysExRquestedDataEvent += Commander_OnSysExRquestedDataEvent;
         }
@@ -165,70 +165,67 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         //---------------------------------------------------------------------------------------------------------------------------------------
 
         // ----  Variables for last received data storing  ----
-        //int msb = -1;       // Most significant byte
-        //int lsb = -1;       // Least significant byte
-        //int patch = -1;     // Patch number
+        int msb = -1;       // Most significant byte
+        int lsb = -1;       // Least significant byte
+        int patch = -1;     // Patch number
 
-        //// Channel message received
-        //private void Commander_OnChannelEvent(object sender, MIDIEvents.ChannelEventArgs e)
-        //{
-        //    switch (e.Command)
-        //    {
-        //        case MIDIEvents.ChannelCommand.Controller:
-        //            if (e.Data1 == 0x00)
-        //            {
-        //                msb = e.Data2;
-        //            }
-        //            else if (e.Data1 == 0x20)
-        //            {
-        //                lsb = e.Data2;
-        //            }
-        //            //else
-        //            //{
-        //            //    // _____________________________  Other Control change  _________________________________
-        //            //}
-        //            break;
+        // Channel message received
+        private void Commander_OnChannelEvent(object sender, MIDIEvents.ChannelEventArgs e)
+        {
+            switch (e.Command)
+            {
+                case MIDIEvents.ChannelCommand.Controller:
+                    if (e.Data1 == 0x00)
+                    {
+                        msb = e.Data2;
+                    }
+                    else if (e.Data1 == 0x20)
+                    {
+                        lsb = e.Data2;
+                    }
+                    else
+                    {
+                        // _____________________________  Other Control change  _________________________________
+                    }
+                    break;
 
-        //        case MIDIEvents.ChannelCommand.ProgramChange:
-        //            patch = e.Data1;
-        //            //string name = BankNameConvertor.GetPatchName(BankNameConvertor.ChannelCommandToBuffer(msb, lsb, patch));
-        //            //Console.WriteLine(name);
-        //            break;
+                case MIDIEvents.ChannelCommand.ProgramChange:
+                    //patch = e.Data1;
+                    //string name = BankNameConvertor.GetPatchName(BankNameConvertor.ChannelCommandToBuffer(msb, lsb, patch));
+                    //Console.WriteLine(name);
+                    break;
 
-        //            //case MIDIEvents.ChannelCommand.NoteOn:
-        //            //    break;
+                case MIDIEvents.ChannelCommand.NoteOn:
+                    break;
 
-        //            //case MIDIEvents.ChannelCommand.NoteOff:
-        //            //    break;
+                case MIDIEvents.ChannelCommand.NoteOff:
+                    break;
 
-        //            //case MIDIEvents.ChannelCommand.PitchWheel:
-        //            //    break;
+                case MIDIEvents.ChannelCommand.PitchWheel:
+                    break;
 
-        //            //case MIDIEvents.ChannelCommand.PolyPressure:
-        //            //    break;
+                case MIDIEvents.ChannelCommand.PolyPressure:
+                    break;
 
-        //            //case MIDIEvents.ChannelCommand.ChannelPressure:
-        //            //    break;
-        //    }
-        //}
+                case MIDIEvents.ChannelCommand.ChannelPressure:
+                    break;
+            }
+        }
 
         // System exclusive: Requested data received
         private void Commander_OnSysExRquestedDataEvent(object sender, MIDIEvents.SysExEventArgs e)
         {
-            SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
-            int target = DetectTarget(msg);
-            if ((target >= 0) && (target < SongChannelCount) || (target == 16)) SongDataReceived?.Invoke(sender, new SegmentDataReceivedEvendArgs(target));
-            else if ((target >= SongChannelCount) && (target < SongChannelCount + FastChannelCount)) FastDataReceived?.Invoke(sender, new SegmentDataReceivedEvendArgs(target));
-            else
-            {
-                // Other Segment
-                //Console.WriteLine("Other segment");
-            }
-
+            SysExProcessing(sender, e);
         }
 
         // System exclusive: Data for edit received
         private void Commander_OnSysExEditDataEvent(object sender, MIDIEvents.SysExEventArgs e)
+        {
+            SysExProcessing(sender, e);
+        }
+
+        // SysExProcessing
+        private void SysExProcessing(object sender, MIDIEvents.SysExEventArgs e)
         {
             SystemExclusiveBaseClass msg = new SystemExclusiveBaseClass(e.Buffer);
             int target = DetectTarget(msg);
@@ -255,7 +252,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 SetDataInBuffer(buf, off, msg.GetDataFromArray());
 
                 performanceCommon.CopyDataToStructure(buf);
-                //performanceCommon.Requested = false;
 
                 result = 16;
             }
@@ -271,7 +267,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                         SetDataInBuffer(buf, off, msg.GetDataFromArray());
 
                         performancePartList[i].CopyDataToStructure(buf);
-                        //performancePartList[i].Requested = false;
 
                         result = i;
                         break;
@@ -321,21 +316,34 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         //--------------------------------------------------  ISongListStorageSectionInterface  ------------------------------------------------|
+        public string GetSongName()
+        {
+            return songCommandSet.PresetName;
+        }
 
-        string ISongPresetName.PresetName 
+        public void SetSongName(string name)
         {
-            get => songCommandSet.PresetName;
-            set => songCommandSet.PresetName = value; 
+            songCommandSet.PresetName = name;
         }
-        public string Singer 
+
+        public string GetSinger()
         { 
-            get => songCommandSet.Singer;
-            set => songCommandSet.Singer = value; 
+            return songCommandSet.Singer;
         }
-        public string Key 
+
+        public void SetSinger(string singer)
         {
-            get => songCommandSet.Key;
-            set => songCommandSet.Key = value;
+            songCommandSet.Singer = singer;
+        }
+
+        public string GetKey()
+        {
+            return songCommandSet.Key;
+        }
+
+        public void SetKey(string key)
+        {
+            songCommandSet.Key = key;
         }
 
         public void SetSongData(byte[] data)
@@ -396,12 +404,16 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         //-------------------------------------------------  IFastListStorageSectionInterface  -------------------------------------------------|
-        string IFastPresetName.PresetName
+        public string GetPresetName()
         {
-            get => fastCommandSet.PresetName;
-            set => fastCommandSet.PresetName = value;
+            return fastCommandSet.PresetName;
         }
-        
+
+        public void SetPresetName(string name)
+        {
+            fastCommandSet.PresetName = name;
+        }
+
         public void SetFastData(byte[] data)
         {
             int index = 0;
@@ -451,16 +463,24 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         //-------------------------------------------------  ISongListEditorSectionInterface  --------------------------------------------------|
-        public string PerformanceTitle 
+        public string GetPerformanceTitle()
         {
-            get => performanceCommon.PerformanceName;
-            set => performanceCommon.PerformanceName = value; 
+            return performanceCommon.PerformanceName;
         }
 
-        public byte Tempo 
+        public void SetPerformanceTitle(string title)
         {
-            get => performanceCommon.Tempo;
-            set => performanceCommon.Tempo = value; 
+            performanceCommon.PerformanceName = title;
+        }
+
+        public byte GetTempo() 
+        {
+            return performanceCommon.Tempo;
+        }
+
+        public void SetTempo(byte tempo)
+        {
+            performanceCommon.Tempo = tempo;
         }
 
         EFXSource ISongCommandsEditInterface.GetCommandEFXSource(int comNumber)

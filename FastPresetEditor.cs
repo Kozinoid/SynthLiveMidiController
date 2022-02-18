@@ -6,8 +6,6 @@ namespace SynthLiveMidiController
 {
     public partial class FastPresetEditor : Form
     {
-        IFastListEditorSectionInterface perfData;
-
         // Constructor
         public FastPresetEditor()
         {
@@ -17,20 +15,18 @@ namespace SynthLiveMidiController
         // Set Data Interface
         public void SetInterface(IFastListEditorSectionInterface data)
         {
-            perfData = data;
-            perfData.FastDataReceived += PerfData_FastDataReceived;
-        }
-
-        // Data Received
-        private void PerfData_FastDataReceived(object sender, SegmentDataReceivedEvendArgs ea)
-        {
-            //Console.WriteLine("Fast Preset Editor {0}", ea.segment);
+            ctlFastComEditor.SetInterface(data);
         }
 
         // Show Editor
         public DialogResult ShowEditor(IFastListEditorSectionInterface parameters)
         {
             return ShowDialog();
+        }
+
+        private void FastPresetEditor_Shown(object sender, EventArgs e)
+        {
+            ctlFastComEditor.RefreshAllFields();
         }
     }
 }

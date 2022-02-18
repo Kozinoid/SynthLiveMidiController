@@ -29,13 +29,24 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
+            this.ctlFastComEditor = new SynthLiveMidiController.CtlFastCommandEditor();
             this.SuspendLayout();
+            // 
+            // ctlFastComEditor
+            // 
+            this.ctlFastComEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ctlFastComEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlFastComEditor.Location = new System.Drawing.Point(0, 0);
+            this.ctlFastComEditor.Name = "ctlFastComEditor";
+            this.ctlFastComEditor.Size = new System.Drawing.Size(984, 561);
+            this.ctlFastComEditor.TabIndex = 3;
             // 
             // FastPresetEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.ctlFastComEditor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -43,10 +54,12 @@ namespace SynthLiveMidiController
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fast Preset Editor";
+            this.Shown += new System.EventHandler(this.FastPresetEditor_Shown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+        private CtlFastCommandEditor ctlFastComEditor;
     }
 }

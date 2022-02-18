@@ -1,13 +1,13 @@
 ﻿namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
     //===============================  COMPLEX INTERFACES  ==============================
-    public interface ISongListStorageSectionInterface : ISongListStoreData, ISongPresetName, IAdditionalSongTitle { }
+    public interface ISongListStorageSectionInterface : ISongListStoreData, ISongPresetName, IAdditionalSongTitle, ISongCallbackInterface { }
 
-    public interface IFastListStorageSectionInterface : IFastListStoreData, IFastPresetName { }
+    public interface IFastListStorageSectionInterface : IFastListStoreData, IFastPresetName, IFastCallbackInterface { }
 
-    public interface ISongListEditorSectionInterface : ISongCommandsEditInterface, IPerformancePartData, ISongPresetName, IPerformanceEditInterface, IAdditionalSongTitle { }
+    public interface ISongListEditorSectionInterface : ISongCommandsEditInterface, IPerformancePartData, ISongPresetName, IPerformanceEditInterface, IAdditionalSongTitle, ISongCallbackInterface { }
 
-    public interface IFastListEditorSectionInterface : IFastCommandsEditInterface, IPerformancePartData, IFastPresetName { }
+    public interface IFastListEditorSectionInterface : IFastCommandsEditInterface, IPerformancePartData, IFastPresetName, IFastCallbackInterface { }
 
     //===============================  BASE INTERFACES  =================================
     // Interface for Song Edition data
@@ -19,8 +19,6 @@
         // Command&Channel Local Switch
         LocalSwitch GetCommandLocalSwitch(int comNumber, int midichannel);
         void SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw);
-        // CallBack
-        event SegmentDataReceivedHandler SongDataReceived;
     }
 
     // Interface for Fast Edition data
@@ -32,6 +30,18 @@
         // Command&Channel Local Switch
         LocalSwitch GetCommandLocalSwitch(int comNumber, int midichannel);
         void SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw);
+    }
+
+    // Song CallBack Interface
+    public interface ISongCallbackInterface
+    {
+        // CallBack
+        event SegmentDataReceivedHandler SongDataReceived;
+    }
+
+    // Fast CallBack Interface
+    public interface IFastCallbackInterface
+    {
         // CallBack
         event SegmentDataReceivedHandler FastDataReceived;
     }
@@ -90,8 +100,9 @@
     // Song Preset and Commands name
     public interface ISongPresetName
     {
-        // Preset or Song Name
-        string PresetName { get; set; }
+        // Song Name
+        string GetSongName();
+        void SetSongName(string name);
         // Command Name
         string GetCommandName(int comNumber);
         void SetCommandName(int comNumber, string name);
@@ -100,8 +111,9 @@
     // Fast Preset and Commands name
     public interface IFastPresetName
     {
-        // Preset or Song Name
-        string PresetName { get; set; }
+        // Preset Name
+        string GetPresetName();
+        void SetPresetName(string name);
         // Command Name
         string GetCommandName(int comNumber);
         void SetCommandName(int comNumber, string name);
@@ -110,17 +122,21 @@
     // Additional parameters for Edition Performance Common (Song Section)
     public interface IPerformanceEditInterface
     {
-        string PerformanceTitle { get; set; }
-        byte Tempo { get; set; }
+        string GetPerformanceTitle();
+        void SetPerformanceTitle(string title);
+        byte GetTempo();
+        void SetTempo(byte tempo);
     }
 
     // Addition Song Parameters for Song Section (Edit and Store)
     public interface IAdditionalSongTitle
     {
         // Singer or Athor name
-        string Singer { get; set; }
+        string GetSinger();
+        void SetSinger(string title);
         // Score Key
-        string Key { get; set; }
+        string GetKey();
+        void SetKey(string key);
     }
 }
 

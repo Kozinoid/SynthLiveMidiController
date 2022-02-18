@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Drawing;
 using SynthLiveMidiController.File;
 using SynthLiveMidiController.InstrumentList.Roland.XP50;
 using SynthLiveMidiController.Picrutes;
@@ -201,9 +200,9 @@ namespace SynthLiveMidiController
         // Get Data From Performance
         public void GetDataFromPerformance(ISongListStorageSectionInterface dev)
         {
-            PresetName = dev.PresetName;
-            Singer = dev.Singer;
-            Key = dev.Key;
+            PresetName = dev.GetSongName();
+            Singer = dev.GetSinger();
+            Key = dev.GetKey();
             SongData = dev.GetSongData();
             for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
             {
@@ -215,9 +214,9 @@ namespace SynthLiveMidiController
         // Set Data To Performance
         public void SetDataToPerformance(ISongListStorageSectionInterface dev)
         {
-            dev.PresetName = PresetName;
-            dev.Singer = Singer;
-            dev.Key = Key;
+            dev.SetSongName(PresetName);
+            dev.SetSinger(Singer);
+            dev.SetKey(Key);
             dev.SetSongData(SongData);
             for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
             {

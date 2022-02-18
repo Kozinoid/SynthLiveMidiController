@@ -96,6 +96,7 @@ namespace SynthLiveMidiController
         public Form1()
         {
             InitializeComponent();
+
             LoadPatchNames();
             PrepareButtonGroups();
         }
@@ -260,15 +261,15 @@ namespace SynthLiveMidiController
             songListControl.GetTemporaryDataFromPerformance();
             fastListControl.GetTemporaryDataFromPerformance();
 
-            songListControl.StoreTemporaryToTemplate();
-            fastListControl.StoreTemporaryToTemplate();
-
             songListControl.PrintData();
             fastListControl.PrintData();
         }
 
         private void bt_act3_Click(object sender, EventArgs e)
         {
+            songListControl.StoreTemporaryToTemplate();
+            fastListControl.StoreTemporaryToTemplate();
+
             songListControl.SaveNewSongTemplate();
             fastListControl.SaveNewFastTemplate();
         }
@@ -286,7 +287,10 @@ namespace SynthLiveMidiController
         {
             songListControl.SetTemporaryDataToPerformance();
             fastListControl.SetTemporaryDataToPerformance();
+        }
 
+        private void bt_Act6_Click(object sender, EventArgs e)
+        {
             mainPerformance.SendPerformance();
         }
     }

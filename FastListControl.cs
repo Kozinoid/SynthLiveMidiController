@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Drawing;
 using SynthLiveMidiController.File;
 using SynthLiveMidiController.InstrumentList.Roland.XP50;
 using SynthLiveMidiController.Picrutes;
@@ -194,7 +193,7 @@ namespace SynthLiveMidiController
         // Get Data From Performance
         public void GetDataFromPerformance(IFastListStorageSectionInterface dev)
         {
-            PresetName = dev.PresetName;
+            PresetName = dev.GetPresetName();
             FastData = dev.GetFastData();
             for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
             {
@@ -206,7 +205,7 @@ namespace SynthLiveMidiController
         // Set Data To Performance
         public void SetDataToPerformance(IFastListStorageSectionInterface dev)
         {
-            dev.PresetName = PresetName;
+            dev.SetPresetName(PresetName);
             dev.SetFastData(FastData);
             for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
             {

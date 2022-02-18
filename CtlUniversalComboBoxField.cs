@@ -14,7 +14,7 @@ namespace SynthLiveMidiController
         private readonly List<string> list;
         private int capacity = 0;
         private bool loaded = false;
-        ContextMenu cm = new ContextMenu();
+        ContextMenuStrip contextMenu = new ContextMenuStrip();
 
         // Override Property
         public override byte ByteValue
@@ -26,21 +26,29 @@ namespace SynthLiveMidiController
         // Constructor
         public CtlUniversalComboBoxField()
         {
-            InitializeComponent();
-
             caption = "Command:";
             min = 1;
             max = 10;
             shift = 1;
             _value = 1;
-
             capacity = max - min + 1;
             list = new List<string>();
+
+            InitializeComponent();
+
+            ValueChanged += CtlUniversalComboBoxField_ValueChanged;
+
+
             for (int i = 0; i < capacity; i++)
             {
                 list.Add("");
             }
             loaded = true;
+        }
+
+        private void CtlUniversalComboBoxField_ValueChanged(object sender, EventArgs e)
+        {
+            CommandChanged?.Invoke(sender, e);
         }
 
         // Set String Value at Index Position
@@ -102,30 +110,28 @@ namespace SynthLiveMidiController
         // Show Context Menu with Commsnd List
         public override void RightClick(object sender, MouseEventArgs e)
         {
-            
-            cm.MenuItems.Clear();
+
+            contextMenu.Items.Clear();
             capacity = max - min + 1;
             for (int i = 0; i < capacity; i++)
             {
-                MenuItem item = cm.MenuItems.Add((i + shift).ToString() + " - " + list[i]);
-                item.Click += Item_Click;
-                item.OwnerDraw = true;
-                item.DrawItem += Item_DrawItem;
-            }
-            cm.Show(this, e.Location);
+                ToolStripItem item = contextMenu.Items.Add((i + shift).ToString() + " - " + list[i]);
 
+                item.Click += Item_Click;
+                item.Paint += Item_Paint;
+
+                contextMenu.Items.Add(item);
+            }
+            contextMenu.Show(this, e.Location);
+            
         }
 
-        // Owner draw
-        private void Item_DrawItem(object sender, DrawItemEventArgs e)
+        // Context Menu Item Paint
+        private void Item_Paint(object sender, PaintEventArgs e)
         {
-            StringFormat sf = new StringFormat();
-            sf.Alignment = StringAlignment.Near;
-            sf.LineAlignment = StringAlignment.Center;
-
-            e.Graphics.FillRectangle(Picrutes.VisualOptions.backgroundBrush, e.Bounds);
-            e.Graphics.DrawRectangle(Picrutes.VisualOptions.borderPen, e.Bounds);
-            e.Graphics.DrawString(((MenuItem)sender).Text, Picrutes.VisualOptions.mainFont, Picrutes.VisualOptions.mainBrush, e.Bounds, sf);
+            ToolStripItem customItem = (ToolStripItem)sender;
+            customItem.BackColor = Picrutes.VisualOptions.backgroundColor;
+            customItem.ForeColor = Picrutes.VisualOptions.mainTextColor;
         }
 
         // Select Command in Context Menu
@@ -140,15 +146,17 @@ namespace SynthLiveMidiController
             int selIndex = -1;
             for (int i = 0; i < capacity; i++)
             {
-                MenuItem item = cm.MenuItems[i];
+                ToolStripItem item = contextMenu.Items[i];
                 item.Click -= Item_Click;
-                item.DrawItem -= Item_DrawItem;
-                if (item.Text == ((MenuItem)sender).Text) selIndex = i;
+                item.Paint -= Item_Paint;
+                if (item.Text == ((ToolStripItem)sender).Text) selIndex = i;
             }
 
-            if (selIndex >= 0) _value = ValidateValue(selIndex + shift);
+            if (selIndex >= 0) Value = ValidateValue(selIndex + shift);
 
             this.Invalidate();
+
+            CommandChanged?.Invoke(sender, e);
         }
     }
 }
