@@ -315,37 +315,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return performancePartList[channel].ToByteArray();
         }
 
-        //--------------------------------------------------  ISongListStorageSectionInterface  ------------------------------------------------|
-        public string GetSongName()
-        {
-            return songCommandSet.PresetName;
-        }
-
-        public void SetSongName(string name)
-        {
-            songCommandSet.PresetName = name;
-        }
-
-        public string GetSinger()
-        { 
-            return songCommandSet.Singer;
-        }
-
-        public void SetSinger(string singer)
-        {
-            songCommandSet.Singer = singer;
-        }
-
-        public string GetKey()
-        {
-            return songCommandSet.Key;
-        }
-
-        public void SetKey(string key)
-        {
-            songCommandSet.Key = key;
-        }
-
+        //--------------------------------------------------  Song Data and Command exchange  ------------------------------------------------|
         public void SetSongData(byte[] data)
         {
             int index = 0;
@@ -383,16 +353,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return buffer;
         }
 
-        string ISongPresetName.GetCommandName(int comNumber)
-        {
-            return songCommandSet.GetCommandName(comNumber);
-        }
-
-        void ISongPresetName.SetCommandName(int comNumber, string name)
-        {
-            songCommandSet.SetCommandName(comNumber, name);
-        }
-
         public void SetSongCommandSection(byte[] data)
         {
             songCommandSet.FromByteArray(data);
@@ -403,17 +363,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return songCommandSet.ToByteArray();
         }
 
-        //-------------------------------------------------  IFastListStorageSectionInterface  -------------------------------------------------|
-        public string GetPresetName()
-        {
-            return fastCommandSet.PresetName;
-        }
-
-        public void SetPresetName(string name)
-        {
-            fastCommandSet.PresetName = name;
-        }
-
+        //-------------------------------------------------  Fast Data and Command exchange  -------------------------------------------------|
         public void SetFastData(byte[] data)
         {
             int index = 0;
@@ -442,16 +392,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return buffer;
         }
 
-        string IFastPresetName.GetCommandName(int comNumber)
-        {
-            return fastCommandSet.GetCommandName(comNumber);
-        }
-
-        void IFastPresetName.SetCommandName(int comNumber, string name)
-        {
-            fastCommandSet.SetCommandName(comNumber, name);
-        }
-
         public void SetFastCommandSection(byte[] data)
         {
             fastCommandSet.FromByteArray(data);
@@ -462,162 +402,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return fastCommandSet.ToByteArray();
         }
 
-        //-------------------------------------------------  ISongListEditorSectionInterface  --------------------------------------------------|
-        public string GetPerformanceTitle()
-        {
-            return performanceCommon.PerformanceName;
-        }
-
-        public void SetPerformanceTitle(string title)
-        {
-            performanceCommon.PerformanceName = title;
-        }
-
-        public byte GetTempo() 
-        {
-            return performanceCommon.Tempo;
-        }
-
-        public void SetTempo(byte tempo)
-        {
-            performanceCommon.Tempo = tempo;
-        }
-
-        EFXSource ISongCommandsEditInterface.GetCommandEFXSource(int comNumber)
-        {
-            return songCommandSet.GetCommandEFXSource(comNumber);
-        }
-
-        void ISongCommandsEditInterface.SetCommandEFXSource(int comNumber, EFXSource src)
-        {
-            songCommandSet.SetCommandEFXSource(comNumber, src);
-        }
-
-        LocalSwitch ISongCommandsEditInterface.GetCommandLocalSwitch(int comNumber, int midichannel)
-        {
-            int channel = midichannel;
-            return songCommandSet.GetCommandLocalSwitch(comNumber, channel);
-        }
-
-        void ISongCommandsEditInterface.SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw)
-        {
-            int channel = midichannel;
-            songCommandSet.SetCommandLocalSwitch(comNumber, channel, lcSw);
-        }
-
-        //-------------------------------------------------  IFastListEditorSectionInterface  --------------------------------------------------|
-        EFXSource IFastCommandsEditInterface.GetCommandEFXSource(int comNumber)
-        {
-            return fastCommandSet.GetCommandEFXSource(comNumber);
-        }
-
-        void IFastCommandsEditInterface.SetCommandEFXSource(int comNumber, EFXSource src)
-        {
-            fastCommandSet.SetCommandEFXSource(comNumber, src);
-        }
-
-        LocalSwitch IFastCommandsEditInterface.GetCommandLocalSwitch(int comNumber, int midichannel)
-        {
-            int channel = midichannel - SongChannelCount;
-            return fastCommandSet.GetCommandLocalSwitch(comNumber, channel);
-        }
-
-        void IFastCommandsEditInterface.SetCommandLocalSwitch(int comNumber, int midichannel, LocalSwitch lcSw)
-        {
-            int channel = midichannel - SongChannelCount;
-            fastCommandSet.SetCommandLocalSwitch(comNumber, channel, lcSw);
-        }
-
-        //----------------------------------------------------  IPerformancePartInterface  -----------------------------------------------------|
-        public RecieveHold1Switch GetRecieveHold1Switch(int channel)
-        {
-            return performancePartList[channel].Hold1Switch;
-        }
-
-        public void SetRecieveHold1Switch(int channel, RecieveHold1Switch hold)
-        {
-            performancePartList[channel].Hold1Switch = hold;
-        }
-
-        public byte GetLowerKey(int channel)
-        {
-            return performancePartList[channel].LowerKey;
-        }
-
-        public void SetLowerKey(int channel, byte key)
-        {
-            performancePartList[channel].LowerKey = key;
-        }
-
-        public byte GetUpperKey(int channel)
-        {
-            return performancePartList[channel].UpperKey;
-        }
-
-        public void SetUpperKey(int channel, byte key)
-        {
-            performancePartList[channel].UpperKey = key;
-        }
-
-        public byte GetVolume(int channel)
-        {
-            return performancePartList[channel].Volume;
-        }
-
-        public void SetVolume(int channel, byte val)
-        {
-            performancePartList[channel].Volume = val;
-        }
-
-        public byte GetPan(int channel)
-        {
-            return performancePartList[channel].Pan;
-        }
-
-        public void SetPan(int channel, byte val)
-        {
-            performancePartList[channel].Pan = val;
-        }
-
-        public byte GetReverb(int channel)
-        {
-            return performancePartList[channel].Reverb;
-        }
-
-        public void SetReverb(int channel, byte val)
-        {
-            performancePartList[channel].Reverb = val;
-        }
-
-        public byte GetChorus(int channel)
-        {
-            return performancePartList[channel].Chorus;
-        }
-
-        public void SetChorus(int channel, byte val)
-        {
-            performancePartList[channel].Chorus = val;
-        }
-
-        public byte[] GetPatch(int channel)
-        {
-            return performancePartList[channel].PatchCommandArray;
-        }
-
-        public void SetPatch(int channel, byte[] data)
-        {
-            performancePartList[channel].PatchCommandArray = data;
-        }
-
-        public byte GetOctaveShift(int channel)
-        {
-            return performancePartList[channel].OctaveShift;
-        }
-
-        public void SetOctaveShift(int channel, byte val)
-        {
-            performancePartList[channel].OctaveShift = val;
-        }
     }
 
     public class SegmentDataReceivedEvendArgs : EventArgs

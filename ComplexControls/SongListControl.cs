@@ -200,29 +200,29 @@ namespace SynthLiveMidiController
         // Get Data From Performance
         public void GetDataFromPerformance(ISongListStorageSectionInterface dev)
         {
-            PresetName = dev.GetSongName();
-            Singer = dev.GetSinger();
-            Key = dev.GetKey();
-            SongData = dev.GetSongData();
-            for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
-            {
-                CommandNames[i] = dev.GetCommandName(i);
-            }
-            SongCommandSection = dev.GetSongCommandSection();
+            //PresetName = dev.GetSongName();
+            //Singer = dev.GetSinger();
+            //Key = dev.GetKey();
+            //SongData = dev.GetSongData();
+            //for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
+            //{
+            //    CommandNames[i] = dev.GetCommandName(i);
+            //}
+            //SongCommandSection = dev.GetSongCommandSection();
         }
 
         // Set Data To Performance
         public void SetDataToPerformance(ISongListStorageSectionInterface dev)
         {
-            dev.SetSongName(PresetName);
-            dev.SetSinger(Singer);
-            dev.SetKey(Key);
-            dev.SetSongData(SongData);
-            for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
-            {
-                dev.SetCommandName(i, CommandNames[i]);
-            }
-            dev.SetSongCommandSection(SongCommandSection);
+            //dev.SetSongName(PresetName);
+            //dev.SetSinger(Singer);
+            //dev.SetKey(Key);
+            //dev.SetSongData(SongData);
+            //for (int i = 0; i < RolandXP50CommandSet.SongCommandCount; i++)
+            //{
+            //    dev.SetCommandName(i, CommandNames[i]);
+            //}
+            //dev.SetSongCommandSection(SongCommandSection);
         }
 
         // Save Preset To File

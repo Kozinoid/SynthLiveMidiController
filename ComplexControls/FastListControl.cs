@@ -193,25 +193,25 @@ namespace SynthLiveMidiController
         // Get Data From Performance
         public void GetDataFromPerformance(IFastListStorageSectionInterface dev)
         {
-            PresetName = dev.GetPresetName();
-            FastData = dev.GetFastData();
-            for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
-            {
-                CommandNames[i] = dev.GetCommandName(i);
-            }
-            FastCommandSection = dev.GetFastCommandSection();
+            //PresetName = dev.GetPresetName();
+            //FastData = dev.GetFastData();
+            //for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
+            //{
+            //    CommandNames[i] = dev.GetCommandName(i);
+            //}
+            //FastCommandSection = dev.GetFastCommandSection();
         }
 
         // Set Data To Performance
         public void SetDataToPerformance(IFastListStorageSectionInterface dev)
         {
-            dev.SetPresetName(PresetName);
-            dev.SetFastData(FastData);
-            for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
-            {
-                dev.SetCommandName(i, CommandNames[i]);
-            }
-            dev.SetFastCommandSection(FastCommandSection);
+            //dev.SetPresetName(PresetName);
+            //dev.SetFastData(FastData);
+            //for (int i = 0; i < RolandXP50CommandSet.FastCommandCount; i++)
+            //{
+            //    dev.SetCommandName(i, CommandNames[i]);
+            //}
+            //dev.SetFastCommandSection(FastCommandSection);
         }
 
         // Save Preset To File
