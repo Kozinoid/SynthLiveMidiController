@@ -15,7 +15,7 @@ namespace SynthLiveMidiController
         // Set Data Interface
         public void SetInterface(IFastListEditorSectionInterface data)
         {
-            ctlFastComEditor.SetInterface(data);
+            // Set Interface to FAst Editor
         }
 
         // Show Editor
@@ -26,7 +26,7 @@ namespace SynthLiveMidiController
 
         private void FastPresetEditor_Shown(object sender, EventArgs e)
         {
-            ctlFastComEditor.RefreshAllFields();
+            // Refresh Editor
         }
     }
 }

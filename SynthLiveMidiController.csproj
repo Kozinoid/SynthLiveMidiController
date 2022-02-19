@@ -76,28 +76,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CtlBoolField.cs">
+    <Compile Include="ParameterControls\CtlBoolField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlBoolField.Designer.cs">
+    <Compile Include="ParameterControls\CtlBoolField.Designer.cs">
       <DependentUpon>CtlBoolField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlByteField.cs">
+    <Compile Include="ParameterControls\CtlByteField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlByteField.Designer.cs">
+    <Compile Include="ParameterControls\CtlByteField.Designer.cs">
       <DependentUpon>CtlByteField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlChannelField.cs">
+    <Compile Include="ParameterControls\CtlChannelField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlChannelField.Designer.cs">
+    <Compile Include="ParameterControls\CtlChannelField.Designer.cs">
       <DependentUpon>CtlChannelField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlChannelParametersListEditor.cs">
+    <Compile Include="ComplexControls\CtlChannelParametersListEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlChannelParametersListEditor.Designer.cs">
+    <Compile Include="ComplexControls\CtlChannelParametersListEditor.Designer.cs">
       <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="CtlFastCommandEditor.cs">
@@ -106,16 +106,16 @@
     <Compile Include="CtlFastCommandEditor.Designer.cs">
       <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlFastCommandListField.cs">
+    <Compile Include="ParameterControls\CtlFastCommandListField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlFastCommandListField.Designer.cs">
+    <Compile Include="ParameterControls\CtlFastCommandListField.Designer.cs">
       <DependentUpon>CtlFastCommandListField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlPerformanceNameField.cs">
+    <Compile Include="ParameterControls\CtlPerformanceNameField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlPerformanceNameField.Designer.cs">
+    <Compile Include="ParameterControls\CtlPerformanceNameField.Designer.cs">
       <DependentUpon>CtlPerformanceNameField.cs</DependentUpon>
     </Compile>
     <Compile Include="CtlSongCommandEditor.cs">
@@ -124,76 +124,76 @@
     <Compile Include="CtlSongCommandEditor.Designer.cs">
       <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlEFXSourceField.cs">
+    <Compile Include="ParameterControls\CtlEFXSourceField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlEFXSourceField.Designer.cs">
+    <Compile Include="ParameterControls\CtlEFXSourceField.Designer.cs">
       <DependentUpon>CtlEFXSourceField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlKeyField.cs">
+    <Compile Include="ParameterControls\CtlKeyField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlKeyField.Designer.cs">
+    <Compile Include="ParameterControls\CtlKeyField.Designer.cs">
       <DependentUpon>CtlKeyField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlKeyzoneField.cs">
+    <Compile Include="ParameterControls\CtlKeyzoneField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlKeyzoneField.Designer.cs">
+    <Compile Include="ParameterControls\CtlKeyzoneField.Designer.cs">
       <DependentUpon>CtlKeyzoneField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlOctaveField.cs">
+    <Compile Include="ParameterControls\CtlOctaveField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlOctaveField.Designer.cs">
+    <Compile Include="ParameterControls\CtlOctaveField.Designer.cs">
       <DependentUpon>CtlOctaveField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlOneChannelParameters.cs">
+    <Compile Include="ComplexControls\CtlOneChannelParameters.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlOneChannelParameters.Designer.cs">
+    <Compile Include="ComplexControls\CtlOneChannelParameters.Designer.cs">
       <DependentUpon>CtlOneChannelParameters.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlPanField.cs">
+    <Compile Include="ParameterControls\CtlPanField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlPanField.Designer.cs">
+    <Compile Include="ParameterControls\CtlPanField.Designer.cs">
       <DependentUpon>CtlPanField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlPatchSelectField.cs">
+    <Compile Include="ParameterControls\CtlPatchSelectField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlPatchSelectField.Designer.cs">
+    <Compile Include="ParameterControls\CtlPatchSelectField.Designer.cs">
       <DependentUpon>CtlPatchSelectField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlSongCommandListField.cs">
+    <Compile Include="ParameterControls\CtlSongCommandListField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlSongCommandListField.Designer.cs">
+    <Compile Include="ParameterControls\CtlSongCommandListField.Designer.cs">
       <DependentUpon>CtlSongCommandListField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlStringField.cs">
+    <Compile Include="ParameterControls\CtlStringField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlStringField.Designer.cs">
+    <Compile Include="ParameterControls\CtlStringField.Designer.cs">
       <DependentUpon>CtlStringField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlTempoField.cs">
+    <Compile Include="ParameterControls\CtlTempoField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlTempoField.Designer.cs">
+    <Compile Include="ParameterControls\CtlTempoField.Designer.cs">
       <DependentUpon>CtlTempoField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlUniversalComboBoxField.cs">
+    <Compile Include="ParameterControls\CtlUniversalComboBoxField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlUniversalComboBoxField.Designer.cs">
+    <Compile Include="ParameterControls\CtlUniversalComboBoxField.Designer.cs">
       <DependentUpon>CtlUniversalComboBoxField.cs</DependentUpon>
     </Compile>
-    <Compile Include="FastListControl.cs">
+    <Compile Include="ComplexControls\FastListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FastListControl.Designer.cs">
+    <Compile Include="ComplexControls\FastListControl.Designer.cs">
       <DependentUpon>FastListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="FastPresetEditor.cs">
@@ -228,10 +228,10 @@
     </Compile>
     <Compile Include="MIDIDevice\IMidiInOutInterface.cs" />
     <Compile Include="MIDIDevice\MidiEvents.cs" />
-    <Compile Include="MidiInOutDialog.cs">
+    <Compile Include="Dialogs\MidiInOutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MidiInOutDialog.designer.cs">
+    <Compile Include="Dialogs\MidiInOutDialog.designer.cs">
       <DependentUpon>MidiInOutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="MIDIMessages\MIDIMessageProcessor.cs" />
@@ -241,10 +241,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MIDIDevice\SanfordMidiDevice.cs" />
-    <Compile Include="SongListControl.cs">
+    <Compile Include="ComplexControls\SongListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SongListControl.Designer.cs">
+    <Compile Include="ComplexControls\SongListControl.Designer.cs">
       <DependentUpon>SongListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="SongPresetEditor.cs">
@@ -253,14 +253,14 @@
     <Compile Include="SongPresetEditor.Designer.cs">
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestClass.cs" />
-    <EmbeddedResource Include="CtlBoolField.resx">
+    <Compile Include="Test\TestClass.cs" />
+    <EmbeddedResource Include="ParameterControls\CtlBoolField.resx">
       <DependentUpon>CtlBoolField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlByteField.resx">
+    <EmbeddedResource Include="ParameterControls\CtlByteField.resx">
       <DependentUpon>CtlByteField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlChannelParametersListEditor.resx">
+    <EmbeddedResource Include="ComplexControls\CtlChannelParametersListEditor.resx">
       <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CtlFastCommandEditor.resx">
@@ -269,22 +269,22 @@
     <EmbeddedResource Include="CtlSongCommandEditor.resx">
       <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlKeyzoneField.resx">
+    <EmbeddedResource Include="ParameterControls\CtlKeyzoneField.resx">
       <DependentUpon>CtlKeyzoneField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlOneChannelParameters.resx">
+    <EmbeddedResource Include="ComplexControls\CtlOneChannelParameters.resx">
       <DependentUpon>CtlOneChannelParameters.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlPatchSelectField.resx">
+    <EmbeddedResource Include="ParameterControls\CtlPatchSelectField.resx">
       <DependentUpon>CtlPatchSelectField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlStringField.resx">
+    <EmbeddedResource Include="ParameterControls\CtlStringField.resx">
       <DependentUpon>CtlStringField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlUniversalComboBoxField.resx">
+    <EmbeddedResource Include="ParameterControls\CtlUniversalComboBoxField.resx">
       <DependentUpon>CtlUniversalComboBoxField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FastListControl.resx">
+    <EmbeddedResource Include="ComplexControls\FastListControl.resx">
       <DependentUpon>FastListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FastPresetEditor.resx">
@@ -296,7 +296,7 @@
     <EmbeddedResource Include="InstrumentList\Roland\XP50\SelectPatchDialog.resx">
       <DependentUpon>SelectPatchDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MidiInOutDialog.resx">
+    <EmbeddedResource Include="Dialogs\MidiInOutDialog.resx">
       <DependentUpon>MidiInOutDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -309,7 +309,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SongListControl.resx">
+    <EmbeddedResource Include="ComplexControls\SongListControl.resx">
       <DependentUpon>SongListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SongPresetEditor.resx">

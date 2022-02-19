@@ -86,7 +86,15 @@ namespace SynthLiveMidiController
                 }
             }
         }
+
+        //-------------------------------------------  DISPLAY GROUP CLASS --------------------------------------------------
+        //class DisplayGroup
+        //{
+
+        //}
+
         //-------------------------------------------------------------------------------------------------------------------
+
         // Song Command Buttons
         readonly ButtonGroup bgSong = new ButtonGroup(VisualOptions.mainTextColor, VisualOptions.selTextColor, VisualOptions.backgroundColor, VisualOptions.selBackgroundColor);
         // Fast Command Buttons
@@ -196,12 +204,22 @@ namespace SynthLiveMidiController
 
             mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);  // Main Performance
 
+            /*
+            1. Разработать протокол передачи данных в Performance
+            2. Разработать класс-посредник между редактором/хранилищем (заказчики-корректоры-хранители информации) и Performance
+            3. Разработать интерфейс заказа параметров и Callback при их изменении из другого редактора
+            Любой новый редактор, хранилище, визуализатор параметров может сам выбирать параметры и блоки памяти для редактирования и контролировать их изменение
+            */
+
+            // .............................................  LISTS  .....................................................
             songListControl.LoadData(mainPerformance);      // Song List    
             trackListControl.LoadData(mainPerformance);     // Track List (Loading manually!!!!!!!!)
             fastListControl.LoadData(mainPerformance);      // Fast List
+
+            // ======================================  UNDER CONSTRUCTION  ===============================================
             songPresetEditor.SetInterface(mainPerformance); // Attach Performance to Song Editor
             fastPresetEditor.SetInterface(mainPerformance); // Attach Performance to Fast Editor
-
+            //============================================================================================================
         }
 
         // Form closing...

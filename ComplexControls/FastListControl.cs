@@ -50,7 +50,7 @@ namespace SynthLiveMidiController
             dgv_FastListView.DefaultCellStyle = cellStyle;
         }
 
-        // Load Template and Temporary Data
+        // Load Template and Temporary Data  !!!! PREPARE FAST LIST
         public void LoadData(IFastListStorageSectionInterface dev)
         {
             instrument = dev;

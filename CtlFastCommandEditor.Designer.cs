@@ -59,7 +59,6 @@ namespace SynthLiveMidiController
             this.ctlFastComList.Size = new System.Drawing.Size(184, 22);
             this.ctlFastComList.TabIndex = 5;
             this.ctlFastComList.Value = 1;
-            this.ctlFastComList.CommandChanged += new System.EventHandler(this.ctlFastComList_CommandChanged);
             // 
             // ctlEFXSource
             // 
@@ -70,7 +69,6 @@ namespace SynthLiveMidiController
             this.ctlEFXSource.Size = new System.Drawing.Size(70, 22);
             this.ctlEFXSource.TabIndex = 4;
             this.ctlEFXSource.Value = 0;
-            this.ctlEFXSource.ValueChanged += new System.EventHandler(this.ctlEFXSource_ValueChanged);
             // 
             // ctlPresetName
             // 
@@ -80,7 +78,6 @@ namespace SynthLiveMidiController
             this.ctlPresetName.Size = new System.Drawing.Size(240, 22);
             this.ctlPresetName.TabIndex = 0;
             this.ctlPresetName.Value = "";
-            this.ctlPresetName.ValueChanged += new System.EventHandler(this.ctlPresetName_ValueChanged);
             // 
             // ctlChannelParameters
             // 

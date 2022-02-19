@@ -74,7 +74,6 @@ namespace SynthLiveMidiController
             this.ctlSongComList.Size = new System.Drawing.Size(184, 22);
             this.ctlSongComList.TabIndex = 5;
             this.ctlSongComList.Value = 1;
-            this.ctlSongComList.CommandChanged += new System.EventHandler(this.ctlSongComList_CommandChanged);
             // 
             // ctlEFXSource
             // 
@@ -85,7 +84,6 @@ namespace SynthLiveMidiController
             this.ctlEFXSource.Size = new System.Drawing.Size(70, 22);
             this.ctlEFXSource.TabIndex = 4;
             this.ctlEFXSource.Value = 0;
-            this.ctlEFXSource.ValueChanged += new System.EventHandler(this.ctlEFXSource_ValueChanged);
             // 
             // ctlTempo
             // 
@@ -99,7 +97,6 @@ namespace SynthLiveMidiController
             this.ctlTempo.ValueBuffer = new byte[] {
         ((byte)(0)),
         ((byte)(0))};
-            this.ctlTempo.ValueChanged += new System.EventHandler(this.ctlTempo_ValueChanged);
             // 
             // ctlPerformanceName
             // 
@@ -109,7 +106,6 @@ namespace SynthLiveMidiController
             this.ctlPerformanceName.Size = new System.Drawing.Size(240, 22);
             this.ctlPerformanceName.TabIndex = 2;
             this.ctlPerformanceName.Value = "            ";
-            this.ctlPerformanceName.ValueChanged += new System.EventHandler(this.ctlPerformanceName_ValueChanged);
             // 
             // ctlSingerName
             // 
@@ -119,7 +115,6 @@ namespace SynthLiveMidiController
             this.ctlSingerName.Size = new System.Drawing.Size(240, 22);
             this.ctlSingerName.TabIndex = 1;
             this.ctlSingerName.Value = "";
-            this.ctlSingerName.ValueChanged += new System.EventHandler(this.ctlSingerName_ValueChanged);
             // 
             // ctlSongName
             // 
@@ -129,7 +124,6 @@ namespace SynthLiveMidiController
             this.ctlSongName.Size = new System.Drawing.Size(240, 22);
             this.ctlSongName.TabIndex = 0;
             this.ctlSongName.Value = "";
-            this.ctlSongName.ValueChanged += new System.EventHandler(this.ctlSongName_ValueChanged);
             // 
             // CtlSongCommandEditor
             // 

@@ -15,7 +15,7 @@ namespace SynthLiveMidiController
         // Set Data Interface
         public void SetInterface(ISongListEditorSectionInterface data)
         {
-            ctlSongComEditor.SetInterface(data);
+            // Set Interface to Song Editor
         }
 
         // Show Editor
@@ -26,7 +26,7 @@ namespace SynthLiveMidiController
 
         private void SongPresetEditor_Shown(object sender, EventArgs e)
         {
-            ctlSongComEditor.RefreshAllFields();
+            // Refresh Editor
         }
     }
 }

@@ -51,7 +51,7 @@ namespace SynthLiveMidiController
         }
 
         // -----------------------------------------  Methods  ---------------------------------------------------------------
-        // Load Template and Temporary Data
+        // Load Template and Temporary Data  !!!! PREPARE SONG LIST
         public void LoadData(ISongListStorageSectionInterface dev)
         {
             instrument = dev;
