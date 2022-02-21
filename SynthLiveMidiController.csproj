@@ -76,6 +76,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstrumentList\Roland\XP50\AllDataRouter.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50Commands.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\RolandXP50Constants.cs" />
     <Compile Include="ParameterControls\CtlBoolField.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -202,10 +205,10 @@
     <Compile Include="FastPresetEditor.Designer.cs">
       <DependentUpon>FastPresetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="InstrumentList\Roland\XP50\SelectPatchDialog.cs">
+    <Compile Include="Dialogs\SelectPatchDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InstrumentList\Roland\XP50\SelectPatchDialog.Designer.cs">
+    <Compile Include="Dialogs\SelectPatchDialog.Designer.cs">
       <DependentUpon>SelectPatchDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Picrutes\KeyboardPicture.cs" />
@@ -293,7 +296,7 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InstrumentList\Roland\XP50\SelectPatchDialog.resx">
+    <EmbeddedResource Include="Dialogs\SelectPatchDialog.resx">
       <DependentUpon>SelectPatchDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\MidiInOutDialog.resx">

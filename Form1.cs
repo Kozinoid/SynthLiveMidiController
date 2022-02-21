@@ -18,9 +18,8 @@ namespace SynthLiveMidiController
         private PreprocessorCommandsClass perfCommander = null;             // Command module
         private InstrumentMIDIMessages messages = null;                     // Message options
         private RolandXP50Class roland = null;                              // Roland XP50 
-        private RolandXP50Performance mainPerformance;                      // Main Performance
-        private SongPresetEditor songPresetEditor = new SongPresetEditor(); // Song Preset Editor
-        private FastPresetEditor fastPresetEditor = new FastPresetEditor(); // Fast Preset Editor
+        private AllDataManagerRouter manager = null;                        // Main Manager
+
 
         //------------------------------------------  BUTTON GROUP CLASS  ----------------------------------------------
         class ButtonGroup 
@@ -169,8 +168,8 @@ namespace SynthLiveMidiController
             this.Font = VisualOptions.mainFont;
             songListControl.Font = VisualOptions.mainFont;
             fastListControl.Font = VisualOptions.mainFont;
-            songPresetEditor.Font = VisualOptions.mainFont;
-            fastPresetEditor.Font = VisualOptions.mainFont;
+            //songPresetEditor.Font = VisualOptions.mainFont;
+            //fastPresetEditor.Font = VisualOptions.mainFont;
             lb_SongName.Font = VisualOptions.displayNameFont;
             lb_CommandName.Font = VisualOptions.displayTempoFont;
             lb_Tempo.Font = VisualOptions.displayTempoFont;
@@ -179,15 +178,15 @@ namespace SynthLiveMidiController
             this.ForeColor = VisualOptions.mainTextColor;
             songListControl.ForeColor = VisualOptions.mainTextColor;
             fastListControl.ForeColor = VisualOptions.mainTextColor;
-            songPresetEditor.ForeColor = VisualOptions.mainTextColor;
-            fastPresetEditor.ForeColor = VisualOptions.mainTextColor;
+            //songPresetEditor.ForeColor = VisualOptions.mainTextColor;
+            //fastPresetEditor.ForeColor = VisualOptions.mainTextColor;
 
             // Background Color
             this.BackColor = VisualOptions.backgroundColor;
             songListControl.BackColor = VisualOptions.backgroundColor;
             fastListControl.BackColor = VisualOptions.backgroundColor;
-            songPresetEditor.BackColor = VisualOptions.backgroundColor;
-            fastPresetEditor.BackColor = VisualOptions.backgroundColor;
+            //songPresetEditor.BackColor = VisualOptions.backgroundColor;
+            //fastPresetEditor.BackColor = VisualOptions.backgroundColor;
         }
 
         // Setup Devices
@@ -202,7 +201,7 @@ namespace SynthLiveMidiController
 
             perfCommander = new PreprocessorCommandsClass(mainMidiDevice, messages);                                        // Command module
 
-            mainPerformance = new RolandXP50Performance(RolandXP50Performance.TemporaryPerformanceAddress, perfCommander);  // Main Performance
+            manager = new AllDataManagerRouter(perfCommander);
 
             /*
             1. Разработать протокол передачи данных в Performance
@@ -210,16 +209,6 @@ namespace SynthLiveMidiController
             3. Разработать интерфейс заказа параметров и Callback при их изменении из другого редактора
             Любой новый редактор, хранилище, визуализатор параметров может сам выбирать параметры и блоки памяти для редактирования и контролировать их изменение
             */
-
-            // .............................................  LISTS  .....................................................
-            songListControl.LoadData(mainPerformance);      // Song List    
-            trackListControl.LoadData(mainPerformance);     // Track List (Loading manually!!!!!!!!)
-            fastListControl.LoadData(mainPerformance);      // Fast List
-
-            // ======================================  UNDER CONSTRUCTION  ===============================================
-            songPresetEditor.SetInterface(mainPerformance); // Attach Performance to Song Editor
-            fastPresetEditor.SetInterface(mainPerformance); // Attach Performance to Fast Editor
-            //============================================================================================================
         }
 
         // Form closing...
@@ -264,52 +253,39 @@ namespace SynthLiveMidiController
         // OPTOINS Button
         private void bt_Options_Click(object sender, EventArgs e)
         {
-            songPresetEditor.ShowEditor(mainPerformance);
+            //songPresetEditor.ShowEditor(mainPerformance);
             //fastPresetEditor.ShowEditor(mainPerformance);
         }
 
         //---------------------------------------  TEST  --------------------------------------------
         private void bt_act1_Click(object sender, EventArgs e)
         {
-            mainPerformance.RequestPerformance();
+            
         }
 
         private void bt_act2_Click(object sender, EventArgs e)
         {
-            songListControl.GetTemporaryDataFromPerformance();
-            fastListControl.GetTemporaryDataFromPerformance();
-
-            songListControl.PrintData();
-            fastListControl.PrintData();
+            
         }
 
         private void bt_act3_Click(object sender, EventArgs e)
         {
-            songListControl.StoreTemporaryToTemplate();
-            fastListControl.StoreTemporaryToTemplate();
-
-            songListControl.SaveNewSongTemplate();
-            fastListControl.SaveNewFastTemplate();
+            
         }
 
         private void bt_act4_Click(object sender, EventArgs e)
         {
-            songListControl.LoadNewSongTemplate();
-            fastListControl.LoadNewFastTemplate();
-
-            songListControl.LoadTemporaryFromTemplate();
-            fastListControl.LoadTemporaryFromTemplate();
+            
         }
 
         private void bt_act5_Click(object sender, EventArgs e)
         {
-            songListControl.SetTemporaryDataToPerformance();
-            fastListControl.SetTemporaryDataToPerformance();
+            
         }
 
         private void bt_Act6_Click(object sender, EventArgs e)
         {
-            mainPerformance.SendPerformance();
+            
         }
     }
 }

@@ -99,25 +99,26 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // ----------------------------------------------  Static fields  -------------------------------------------
         public static int SongCommandCount = 10;
         public static int FastCommandCount = 9;
-        public static uint TemporaryEFXSourceAddress = RolandXP50Performance.TemporaryPerformanceAddress + 0x0C;
+        public static uint TemporaryEFXSourceAddress = RolandXP50Constants.TemporaryPerformanceAddress + 0x0C;
         public static uint[] TemporaryLocalSwitchAddresses = {
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1014u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1114u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1214u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1314u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1414u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1514u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1614u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1714u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1814u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1914u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1A14u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1B14u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1C14u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1D14u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1E14u,
-                RolandXP50Performance.TemporaryPerformanceAddress + 0x1F14u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1014u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1114u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1214u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1314u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1414u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1514u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1614u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1714u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1814u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1914u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1A14u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1B14u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1C14u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1D14u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1E14u,
+                RolandXP50Constants.TemporaryPerformanceAddress + 0x1F14u,
             };
+        protected IPerformanceMIDIInOutInterface commander;
 
         // Song/Fast Preset Name
         public string PresetName { get; set; }
@@ -126,7 +127,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         protected List<RolandXP50PerformanceCommand> commandList;
 
         // Length of serialized data buffer
-        protected abstract int Lenght{ get; }
+        protected abstract int Lenght { get; }
 
         // Indexator
         public RolandXP50PerformanceCommand this[int comIndex]
@@ -135,8 +136,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Constructor
-        internal RolandXP50CommandSet(int commandCount, int channelCount)
+        internal RolandXP50CommandSet(IPerformanceMIDIInOutInterface cmd, int commandCount, int channelCount)
         {
+            commander = cmd;
             commandList = new List<RolandXP50PerformanceCommand>(commandCount);
             for (int i = 0; i < commandCount; i++)
             {
@@ -145,9 +147,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         //Send Command
-        public abstract void SendCommand(int comNumber, IPerformanceMIDIInOutInterface commander);
+        public abstract void SendCommand(int comNumber);
 
-        // To byte array
+        // To Byte Array
         public byte[] ToByteArray()
         {
             byte[] buffer = new byte[Lenght];
@@ -227,11 +229,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Serialized data buffer length
         protected override int Lenght
         {
-            get { return SongCommandCount * (RolandXP50Performance.SongChannelCount + 1); }
+            get { return SongCommandCount * (RolandXP50Constants.SongChannelCount + 1); }
         }
 
         // Constructor
-        public RolandXP50SongCommandSet() : base(SongCommandCount, RolandXP50Performance.SongChannelCount) 
+        public RolandXP50SongCommandSet(IPerformanceMIDIInOutInterface cmd) : base(cmd, SongCommandCount, RolandXP50Constants.SongChannelCount)
         {
             // Initialization
             PresetName = "New Song Name";
@@ -245,23 +247,23 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Send Song Command
-        public override void SendCommand(int comNumber, IPerformanceMIDIInOutInterface commander)
+        public override void SendCommand(int comNumber)
         {
             if ((comNumber >= 0) && (comNumber < commandList.Count))
             {
                 // Send Command to commander
                 uint efxAddr = TemporaryEFXSourceAddress;
                 commander.SendData(efxAddr, commandList[comNumber].GetEFXBuffer());
-                for (int i = 0; i < RolandXP50Performance.MIDIChannelCount; i++)
+                for (int i = 0; i < RolandXP50Constants.MIDIChannelCount; i++)
                 {
                     uint addr = TemporaryLocalSwitchAddresses[i];
-                    if (i < RolandXP50Performance.SongChannelCount)
+                    if (i < RolandXP50Constants.SongChannelCount)
                     {
                         commander.SendData(addr, commandList[comNumber].channels[i].GetLocalBuffer());
                     }
                     else
                     {
-                        commander.SendData(addr, new byte[] {(byte)LocalSwitch.OFF});
+                        commander.SendData(addr, new byte[] { (byte)LocalSwitch.OFF });
                     }
                 }
 
@@ -275,11 +277,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Serialized data buffer length
         protected override int Lenght
         {
-            get { return FastCommandCount * (RolandXP50Performance.FastChannelCount + 1); }
+            get { return FastCommandCount * (RolandXP50Constants.FastChannelCount + 1); }
         }
 
         // Constructor
-        public RolandXP50FastCommandSet() : base(FastCommandCount, RolandXP50Performance.FastChannelCount) 
+        public RolandXP50FastCommandSet(IPerformanceMIDIInOutInterface cmd) : base(cmd, FastCommandCount, RolandXP50Constants.FastChannelCount)
         {
             // Initialization
             PresetName = "New Fast Preset";
@@ -291,19 +293,19 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Send Fast Command
-        public override void SendCommand(int comNumber, IPerformanceMIDIInOutInterface commander)
+        public override void SendCommand(int comNumber)
         {
             if ((comNumber >= 0) && (comNumber < commandList.Count))
             {
                 // Send Command to commander
                 uint efxAddr = TemporaryEFXSourceAddress;
                 commander.SendData(efxAddr, commandList[comNumber].GetEFXBuffer());
-                for (int i = 0; i < RolandXP50Performance.MIDIChannelCount; i++)
+                for (int i = 0; i < RolandXP50Constants.MIDIChannelCount; i++)
                 {
                     uint addr = TemporaryLocalSwitchAddresses[i];
-                    if ((i >= RolandXP50Performance.SongChannelCount) && (i < RolandXP50Performance.MIDIChannelCount))
+                    if ((i >= RolandXP50Constants.SongChannelCount) && (i < RolandXP50Constants.MIDIChannelCount))
                     {
-                        commander.SendData(addr, commandList[comNumber].channels[i - RolandXP50Performance.SongChannelCount].GetLocalBuffer());
+                        commander.SendData(addr, commandList[comNumber].channels[i - RolandXP50Constants.SongChannelCount].GetLocalBuffer());
                     }
                     else
                     {

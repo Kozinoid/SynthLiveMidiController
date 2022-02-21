@@ -2,9 +2,72 @@
 using System.Text;
 using System.Runtime.InteropServices;
 using SynthLiveMidiController.MIDIMessages;
+using System.Collections.Generic;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
+    //Dictionary<int, OneParameterFieldManager> parameters;
+    //--------------------------------  One Fiel Manager  -------------------------------------
+    class OneParameterFieldManager
+    {
+        readonly string name = "";
+        readonly int offset = 0;
+        readonly int length = 1;
+        readonly byte[] parameterValue;
+
+        public string Name
+        {
+            get { return name; }
+        }
+        public int Offset
+        {
+            get { return offset; }
+        }
+        public int Length
+        {
+            get { return length; }
+        }
+        public byte[] ParameterValue
+        {
+            get
+            {
+                byte[] res = new byte[length];
+                for (int i = 0; i < length; i++)
+                {
+                    res[i] = parameterValue[i];
+                }
+                return res;
+            }
+            set
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    parameterValue[i] = value[i];
+                }
+            }
+        }
+
+        public OneParameterFieldManager(string nm, int os, int len)
+        {
+            name = nm;
+            length = len;
+            offset = os;
+            parameterValue = new byte[len];
+        }
+
+        //----------------------------  TEST  -------------------------------
+        public void Print()
+        {
+            Console.Write(name);
+            Console.Write(" = ");
+            for (int i = 0; i < Length; i++)
+            {
+                Console.Write("{0:X2} ", parameterValue[i]);
+            }
+            Console.WriteLine();
+        }
+    }
+
     // -----------------------------------------------  Data Segment Base Class  ---------------------------------------------------------------------
     abstract class DataSegmentClass
     {
@@ -12,10 +75,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         protected readonly uint segmentAddress;
 
         // Main segment address getter
-        public uint SegmentAddress { get { return segmentAddress; } }   
-
-        //protected bool requested = false;
-        //public bool Requested { get { return requested; } set { requested = value; } }
+        public uint SegmentAddress { get { return segmentAddress; } }
 
         // Segment data length
         public abstract uint Length { get; }
@@ -39,111 +99,67 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     // ---------------------------------------------  Performance Common Data Class  -----------------------------------------------------------------
     class PerformanceCommonClass : DataSegmentClass
     {
+        // Parameters Manager
+        private Dictionary<PERFORMANCE_COMMON_PARAMETERS, OneParameterFieldManager> parametersManager;
+
+        // Modified Fields
+        List<OneParameterFieldManager> modified = new List<OneParameterFieldManager>();
+        public List<OneParameterFieldManager> Modified
+        {
+            get { return modified; }
+        }
+
         // Structure
         PERFORMANCE_COMMON performanceCommonData;
-
-        // Имя Performance
-        public string PerformanceName
-        {
-            get
-            {
-                string str = "";
-
-                byte[] buf = new byte[12];
-                buf[0] = performanceCommonData.PerformanceName1;
-                buf[1] = performanceCommonData.PerformanceName2;
-                buf[2] = performanceCommonData.PerformanceName3;
-                buf[3] = performanceCommonData.PerformanceName4;
-                buf[4] = performanceCommonData.PerformanceName5;
-                buf[5] = performanceCommonData.PerformanceName6;
-                buf[6] = performanceCommonData.PerformanceName7;
-                buf[7] = performanceCommonData.PerformanceName8;
-                buf[8] = performanceCommonData.PerformanceName9;
-                buf[9] = performanceCommonData.PerformanceName10;
-                buf[10] = performanceCommonData.PerformanceName11;
-                buf[11] = performanceCommonData.PerformanceName12;
-                str = Encoding.Default.GetString(buf);
-
-                return str;
-
-            }
-            set
-            {
-                string str = value.PadRight(12, ' ');
-                byte[] buf = new byte[12];
-                buf = Encoding.Default.GetBytes(str);
-                performanceCommonData.PerformanceName1 = buf[0];
-                performanceCommonData.PerformanceName2 = buf[1];
-                performanceCommonData.PerformanceName3 = buf[2];
-                performanceCommonData.PerformanceName4 = buf[3];
-                performanceCommonData.PerformanceName5 = buf[4];
-                performanceCommonData.PerformanceName6 = buf[5];
-                performanceCommonData.PerformanceName7 = buf[6];
-                performanceCommonData.PerformanceName8 = buf[7];
-                performanceCommonData.PerformanceName9 = buf[8];
-                performanceCommonData.PerformanceName10 = buf[9];
-                performanceCommonData.PerformanceName11 = buf[10];
-                performanceCommonData.PerformanceName12 = buf[11];
-            }
-        }
-
-        // Tempo
-        public byte Tempo
-        {
-            get
-            {
-                byte lsb = performanceCommonData.PerformanceTempoLSB;
-                byte msb = performanceCommonData.PerformanceTempoMSB;
-                msb <<= 4;
-                return (byte)(lsb | msb);
-            }
-            set
-            {
-                byte tmp = value;
-                if (tmp < 20) tmp = 20;
-                if (tmp > 250) tmp = 250;
-                performanceCommonData.PerformanceTempoLSB = (byte)(tmp & 0x0F);
-                performanceCommonData.PerformanceTempoMSB = (byte)((tmp & 0xF0) >> 4);
-            }
-        }
-
-        // EFX Source
-        public EFXSource EfxSource
-        {
-            get { return performanceCommonData.EFXSource; }
-        }
-
-        // Structure -> Data Array
-        public override byte[] ToByteArray()
-        {
-            int rawsize = Marshal.SizeOf(performanceCommonData);
-            IntPtr buffer = Marshal.AllocHGlobal(rawsize);
-            Marshal.StructureToPtr(performanceCommonData, buffer, false);
-            byte[] rawdata = new byte[rawsize];
-            Marshal.Copy(buffer, rawdata, 0, rawsize);
-            Marshal.FreeHGlobal(buffer);
-            return rawdata;
-        }
 
         // Structure Length
         public override uint Length
         {
-            get { return (uint)Marshal.SizeOf(performanceCommonData); }
+            get { return (uint)performanceCommonData.Length; }
         }
 
         // Constructor
         public PerformanceCommonClass(uint segAddr) : base(segAddr)
         {
             performanceCommonData = new PERFORMANCE_COMMON();
+            ParametersManagerInit();
+        }
+
+        // Parameters Manager Init
+        private void ParametersManagerInit()
+        {
+            parametersManager = new Dictionary<PERFORMANCE_COMMON_PARAMETERS, OneParameterFieldManager>();
+            foreach (PERFORMANCE_COMMON_PARAMETERS par in Enum.GetValues(typeof(PERFORMANCE_COMMON_PARAMETERS)))
+            {
+                int length = 1;
+                if (par == PERFORMANCE_COMMON_PARAMETERS.PerformanceName) length = 12;
+                if (par == PERFORMANCE_COMMON_PARAMETERS.PerformanceTempo) length = 2;
+                int offset = (int)par;
+
+                OneParameterFieldManager item = new OneParameterFieldManager(par.ToString(), offset, length);
+                parametersManager.Add(par, item);
+            }
         }
 
         // Data Array -> Structure
         public void CopyDataToStructure(byte[] data)
         {
-            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            PERFORMANCE_COMMON temp = (PERFORMANCE_COMMON)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(PERFORMANCE_COMMON));
-            handle.Free();
-            performanceCommonData = temp;
+            CopyDataToStructure(data, 0);
+        }
+
+        // Data Array -> Structure at Address
+        public void CopyDataToStructure(byte[] data, int offset)
+        {
+            Array.Copy(data, 0, performanceCommonData.Buffer, offset, data.Length);
+        }
+
+        // Structure -> Data Array
+        public override byte[] ToByteArray()
+        {
+            int length = performanceCommonData.Length;
+            byte[] data = new byte[length];
+            Array.Copy(performanceCommonData.Buffer, data, length);
+            return data;
         }
 
         // Send
@@ -155,161 +171,132 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Request
         public override void RequestData(IPerformanceMIDIInOutInterface commander)
         {
-            //requested = true;
             commander.RequestData(segmentAddress, Length);
+        }
+
+        // Set Parameter in Parameter Field
+        public void SetParameterInField(PERFORMANCE_COMMON_PARAMETERS param, byte[] value)
+        {
+            OneParameterFieldManager field = parametersManager[param];
+            int len = field.Length;
+            for (int i = 0; i < len; i++)
+            {
+                field.ParameterValue[i] = value[i];
+            }
+        }
+
+        // Copy Parameter in Structure
+        public void CopyParameterInStructure(PERFORMANCE_COMMON_PARAMETERS param)
+        {
+            OneParameterFieldManager field = parametersManager[param];
+            CopyDataToStructure(field.ParameterValue, field.Offset);
+        }
+
+        // Send Parameter to Roland
+        public void SendParameter(PERFORMANCE_COMMON_PARAMETERS param, IPerformanceMIDIInOutInterface commander)
+        {
+            uint addr = segmentAddress + (uint)parametersManager[param].Offset;
+            commander.SendData(addr, parametersManager[param].ParameterValue);
+        }
+
+        // Scan Structure. Find non equal parameters. Copy parameters.
+        public void ScanModifiedParameters()
+        {
+            ResetModified();
+
+            foreach (PERFORMANCE_COMMON_PARAMETERS param in Enum.GetValues(typeof(PERFORMANCE_COMMON_PARAMETERS)))
+            {
+                OneParameterFieldManager field = parametersManager[param];
+                int len = field.Length;
+                int off = field.Offset;
+                bool equal = true;
+                for (int i = 0; i < len; i++)
+                {
+                    if (performanceCommonData[off + i] != field.ParameterValue[i])
+                    {
+                        equal = false;
+                    }
+                }
+                if (!equal)
+                {
+                    byte[] buf = new byte[len];
+                    Array.Copy(performanceCommonData.Buffer, off, buf, 0, len);
+                    field.ParameterValue = buf;
+                    modified.Add(field);
+                }
+            }
+        }
+
+        // Reset Modified
+        public void ResetModified()
+        {
+            modified.Clear();
         }
     }
 
     // -------------------------------------------------  Performance Part Data Class  ---------------------------------------------------------------
     class PerformancePartClass : DataSegmentClass
     {
+        // Parameters Manager
+        private Dictionary<PERFORMANCE_PART_PARAMETERS, OneParameterFieldManager> parametersManager;
+
+        // Modified Fields
+        List<OneParameterFieldManager> modified = new List<OneParameterFieldManager>();
+        public List<OneParameterFieldManager> Modified
+        {
+            get { return modified; }
+        }
+
         // Structure
         PERFORMANCE_PART performancePartData;
-
-        // Local Switch 
-        public LocalSwitch LocSwitch
-        {
-            get { return performancePartData.LocalSwitch; }
-            set { performancePartData.LocalSwitch = value; }
-        }
-
-        // Receive Hold1 Switch
-        public RecieveHold1Switch Hold1Switch
-        {
-            get { return performancePartData.RecieveHold1Switch; }
-            set { performancePartData.RecieveHold1Switch = value; }
-        }
-
-        // Lower Key
-        public byte LowerKey
-        {
-            get { return performancePartData.KeyboardRangeLower; }
-            set { performancePartData.KeyboardRangeLower = value; }
-        }
-
-        // Upper Key
-        public byte UpperKey
-        {
-            get { return performancePartData.KeyboardRangeUpper; }
-            set { performancePartData.KeyboardRangeUpper = value; }
-        }
-
-        // Volume
-        public byte Volume
-        {
-            get
-            {
-                return performancePartData.PartLevel;
-            }
-            set
-            {
-                performancePartData.PartLevel = value;
-            }
-        }
-
-        // Pan
-        public byte Pan
-        {
-            get
-            {
-                return performancePartData.PartPan;
-            }
-            set
-            {
-                performancePartData.PartPan = value;
-            }
-        }
-
-        // Octave
-        public byte OctaveShift
-        {
-            get
-            {
-                return performancePartData.OctaveShift;
-            }
-            set
-            {
-                performancePartData.OctaveShift = value;
-            }
-        }
-
-        // Reverb
-        public byte Reverb
-        {
-            get
-            {
-                return performancePartData.ReverbSendLevel;
-            }
-            set
-            {
-                performancePartData.ReverbSendLevel = value;
-            }
-        }
-
-        // Chorus
-        public byte Chorus
-        {
-            get
-            {
-                return performancePartData.ChorusSendLevel;
-            }
-            set
-            {
-                performancePartData.ChorusSendLevel = value;
-            }
-        }
-
-        // Patch
-        public byte[] PatchCommandArray
-        {
-            get
-            {
-                return new byte[] {
-                (byte)performancePartData.PathGroupType,
-                performancePartData.PatchGroupID,
-                performancePartData.PatchNumberMSB,
-                performancePartData.PatchNumberLSB};
-            }
-            set
-            {
-                performancePartData.PathGroupType = (PathGroupType)value[0];
-                performancePartData.PatchGroupID = value[1];
-                performancePartData.PatchNumberMSB = value[2];
-                performancePartData.PatchNumberLSB = value[3];
-            }
-        }
-
-        // Structure -> Data Array
-        public override byte[] ToByteArray()
-        {
-            int rawsize = Marshal.SizeOf(performancePartData);
-            IntPtr buffer = Marshal.AllocHGlobal(rawsize);
-            Marshal.StructureToPtr(performancePartData, buffer, false);
-            byte[] rawdata = new byte[rawsize];
-            Marshal.Copy(buffer, rawdata, 0, rawsize);
-            Marshal.FreeHGlobal(buffer);
-            return rawdata;
-        }
 
         // Structure Length
         public override uint Length
         {
-            get { return (uint)Marshal.SizeOf(performancePartData); }
+            get { return (uint)performancePartData.Length; }
         }
 
         // Constructor
         public PerformancePartClass(uint segAddr) : base(segAddr)
         {
             performancePartData = new PERFORMANCE_PART();
+            ParametersManagerInit();
+        }
+
+        // Parameters Manager Init
+        private void ParametersManagerInit()
+        {
+            parametersManager = new Dictionary<PERFORMANCE_PART_PARAMETERS, OneParameterFieldManager>();
+            foreach (PERFORMANCE_PART_PARAMETERS par in Enum.GetValues(typeof(PERFORMANCE_PART_PARAMETERS)))
+            {
+                int length = 1;
+                if (par == PERFORMANCE_PART_PARAMETERS.PatchNumber) length = 2;
+                if (par == PERFORMANCE_PART_PARAMETERS.TransmitVolume) length = 2;
+                int offset = (int)par;
+                OneParameterFieldManager item = new OneParameterFieldManager(par.ToString(), offset, length);
+                parametersManager.Add(par, item);
+            }
         }
 
         // Data Array -> Structure
         public void CopyDataToStructure(byte[] data)
         {
-            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            PERFORMANCE_PART temp = (PERFORMANCE_PART)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(PERFORMANCE_PART));
-            handle.Free();
-            performancePartData = temp;
+            CopyDataToStructure(data, 0);
+        }
+
+        // Data Array -> Structure at Address
+        public void CopyDataToStructure(byte[] data, int offset)
+        {
+            Array.Copy(data, 0, performancePartData.Buffer, offset, data.Length);
+        }
+
+        // Structure -> Data Array
+        public override byte[] ToByteArray()
+        {
+            int length = performancePartData.Length;
+            byte[] data = new byte[length];
+            Array.Copy(performancePartData.Buffer, data, length);
+            return data;
         }
 
         // Send
@@ -321,8 +308,66 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Request
         public override void RequestData(IPerformanceMIDIInOutInterface commander)
         {
-            //requested = true;
             commander.RequestData(segmentAddress, Length);
+        }
+
+        // Set Parameter in Parameter Field
+        public void SetParameterInField(PERFORMANCE_PART_PARAMETERS param, byte[] value)
+        {
+            OneParameterFieldManager field = parametersManager[param];
+            int len = field.Length;
+            for (int i = 0; i < len; i++)
+            {
+                field.ParameterValue[i] = value[i];
+            }
+        }
+
+        // Copy Parameter in Structure
+        public void CopyParameterInStructure(PERFORMANCE_PART_PARAMETERS param)
+        {
+            OneParameterFieldManager field = parametersManager[param];
+            CopyDataToStructure(field.ParameterValue, field.Offset);
+        }
+
+        // Send Parameter to Roland
+        public void SendParameter(PERFORMANCE_PART_PARAMETERS param, IPerformanceMIDIInOutInterface commander)
+        {
+            uint addr = segmentAddress + (uint)parametersManager[param].Offset;
+            commander.SendData(addr, parametersManager[param].ParameterValue);
+        }
+
+        // Scan Structure. Find non equal parameters. Copy parameters.
+        public void ScanModifiedParameters()
+        {
+            ResetModified();
+
+            foreach (PERFORMANCE_PART_PARAMETERS param in Enum.GetValues(typeof(PERFORMANCE_PART_PARAMETERS)))
+            {
+                OneParameterFieldManager field = parametersManager[param];
+                int len = field.Length;
+                int off = field.Offset;
+                bool equal = true;
+                for (int i = 0; i < len; i++)
+                {
+                    if (performancePartData[off + i] != field.ParameterValue[i])
+                    {
+                        equal = false;
+                    }
+                }
+                if (!equal)
+                {
+                    byte[] buf = new byte[len];
+                    Array.Copy(performancePartData.Buffer, off, buf, 0, len);
+                    field.ParameterValue = buf;
+                    modified.Add(field);
+                }
+            }
+        }
+
+        // Reset Modified
+        public void ResetModified()
+        {
+            modified.Clear();
         }
     }
 }
