@@ -18,7 +18,7 @@ namespace SynthLiveMidiController
         private PreprocessorCommandsClass perfCommander = null;             // Command module
         private InstrumentMIDIMessages messages = null;                     // Message options
         private RolandXP50Class roland = null;                              // Roland XP50 
-        private AllDataManagerRouter manager = null;                        // Main Manager
+        private AllDataManager manager = null;                        // Main Manager
 
 
         //------------------------------------------  BUTTON GROUP CLASS  ----------------------------------------------
@@ -201,7 +201,7 @@ namespace SynthLiveMidiController
 
             perfCommander = new PreprocessorCommandsClass(mainMidiDevice, messages);                                        // Command module
 
-            manager = new AllDataManagerRouter(perfCommander);
+            manager = new AllDataManager(perfCommander);
 
             /*
             1. Разработать протокол передачи данных в Performance

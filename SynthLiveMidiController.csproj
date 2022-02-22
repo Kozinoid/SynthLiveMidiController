@@ -76,7 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InstrumentList\Roland\XP50\AllDataRouter.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\AllDataManager.cs" />
+    <Compile Include="InstrumentList\Roland\XP50\ParameterRouter.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Commands.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Constants.cs" />
     <Compile Include="ParameterControls\CtlBoolField.cs">

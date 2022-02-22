@@ -83,17 +83,34 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         // Segment data to byte array
         public abstract byte[] ToByteArray();
 
+        // Modified Fields
+        protected List<OneParameterFieldManager> modified = new List<OneParameterFieldManager>();
+        public List<OneParameterFieldManager> Modified
+        {
+            get { return modified; }
+        }
+
         // Base Constructor
         protected DataSegmentClass(uint addr)
         {
             segmentAddress = addr;
         }
 
+        //-------------------------------  Roland  ------------------------------------
         // Send segment data to device
         public abstract void SendData(IPerformanceMIDIInOutInterface commander);
 
         // Request segment data from device via Callback events
         public abstract void RequestData(IPerformanceMIDIInOutInterface commander);
+
+        //------------------------------  From Roland  --------------------------------
+        // Scan
+        public abstract void ScanModifiedParameters();
+
+        // Reset
+        public abstract void ResetModified();
+
+        //-----------------------------  From Subscriber  -----------------------------
     }
 
     // ---------------------------------------------  Performance Common Data Class  -----------------------------------------------------------------
@@ -101,13 +118,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     {
         // Parameters Manager
         private Dictionary<PERFORMANCE_COMMON_PARAMETERS, OneParameterFieldManager> parametersManager;
-
-        // Modified Fields
-        List<OneParameterFieldManager> modified = new List<OneParameterFieldManager>();
-        public List<OneParameterFieldManager> Modified
-        {
-            get { return modified; }
-        }
 
         // Structure
         PERFORMANCE_COMMON performanceCommonData;
@@ -162,6 +172,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return data;
         }
 
+        //-------------------------------  Roland  ------------------------------------
         // Send
         public override void SendData(IPerformanceMIDIInOutInterface commander)
         {
@@ -174,19 +185,17 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             commander.RequestData(segmentAddress, Length);
         }
 
+        //---------------------------  Parameter section  -----------------------------
         // Set Parameter in Parameter Field
         public void SetParameterInField(PERFORMANCE_COMMON_PARAMETERS param, byte[] value)
         {
             OneParameterFieldManager field = parametersManager[param];
             int len = field.Length;
-            for (int i = 0; i < len; i++)
-            {
-                field.ParameterValue[i] = value[i];
-            }
+            Array.Copy(value, field.ParameterValue, len);
         }
 
         // Copy Parameter in Structure
-        public void CopyParameterInStructure(PERFORMANCE_COMMON_PARAMETERS param)
+        public void CopyParameterIntoStructure(PERFORMANCE_COMMON_PARAMETERS param)
         {
             OneParameterFieldManager field = parametersManager[param];
             CopyDataToStructure(field.ParameterValue, field.Offset);
@@ -199,8 +208,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             commander.SendData(addr, parametersManager[param].ParameterValue);
         }
 
+        //------------------------------  From Roland  --------------------------------
         // Scan Structure. Find non equal parameters. Copy parameters.
-        public void ScanModifiedParameters()
+        public override void ScanModifiedParameters()
         {
             ResetModified();
 
@@ -228,9 +238,18 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Reset Modified
-        public void ResetModified()
+        public override void ResetModified()
         {
             modified.Clear();
+        }
+
+        //-----------------------------  From Subscriber  -----------------------------
+        // Receive Parameter
+        public void SetParameter(PERFORMANCE_COMMON_PARAMETERS param, byte[] value, IPerformanceMIDIInOutInterface commander)
+        {
+            SetParameterInField(param, value);
+            CopyParameterIntoStructure(param);
+            SendParameter(param, commander);
         }
     }
 
@@ -239,13 +258,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     {
         // Parameters Manager
         private Dictionary<PERFORMANCE_PART_PARAMETERS, OneParameterFieldManager> parametersManager;
-
-        // Modified Fields
-        List<OneParameterFieldManager> modified = new List<OneParameterFieldManager>();
-        public List<OneParameterFieldManager> Modified
-        {
-            get { return modified; }
-        }
 
         // Structure
         PERFORMANCE_PART performancePartData;
@@ -270,7 +282,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             foreach (PERFORMANCE_PART_PARAMETERS par in Enum.GetValues(typeof(PERFORMANCE_PART_PARAMETERS)))
             {
                 int length = 1;
-                if (par == PERFORMANCE_PART_PARAMETERS.PatchNumber) length = 2;
+                if (par == PERFORMANCE_PART_PARAMETERS.PatchNumber) length = 4;
                 if (par == PERFORMANCE_PART_PARAMETERS.TransmitVolume) length = 2;
                 int offset = (int)par;
                 OneParameterFieldManager item = new OneParameterFieldManager(par.ToString(), offset, length);
@@ -299,6 +311,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             return data;
         }
 
+        //-------------------------------  Roland  ------------------------------------
         // Send
         public override void SendData(IPerformanceMIDIInOutInterface commander)
         {
@@ -311,19 +324,17 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             commander.RequestData(segmentAddress, Length);
         }
 
+        //---------------------------  Parameter section  -----------------------------
         // Set Parameter in Parameter Field
         public void SetParameterInField(PERFORMANCE_PART_PARAMETERS param, byte[] value)
         {
             OneParameterFieldManager field = parametersManager[param];
             int len = field.Length;
-            for (int i = 0; i < len; i++)
-            {
-                field.ParameterValue[i] = value[i];
-            }
+            Array.Copy(value, field.ParameterValue, len);
         }
 
         // Copy Parameter in Structure
-        public void CopyParameterInStructure(PERFORMANCE_PART_PARAMETERS param)
+        public void CopyParameterIntoStructure(PERFORMANCE_PART_PARAMETERS param)
         {
             OneParameterFieldManager field = parametersManager[param];
             CopyDataToStructure(field.ParameterValue, field.Offset);
@@ -336,8 +347,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             commander.SendData(addr, parametersManager[param].ParameterValue);
         }
 
+        //------------------------------  From Roland  --------------------------------
         // Scan Structure. Find non equal parameters. Copy parameters.
-        public void ScanModifiedParameters()
+        public override void ScanModifiedParameters()
         {
             ResetModified();
 
@@ -365,9 +377,18 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Reset Modified
-        public void ResetModified()
+        public override void ResetModified()
         {
             modified.Clear();
+        }
+
+        //-----------------------------  From Subscriber  -----------------------------
+        // Receive Parameter
+        public void SetParameter(PERFORMANCE_PART_PARAMETERS param, byte[] value, IPerformanceMIDIInOutInterface commander)
+        {
+            SetParameterInField(param, value);
+            CopyParameterIntoStructure(param);
+            SendParameter(param, commander);
         }
     }
 }

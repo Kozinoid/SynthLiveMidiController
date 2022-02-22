@@ -8,8 +8,8 @@ using SynthLiveMidiController.MIDIMessages;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
-    //--------------------------------  All Fields MAnager  -----------------------------------
-    class AllDataManagerRouter
+    //--------------------------------------  All Fields MAnager  ---------------------------------------------
+    class AllDataManager
     {
         //----------------------------------------  DATA  -----------------------------------------------------
         RolandXP50Performance performance;
@@ -17,7 +17,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         private readonly IPerformanceMIDIInOutInterface commander;          // Command Collection
 
         // Constructor
-        public AllDataManagerRouter(IPerformanceMIDIInOutInterface cmd)
+        public AllDataManager(IPerformanceMIDIInOutInterface cmd)
         {
             commander = cmd;
 
@@ -109,11 +109,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 OneParameterFieldManager[] mod = performance.ScanModified(target);
                 // Refresh editors
             }
-            else
-            {
-                // Other Segment
-                //Console.WriteLine("Other segment");
-            }
+            //else
+            //{
+            //    // Other Segment
+            //    //Console.WriteLine("Other segment");
+            //}
         }
     }
 }

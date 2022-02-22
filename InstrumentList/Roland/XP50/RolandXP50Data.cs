@@ -1,7 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-
-namespace SynthLiveMidiController.InstrumentList.Roland.XP50
+﻿namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 {
     // COMMON SEGMENT BUFFER CLASS
     abstract class SEGMENT_BUFFER
@@ -106,9 +103,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         RecieveSwitch = 0x00,                   // 00                      
         MIDIChannel,                            // 01
 
-        PathGroupType,                          // 02
-        PatchGroupID,                           // 03
-        PatchNumber,                            // 04
+        //PathGroupType,                        
+        //PatchGroupID,                         
+        PatchNumber,                            // 02
 
         PartLevel = 0x06,                       // 06
         PartPan,                                // 07
