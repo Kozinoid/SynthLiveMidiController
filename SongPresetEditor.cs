@@ -13,13 +13,13 @@ namespace SynthLiveMidiController
         }
 
         // Set Data Interface
-        public void SetInterface(ISongListEditorSectionInterface data)
+        public void SetInterface(IParametersManager data)
         {
             // Set Interface to Song Editor
         }
 
         // Show Editor
-        public DialogResult ShowEditor(ISongListEditorSectionInterface parameters)
+        public DialogResult ShowEditor(IParametersManager parameters)
         {
             return ShowDialog();
         }

@@ -137,10 +137,12 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Data Array -> Structure at Address
+        bool scanAll = false;
         public void CopyDataToStructure(byte[] data, int offset)
         {
             Array.Copy(data, 0, segmentData.Buffer, offset, data.Length);
-            SendParametersToSubScribers();
+            SendParametersToSubScribers(scanAll);
+            scanAll = false;
         }
 
         // Structure -> Data Array
@@ -161,8 +163,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Request
-        public void RequestData(IPerformanceMIDIInOutInterface commander)
+        public void RequestData(IPerformanceMIDIInOutInterface commander, bool all)
         {
+            scanAll = all;
             commander.RequestData(segmentAddress, Length);
         }
 
@@ -224,6 +227,24 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
+        // Scan All Parameters
+        private void ScanAllParameters()
+        {
+            ResetModified();
+
+            foreach (T param in Enum.GetValues(typeof(T)))
+            {
+                OneParameterFieldManager<T> field = parametersManager[param];
+                int len = field.Length;
+                int off = field.Offset;
+
+                byte[] buf = new byte[len];
+                Array.Copy(segmentData.Buffer, off, buf, 0, len);
+                field.ParameterValue = buf;
+                modified.Add(field);
+            }
+        }
+
         // Find All Subscribers
         private void FindSubscribers()
         {
@@ -244,9 +265,16 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Send Parameters to Subscribers
-        private void SendParametersToSubScribers()
+        private void SendParametersToSubScribers(bool all)
         {
-            ScanModifiedParameters();
+            if (all) ScanAllParameters(); else ScanModifiedParameters();
+            FindSubscribers();
+        }
+
+        // Refresh All Parameters
+        public void RefreshAllParameters()
+        {
+            ScanAllParameters();
             FindSubscribers();
         }
 

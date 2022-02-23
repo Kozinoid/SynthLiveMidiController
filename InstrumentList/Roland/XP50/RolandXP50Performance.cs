@@ -109,6 +109,16 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
+        // Refresh All
+        public void RefreshAllPArameters()
+        {
+            performanceCommon.RefreshAllParameters();
+            for (int i = 0; i < RolandXP50Constants.MIDIChannelCount; i++)
+            {
+                performancePartList[i].RefreshAllParameters();
+            }
+        }
+
         //|                                       *********  PERFORMANCE STRUCTURE <-> ROLAND  *********                                        |
         //======================================================================================================================================|
 

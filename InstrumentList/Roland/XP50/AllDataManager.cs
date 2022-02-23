@@ -124,14 +124,20 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             performance.SetParameter(id, parameter, channel, value);
         }
+
+        public void RefreshAllPArameters()
+        {
+            performance.RefreshAllPArameters();
+        }
     }
 
     //======================================================================================================================================|
-    interface IParametersManager
+    public interface IParametersManager
     {
         void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_COMMON_PARAMETERS>> eHandler, PERFORMANCE_COMMON_PARAMETERS[] parameters);
         void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_PART_PARAMETERS>> eHandler, PERFORMANCE_PART_PARAMETERS[] parameters);
         void SetParameter(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_COMMON_PARAMETERS>> id, PERFORMANCE_COMMON_PARAMETERS parameter, byte[] value);
         void SetParameter(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_PART_PARAMETERS>> id, PERFORMANCE_PART_PARAMETERS parameter, int channel, byte[] value);
+        void RefreshAllPArameters();
     }
 }

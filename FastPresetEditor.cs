@@ -13,13 +13,13 @@ namespace SynthLiveMidiController
         }
 
         // Set Data Interface
-        public void SetInterface(IFastListEditorSectionInterface data)
+        public void SetInterface(IParametersManager data)
         {
-            // Set Interface to FAst Editor
+            // Set Interface to Fast Editor
         }
 
         // Show Editor
-        public DialogResult ShowEditor(IFastListEditorSectionInterface parameters)
+        public DialogResult ShowEditor(IParametersManager parameters)
         {
             return ShowDialog();
         }

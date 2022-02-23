@@ -212,7 +212,6 @@
       <DependentUpon>SelectPatchDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Picrutes\KeyboardPicture.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\IRolandXP50CommandsEditInterface.cs" />
     <Compile Include="File\MultiDataFileStream.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50DataSegmentClass.cs" />
     <Compile Include="MIDIMessages\IInstrimentCommandInterface.cs" />
