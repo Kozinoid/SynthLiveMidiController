@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstrumentList\Roland\XP50\AllDataManager.cs" />
-    <Compile Include="InstrumentList\Roland\XP50\ParameterRouter.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Commands.cs" />
     <Compile Include="InstrumentList\Roland\XP50\RolandXP50Constants.cs" />
     <Compile Include="ParameterControls\CtlBoolField.cs">
@@ -346,7 +345,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Picrutes\MainWindow.bmp" />
     <Content Include="InstrumentList\InstrumentList.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

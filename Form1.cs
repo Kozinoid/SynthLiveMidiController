@@ -203,12 +203,6 @@ namespace SynthLiveMidiController
 
             manager = new AllDataManager(perfCommander);
 
-            /*
-            1. Разработать протокол передачи данных в Performance
-            2. Разработать класс-посредник между редактором/хранилищем (заказчики-корректоры-хранители информации) и Performance
-            3. Разработать интерфейс заказа параметров и Callback при их изменении из другого редактора
-            Любой новый редактор, хранилище, визуализатор параметров может сам выбирать параметры и блоки памяти для редактирования и контролировать их изменение
-            */
         }
 
         // Form closing...
@@ -253,8 +247,7 @@ namespace SynthLiveMidiController
         // OPTOINS Button
         private void bt_Options_Click(object sender, EventArgs e)
         {
-            //songPresetEditor.ShowEditor(mainPerformance);
-            //fastPresetEditor.ShowEditor(mainPerformance);
+            
         }
 
         //---------------------------------------  TEST  --------------------------------------------
