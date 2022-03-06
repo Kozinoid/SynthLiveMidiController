@@ -10,7 +10,7 @@ namespace SynthLiveMidiController
     public partial class FastListControl : UserControl
     {
         // Fields
-        private IFastListStorageSectionInterface instrument;            // Main Performance&Command Object
+        private IParametersManager instrument;            // Main Performance&Command Object
 
         private RolandXP50FastPreset temporaryFastPreset;               // Temporary Preset
         private RolandXP50FastPreset templateFastPreset;                // Template Preset
@@ -51,7 +51,7 @@ namespace SynthLiveMidiController
         }
 
         // Load Template and Temporary Data  !!!! PREPARE FAST LIST
-        public void LoadData(IFastListStorageSectionInterface dev)
+        public void LoadData(IParametersManager dev)
         {
             instrument = dev;
             templateFastPreset = new RolandXP50FastPreset();
@@ -191,7 +191,7 @@ namespace SynthLiveMidiController
         }
 
         // Get Data From Performance
-        public void GetDataFromPerformance(IFastListStorageSectionInterface dev)
+        public void GetDataFromPerformance(IParametersManager dev)
         {
             //PresetName = dev.GetPresetName();
             //FastData = dev.GetFastData();
@@ -203,7 +203,7 @@ namespace SynthLiveMidiController
         }
 
         // Set Data To Performance
-        public void SetDataToPerformance(IFastListStorageSectionInterface dev)
+        public void SetDataToPerformance(IParametersManager dev)
         {
             //dev.SetPresetName(PresetName);
             //dev.SetFastData(FastData);

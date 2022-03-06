@@ -10,7 +10,7 @@ namespace SynthLiveMidiController
     public partial class SongListControl : UserControl
     {
         // Fields
-        private ISongListStorageSectionInterface instrument;            // Main Performance&Command Object
+        private IParametersManager instrument;            // Main Performance&Command Object
 
         private RolandXP50SongPreset temporarySongPreset;               // Temporary Preset
         private RolandXP50SongPreset templateSongPreset;                // Template Preset
@@ -52,7 +52,7 @@ namespace SynthLiveMidiController
 
         // -----------------------------------------  Methods  ---------------------------------------------------------------
         // Load Template and Temporary Data  !!!! PREPARE SONG LIST
-        public void LoadData(ISongListStorageSectionInterface dev)
+        public void LoadData(IParametersManager dev)
         {
             instrument = dev;
             templateSongPreset = new RolandXP50SongPreset();
@@ -198,7 +198,7 @@ namespace SynthLiveMidiController
         }
 
         // Get Data From Performance
-        public void GetDataFromPerformance(ISongListStorageSectionInterface dev)
+        public void GetDataFromPerformance(IParametersManager dev)
         {
             //PresetName = dev.GetSongName();
             //Singer = dev.GetSinger();
@@ -212,7 +212,7 @@ namespace SynthLiveMidiController
         }
 
         // Set Data To Performance
-        public void SetDataToPerformance(ISongListStorageSectionInterface dev)
+        public void SetDataToPerformance(IParametersManager dev)
         {
             //dev.SetSongName(PresetName);
             //dev.SetSinger(Singer);
