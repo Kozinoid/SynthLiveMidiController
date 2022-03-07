@@ -105,14 +105,14 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // ====================================================  INTERFACE SECTION  =============================================================
-        public void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_COMMON_PARAMETERS>> eHandler, PERFORMANCE_COMMON_PARAMETERS[] parameters)
+        public void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_COMMON_PARAMETERS>> callbacFunction, PERFORMANCE_COMMON_PARAMETERS[] parameters)
         {
-            performance.RequestParameters(eHandler, parameters);
+            performance.RequestParameters(callbacFunction, parameters);
         }
 
-        public void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_PART_PARAMETERS>> eHandler, PERFORMANCE_PART_PARAMETERS[] parameters)
+        public void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_PART_PARAMETERS>> callbacFunction, PERFORMANCE_PART_PARAMETERS[] parameters)
         {
-            performance.RequestParameters(eHandler, parameters);
+            performance.RequestParameters(callbacFunction, parameters);
         }
 
         public void SetParameter(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_COMMON_PARAMETERS>> id, PERFORMANCE_COMMON_PARAMETERS parameter, byte[] value)
@@ -124,11 +124,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             performance.SetParameter(id, parameter, channel, value);
         }
-
-        public void RefreshAllPArameters()
-        {
-            performance.RefreshAllPArameters();
-        }
     }
 
     //======================================================================================================================================|
@@ -138,6 +133,5 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         void RequestParameters(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_PART_PARAMETERS>> eHandler, PERFORMANCE_PART_PARAMETERS[] parameters);
         void SetParameter(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_COMMON_PARAMETERS>> id, PERFORMANCE_COMMON_PARAMETERS parameter, byte[] value);
         void SetParameter(EventHandler<ModifiedParameterFieldsEventArgs<PERFORMANCE_PART_PARAMETERS>> id, PERFORMANCE_PART_PARAMETERS parameter, int channel, byte[] value);
-        void RefreshAllPArameters();
     }
 }

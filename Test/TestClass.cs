@@ -11,12 +11,21 @@ namespace SynthLiveMidiController
             Console.WriteLine(tittle);
             Console.WriteLine("Length: {0}", buffer.Length);
 
-            foreach (byte bt in buffer) 
+            foreach (byte bt in buffer)
             {
                 Console.Write("{0:X2} ", bt);
             }
             Console.WriteLine();
             //========================================================================
+        }
+
+        public static void PrintArray(byte[] buffer)
+        {
+            foreach (byte bt in buffer)
+            {
+                Console.Write("{0:X2} ", bt);
+            }
+            Console.WriteLine();
         }
     }
 }
@@ -70,4 +79,38 @@ namespace SynthLiveMidiController
 //    buf[10] = perfomanceCommonData.PerformanceName11;
 //    buf[11] = perfomanceCommonData.PerformanceName12;
 //    return buf;
+//}
+
+//--------------------------------------------------------------------
+//// byte [] преобразуется в структуру [При вызове: Type type = typeof (byte); Struct II = (Struct) BytesToStruct (WW, type);]
+//public static TestStruc BytesToStruct(byte[] bytes)
+//{
+//    int size = Marshal.SizeOf(typeof(TestStruc));
+//    IntPtr buffer = Marshal.AllocHGlobal(size);
+//    try
+//    {
+//        Marshal.Copy(bytes, 0, buffer, size);
+//        return (TestStruc)Marshal.PtrToStructure(buffer, typeof(TestStruc));
+//    }
+//    finally
+//    {
+//        Marshal.FreeHGlobal(buffer);
+//    }
+//}
+//// структура преобразуется в byte []
+//public static byte[] StructToBytes(TestStruc structObj)
+//{
+//    int size = Marshal.SizeOf(structObj);
+//    IntPtr buffer = Marshal.AllocHGlobal(size);
+//    try
+//    {
+//        Marshal.StructureToPtr(structObj, buffer, false);
+//        byte[] bytes = new byte[size];
+//        Marshal.Copy(buffer, bytes, 0, size);
+//        return bytes;
+//    }
+//    finally
+//    {
+//        Marshal.FreeHGlobal(buffer);
+//    }
 //}
