@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SynthLiveMidiController.InstrumentList.Roland.XP50
@@ -170,9 +171,17 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         int Max { get; set; }
         int Offset { get; set; }
     }
+    // ----------------  ENUM List  -----------------------------
+    interface IXP50EnumList : IXP50NumericData
+    {
+        string[] Named { get; }
+    }
+    // ----------------------------------------------------------
+    interface IXP50NumericData : IXP50Data, IXP50Numeric { }
+    interface IXP50LimitedNumericData : IXP50Data, IXP50Numeric, IXP50Limited { }
 
     // ==========================================================  JUST BYTE  =================================================================
-    public struct XP50Byte : IXP50Data, IXP50Numeric
+    public struct XP50Byte : IXP50NumericData
     {
         // Field
         private byte data;
@@ -199,7 +208,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     }
 
     // ==========================================================  TWO BYTES  =================================================================
-    public struct XP50TwoBytes : IXP50Data, IXP50Numeric
+    public struct XP50TwoBytes : IXP50NumericData
     {
         // Fields
         private byte MSB;
@@ -234,7 +243,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     }
 
     // =======================================================  LIMITED BYTE  =================================================================
-    public struct XP50LimitedByte : IXP50Data, IXP50Numeric, IXP50Limited
+    public struct XP50LimitedByte : IXP50LimitedNumericData
     {
         // Fields
         private byte data;
@@ -303,7 +312,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     }
 
     // ========================================================  PAN BYTE  ====================================================================
-    public struct XP50PanByte : IXP50Data, IXP50Numeric, IXP50Limited
+    public struct XP50PanByte : IXP50LimitedNumericData
     {
         // Fields
         private byte data;
@@ -375,7 +384,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     }
 
     // =========================================================  ANY ENUM BYTE  ==============================================================
-    public struct XP50EFXEnum<T> : IXP50Data, IXP50Numeric where T : Enum
+    public struct XP50EFXEnum<T> : IXP50EnumList where T : Enum
     {
         // Field
         private T data;
@@ -394,6 +403,9 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             set => data = (T)Enum.Parse(typeof(T), data.ToString());
         }
 
+        // Enum
+        public string[] Named => Enum.GetNames(typeof(T));
+
         // Constructor
         public XP50EFXEnum(T value)
         {
@@ -407,10 +419,83 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
     }
 
+    // ===================================================  INT conversion union  ==============================================================
+    [System.Runtime.InteropServices.StructLayout(LayoutKind.Explicit)]
+    struct IntUnion
+    {
+        [System.Runtime.InteropServices.FieldOffset(0)]
+        public int i;
+
+        [System.Runtime.InteropServices.FieldOffset(0)]
+        public byte b1;
+
+        [System.Runtime.InteropServices.FieldOffset(1)]
+        public byte b2;
+
+        [System.Runtime.InteropServices.FieldOffset(2)]
+        public byte b3;
+
+        [System.Runtime.InteropServices.FieldOffset(3)]
+        public byte b4;
+    }
+
+    // --------------------------------------------------------  Convertor Callback  ---------------------------------------------------------
+    public delegate string GetPatchString(byte[] buf);
+    // ==========================================================  PATCH NUMBER  =============================================================
+    public struct XP50PatchBytes : IXP50NumericData
+    {
+        // Callback to Convert
+        public GetPatchString GetPatchStringHandler;
+
+        // Fields
+        IntUnion patchData;
+
+        // Byte Array
+        public byte[] ByteArray
+        {
+            get => new byte[] { patchData.b1, patchData.b2, patchData.b3, patchData.b4 };
+            set { patchData.b1 = value[0]; patchData.b2 = value[1]; patchData.b3 = value[2]; patchData.b4 = value[3]; }
+        }
+
+        // Byte Array
+        public int Value
+        {
+            get
+            {
+                return patchData.i;
+            }
+            set
+            {
+                patchData.i = value;
+            }
+        }
+
+        // Constructor
+        public XP50PatchBytes(GetPatchString callback)
+        {
+            GetPatchStringHandler = callback;
+            patchData.b1 = 0;
+            patchData.b2 = 0;
+            patchData.b3 = 0;
+            patchData.b4 = 0;
+            patchData.i = 0;
+        }
+
+        // To String
+        public override string ToString()
+        {
+            string res;
+            if (GetPatchStringHandler != null) res = GetPatchStringHandler(ByteArray);
+            else res = Value.ToString();
+            return res;
+        }
+    }
+
     // ========================================================  STRING 12 CHARS  =============================================================
     public struct XP50String12 : IXP50Data
     {
         const byte space = 32;
+
         // Fields
         private byte bt1;
         private byte bt2;

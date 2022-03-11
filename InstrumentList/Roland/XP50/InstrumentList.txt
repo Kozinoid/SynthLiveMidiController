@@ -1,0 +1,41 @@
+Hexadecimal Decimal Manufacturer
+0x01		1		Sequential Circuits
+0x02		2		Big Briar
+0x03		3		Octave / Plateau
+0x04		4		Moog
+0x05		5		Passport Designs
+0x06		6		Lexicon
+0x07		7		Kurzweil
+0x08		8		Fender
+0x09		9		Gulbransen
+0x0A		10		Delta Labs
+0x0B		11		Sound Comp.
+0x0C		12		General Electro
+0x0D		13		Techmar
+0x0E		14		Matthews Research
+0x10		16		Oberheim
+0x11		17		PAIA
+0x12		18		Simmons
+0x13		19		Gentle Electric
+0x14		20		Fairlight
+0x15		21		JL Cooper
+0x16		22		Lowery
+0x17		23		Lin
+0x18		24		Emu
+0x1B		27		Peavey
+0x20		32		Bon Tempi
+0x21		33		S.I.E.L.
+0x23		35		SyntheAxe
+0x24		36		Hohner
+0x25		37		Crumar
+0x26		38		Solton
+0x27		39		Jellinghous Ms
+0x28		40		CTS
+0x29		41		PPG
+0x2F		47		Elka
+0x40		64		Kawai
+0x41		65		Roland
+0x42		66		Korg
+0x43		67		Yamaha
+0x44		68		Casio
+0x45		69		Akai

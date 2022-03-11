@@ -192,7 +192,7 @@ namespace SynthLiveMidiController
         // Setup Devices
         private void SetupDevices()
         {
-            ShowSelectMidiDeviceDialog();                                   // Show Device In/Out Dialog
+            //ShowSelectMidiDeviceDialog();                                   // Show Device In/Out Dialog
             mainMidiDevice = new MIDIDevice.SanfordMidiDevice();            // Create MIDI Device
             mainMidiDevice.InitDevices(midiInDevice, midiOutDevice);        // Init In/Out devices
 

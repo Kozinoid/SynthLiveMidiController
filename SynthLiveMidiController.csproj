@@ -103,10 +103,10 @@
     <Compile Include="ComplexControls\CtlChannelParametersListEditor.Designer.cs">
       <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlFastCommandEditor.cs">
+    <Compile Include="ComplexControls\CtlFastCommandEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlFastCommandEditor.Designer.cs">
+    <Compile Include="ComplexControls\CtlFastCommandEditor.Designer.cs">
       <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ParameterControls\CtlFastCommandListField.cs">
@@ -121,10 +121,10 @@
     <Compile Include="ParameterControls\CtlPerformanceNameField.Designer.cs">
       <DependentUpon>CtlPerformanceNameField.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtlSongCommandEditor.cs">
+    <Compile Include="ComplexControls\CtlSongCommandEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtlSongCommandEditor.Designer.cs">
+    <Compile Include="ComplexControls\CtlSongCommandEditor.Designer.cs">
       <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ParameterControls\CtlEFXSourceField.cs">
@@ -199,10 +199,10 @@
     <Compile Include="ComplexControls\FastListControl.Designer.cs">
       <DependentUpon>FastListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FastPresetEditor.cs">
+    <Compile Include="ComplexControls\FastPresetEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FastPresetEditor.Designer.cs">
+    <Compile Include="ComplexControls\FastPresetEditor.Designer.cs">
       <DependentUpon>FastPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SelectPatchDialog.cs">
@@ -249,13 +249,19 @@
     <Compile Include="ComplexControls\SongListControl.Designer.cs">
       <DependentUpon>SongListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="SongPresetEditor.cs">
+    <Compile Include="ComplexControls\SongPresetEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SongPresetEditor.Designer.cs">
+    <Compile Include="ComplexControls\SongPresetEditor.Designer.cs">
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Test\TestClass.cs" />
+    <Compile Include="XP50BaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XP50BaseControl.designer.cs">
+      <DependentUpon>XP50BaseControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ParameterControls\CtlBoolField.resx">
       <DependentUpon>CtlBoolField.cs</DependentUpon>
     </EmbeddedResource>
@@ -265,10 +271,10 @@
     <EmbeddedResource Include="ComplexControls\CtlChannelParametersListEditor.resx">
       <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlFastCommandEditor.resx">
+    <EmbeddedResource Include="ComplexControls\CtlFastCommandEditor.resx">
       <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtlSongCommandEditor.resx">
+    <EmbeddedResource Include="ComplexControls\CtlSongCommandEditor.resx">
       <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParameterControls\CtlKeyzoneField.resx">
@@ -289,7 +295,7 @@
     <EmbeddedResource Include="ComplexControls\FastListControl.resx">
       <DependentUpon>FastListControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FastPresetEditor.resx">
+    <EmbeddedResource Include="ComplexControls\FastPresetEditor.resx">
       <DependentUpon>FastPresetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
@@ -314,8 +320,11 @@
     <EmbeddedResource Include="ComplexControls\SongListControl.resx">
       <DependentUpon>SongListControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SongPresetEditor.resx">
+    <EmbeddedResource Include="ComplexControls\SongPresetEditor.resx">
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XP50BaseControl.resx">
+      <DependentUpon>XP50BaseControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
