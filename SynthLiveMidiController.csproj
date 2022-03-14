@@ -256,10 +256,10 @@
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Test\TestClass.cs" />
-    <Compile Include="XP50BaseControl.cs">
+    <Compile Include="ParameterControls\XP50BaseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="XP50BaseControl.designer.cs">
+    <Compile Include="ParameterControls\XP50BaseControl.designer.cs">
       <DependentUpon>XP50BaseControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="ParameterControls\CtlBoolField.resx">
@@ -323,7 +323,7 @@
     <EmbeddedResource Include="ComplexControls\SongPresetEditor.resx">
       <DependentUpon>SongPresetEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="XP50BaseControl.resx">
+    <EmbeddedResource Include="ParameterControls\XP50BaseControl.resx">
       <DependentUpon>XP50BaseControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
