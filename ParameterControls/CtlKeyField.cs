@@ -1,25 +1,89 @@
 ﻿using System.Drawing;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlKeyField : CtlByteField
+    public partial class CtlKeyField : XP50BaseControl
     {
-        private readonly string[] keys = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B", "H"};
-        string stringValue;
+        const int min = 0;
+        const int max = 127;
+        const int initValue = 60;
+
+        // Fields
+        protected XP50Key data;
+
+        // Value
+        public int Value
+        {
+            get { return data.Value; }
+            set
+            {
+                data.Value = ValidateValue(value);
+                XP_CalculateBounds();
+                this.Invalidate();
+            }
+        }
+
+        // ByteValue
+        public virtual byte ByteValue
+        {
+            get { return (byte)data.Value; }
+            set { Value = value; }
+        }
 
         // Constructor
         public CtlKeyField()
         {
             InitializeComponent();
+
             caption = "Key:";
+            data.Value = initValue;
+            EnableEditor = true;
+
+            XP_CalculateBounds();
         }
 
-        // Overridable Drawing Fuction
-        public override void Drawing(Graphics gr)
+        // Validate
+        private int ValidateValue(int val)
         {
-            stringValue = keys[_value % 12] + (_value / 12 - 1).ToString();
-            gr.DrawString(caption, Font, new SolidBrush(ForeColor), this.ClientRectangle, sf);
-            gr.DrawString(stringValue, Font, new SolidBrush(ForeColor), rect, sf);
+            int res = val;
+            if (val < min) res = min;
+            if (val > max) res = max;
+            return res;
+        }
+
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
+        {
+            if (Value < max)
+            {
+                Value++;
+                return true;
+            }
+            else return false;
+        }
+
+        public override bool XP_DecValue()
+        {
+            if (Value > min)
+            {
+                Value--;
+                return true;
+            }
+            else return false;
+        }
+
+        public override void XP_EndEdit()
+        {
+            Value = int.Parse(tbEnter.Text);
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

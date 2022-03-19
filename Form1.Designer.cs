@@ -37,8 +37,11 @@ namespace SynthLiveMidiController
             this.pn_LeftPanel = new System.Windows.Forms.Panel();
             this.tab_Control = new System.Windows.Forms.TabControl();
             this.tab_SongList = new System.Windows.Forms.TabPage();
+            this.songListControl = new SynthLiveMidiController.SongListControl();
             this.tab_TrackList = new System.Windows.Forms.TabPage();
+            this.trackListControl = new SynthLiveMidiController.SongListControl();
             this.tab_FastPresets = new System.Windows.Forms.TabPage();
+            this.fastListControl = new SynthLiveMidiController.FastListControl();
             this.pn_ButtonPanel = new System.Windows.Forms.Panel();
             this.gb_Controls = new System.Windows.Forms.GroupBox();
             this.bt_Options = new System.Windows.Forms.Button();
@@ -65,11 +68,11 @@ namespace SynthLiveMidiController
             this.bt_S2 = new System.Windows.Forms.Button();
             this.bt_S1 = new System.Windows.Forms.Button();
             this.pn_PicturePanel = new System.Windows.Forms.Panel();
+            this.ctlByteField1 = new SynthLiveMidiController.ParameterControls.CtlByteField();
+            this.ctlHoldBoolField1 = new SynthLiveMidiController.ParameterControls.CtlHoldBoolField();
+            this.ctlLocalBoolField1 = new SynthLiveMidiController.ParameterControls.CtlLocalBoolField();
             this.pn_Test = new System.Windows.Forms.Panel();
             this.bt_Act6 = new System.Windows.Forms.Button();
-            this.songListControl = new SynthLiveMidiController.SongListControl();
-            this.trackListControl = new SynthLiveMidiController.SongListControl();
-            this.fastListControl = new SynthLiveMidiController.FastListControl();
             this.pn_LeftPanel.SuspendLayout();
             this.tab_Control.SuspendLayout();
             this.tab_SongList.SuspendLayout();
@@ -84,9 +87,10 @@ namespace SynthLiveMidiController
             // bt_act2
             // 
             this.bt_act2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_act2.Location = new System.Drawing.Point(3, 32);
+            this.bt_act2.Location = new System.Drawing.Point(4, 39);
+            this.bt_act2.Margin = new System.Windows.Forms.Padding(4);
             this.bt_act2.Name = "bt_act2";
-            this.bt_act2.Size = new System.Drawing.Size(131, 23);
+            this.bt_act2.Size = new System.Drawing.Size(175, 28);
             this.bt_act2.TabIndex = 0;
             this.bt_act2.Text = "Perf -> Temporary (Print)";
             this.bt_act2.UseVisualStyleBackColor = true;
@@ -95,9 +99,10 @@ namespace SynthLiveMidiController
             // bt_act3
             // 
             this.bt_act3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_act3.Location = new System.Drawing.Point(3, 61);
+            this.bt_act3.Location = new System.Drawing.Point(4, 75);
+            this.bt_act3.Margin = new System.Windows.Forms.Padding(4);
             this.bt_act3.Name = "bt_act3";
-            this.bt_act3.Size = new System.Drawing.Size(131, 23);
+            this.bt_act3.Size = new System.Drawing.Size(175, 28);
             this.bt_act3.TabIndex = 1;
             this.bt_act3.Text = "Tempo -> Templ (Save)";
             this.bt_act3.UseVisualStyleBackColor = true;
@@ -106,9 +111,10 @@ namespace SynthLiveMidiController
             // bt_act1
             // 
             this.bt_act1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_act1.Location = new System.Drawing.Point(3, 3);
+            this.bt_act1.Location = new System.Drawing.Point(4, 4);
+            this.bt_act1.Margin = new System.Windows.Forms.Padding(4);
             this.bt_act1.Name = "bt_act1";
-            this.bt_act1.Size = new System.Drawing.Size(131, 23);
+            this.bt_act1.Size = new System.Drawing.Size(175, 28);
             this.bt_act1.TabIndex = 2;
             this.bt_act1.Text = "XP -> Performance";
             this.bt_act1.UseVisualStyleBackColor = true;
@@ -117,9 +123,10 @@ namespace SynthLiveMidiController
             // bt_act4
             // 
             this.bt_act4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_act4.Location = new System.Drawing.Point(3, 90);
+            this.bt_act4.Location = new System.Drawing.Point(4, 111);
+            this.bt_act4.Margin = new System.Windows.Forms.Padding(4);
             this.bt_act4.Name = "bt_act4";
-            this.bt_act4.Size = new System.Drawing.Size(131, 23);
+            this.bt_act4.Size = new System.Drawing.Size(175, 28);
             this.bt_act4.TabIndex = 3;
             this.bt_act4.Text = "(Load) Templ -> Tempo";
             this.bt_act4.UseVisualStyleBackColor = true;
@@ -128,9 +135,10 @@ namespace SynthLiveMidiController
             // bt_act5
             // 
             this.bt_act5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_act5.Location = new System.Drawing.Point(3, 119);
+            this.bt_act5.Location = new System.Drawing.Point(4, 146);
+            this.bt_act5.Margin = new System.Windows.Forms.Padding(4);
             this.bt_act5.Name = "bt_act5";
-            this.bt_act5.Size = new System.Drawing.Size(131, 23);
+            this.bt_act5.Size = new System.Drawing.Size(175, 28);
             this.bt_act5.TabIndex = 4;
             this.bt_act5.Text = "Temporary - > Perf";
             this.bt_act5.UseVisualStyleBackColor = true;
@@ -142,8 +150,9 @@ namespace SynthLiveMidiController
             this.pn_LeftPanel.Controls.Add(this.pn_ButtonPanel);
             this.pn_LeftPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.pn_LeftPanel.Location = new System.Drawing.Point(0, 0);
+            this.pn_LeftPanel.Margin = new System.Windows.Forms.Padding(4);
             this.pn_LeftPanel.Name = "pn_LeftPanel";
-            this.pn_LeftPanel.Size = new System.Drawing.Size(496, 687);
+            this.pn_LeftPanel.Size = new System.Drawing.Size(661, 846);
             this.pn_LeftPanel.TabIndex = 5;
             // 
             // tab_Control
@@ -158,7 +167,7 @@ namespace SynthLiveMidiController
             this.tab_Control.Name = "tab_Control";
             this.tab_Control.Padding = new System.Drawing.Point(0, 0);
             this.tab_Control.SelectedIndex = 0;
-            this.tab_Control.Size = new System.Drawing.Size(496, 563);
+            this.tab_Control.Size = new System.Drawing.Size(661, 694);
             this.tab_Control.TabIndex = 1;
             this.tab_Control.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tab_Control_DrawItem);
             // 
@@ -166,37 +175,64 @@ namespace SynthLiveMidiController
             // 
             this.tab_SongList.AutoScroll = true;
             this.tab_SongList.Controls.Add(this.songListControl);
-            this.tab_SongList.Location = new System.Drawing.Point(4, 22);
+            this.tab_SongList.Location = new System.Drawing.Point(4, 25);
             this.tab_SongList.Margin = new System.Windows.Forms.Padding(0);
             this.tab_SongList.Name = "tab_SongList";
-            this.tab_SongList.Size = new System.Drawing.Size(488, 537);
+            this.tab_SongList.Size = new System.Drawing.Size(653, 665);
             this.tab_SongList.TabIndex = 0;
             this.tab_SongList.Text = "Писок песен";
             this.tab_SongList.UseVisualStyleBackColor = true;
+            // 
+            // songListControl
+            // 
+            this.songListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.songListControl.Location = new System.Drawing.Point(0, 0);
+            this.songListControl.Margin = new System.Windows.Forms.Padding(0);
+            this.songListControl.Name = "songListControl";
+            this.songListControl.Size = new System.Drawing.Size(653, 665);
+            this.songListControl.TabIndex = 1;
             // 
             // tab_TrackList
             // 
             this.tab_TrackList.AutoScroll = true;
             this.tab_TrackList.Controls.Add(this.trackListControl);
-            this.tab_TrackList.Location = new System.Drawing.Point(4, 22);
+            this.tab_TrackList.Location = new System.Drawing.Point(4, 25);
             this.tab_TrackList.Margin = new System.Windows.Forms.Padding(0);
             this.tab_TrackList.Name = "tab_TrackList";
-            this.tab_TrackList.Size = new System.Drawing.Size(488, 537);
+            this.tab_TrackList.Size = new System.Drawing.Size(653, 665);
             this.tab_TrackList.TabIndex = 1;
             this.tab_TrackList.Text = "Трэклист";
             this.tab_TrackList.UseVisualStyleBackColor = true;
+            // 
+            // trackListControl
+            // 
+            this.trackListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackListControl.Location = new System.Drawing.Point(0, 0);
+            this.trackListControl.Margin = new System.Windows.Forms.Padding(0);
+            this.trackListControl.Name = "trackListControl";
+            this.trackListControl.Size = new System.Drawing.Size(653, 665);
+            this.trackListControl.TabIndex = 0;
             // 
             // tab_FastPresets
             // 
             this.tab_FastPresets.AutoScroll = true;
             this.tab_FastPresets.Controls.Add(this.fastListControl);
-            this.tab_FastPresets.Location = new System.Drawing.Point(4, 22);
+            this.tab_FastPresets.Location = new System.Drawing.Point(4, 25);
             this.tab_FastPresets.Margin = new System.Windows.Forms.Padding(0);
             this.tab_FastPresets.Name = "tab_FastPresets";
-            this.tab_FastPresets.Size = new System.Drawing.Size(488, 537);
+            this.tab_FastPresets.Size = new System.Drawing.Size(653, 665);
             this.tab_FastPresets.TabIndex = 2;
             this.tab_FastPresets.Text = "Быстрые клавиши";
             this.tab_FastPresets.UseVisualStyleBackColor = true;
+            // 
+            // fastListControl
+            // 
+            this.fastListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastListControl.Location = new System.Drawing.Point(0, 0);
+            this.fastListControl.Margin = new System.Windows.Forms.Padding(5);
+            this.fastListControl.Name = "fastListControl";
+            this.fastListControl.Size = new System.Drawing.Size(653, 665);
+            this.fastListControl.TabIndex = 0;
             // 
             // pn_ButtonPanel
             // 
@@ -222,9 +258,10 @@ namespace SynthLiveMidiController
             this.pn_ButtonPanel.Controls.Add(this.bt_S2);
             this.pn_ButtonPanel.Controls.Add(this.bt_S1);
             this.pn_ButtonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pn_ButtonPanel.Location = new System.Drawing.Point(0, 563);
+            this.pn_ButtonPanel.Location = new System.Drawing.Point(0, 694);
+            this.pn_ButtonPanel.Margin = new System.Windows.Forms.Padding(4);
             this.pn_ButtonPanel.Name = "pn_ButtonPanel";
-            this.pn_ButtonPanel.Size = new System.Drawing.Size(496, 124);
+            this.pn_ButtonPanel.Size = new System.Drawing.Size(661, 152);
             this.pn_ButtonPanel.TabIndex = 0;
             // 
             // gb_Controls
@@ -233,18 +270,21 @@ namespace SynthLiveMidiController
             this.gb_Controls.Controls.Add(this.lb_Tempo);
             this.gb_Controls.Controls.Add(this.lb_CommandName);
             this.gb_Controls.Controls.Add(this.lb_SongName);
-            this.gb_Controls.Location = new System.Drawing.Point(10, 2);
+            this.gb_Controls.Location = new System.Drawing.Point(13, 2);
+            this.gb_Controls.Margin = new System.Windows.Forms.Padding(4);
             this.gb_Controls.Name = "gb_Controls";
-            this.gb_Controls.Size = new System.Drawing.Size(354, 79);
+            this.gb_Controls.Padding = new System.Windows.Forms.Padding(4);
+            this.gb_Controls.Size = new System.Drawing.Size(472, 97);
             this.gb_Controls.TabIndex = 1;
             this.gb_Controls.TabStop = false;
             // 
             // bt_Options
             // 
             this.bt_Options.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_Options.Location = new System.Drawing.Point(288, 18);
+            this.bt_Options.Location = new System.Drawing.Point(384, 22);
+            this.bt_Options.Margin = new System.Windows.Forms.Padding(4);
             this.bt_Options.Name = "bt_Options";
-            this.bt_Options.Size = new System.Drawing.Size(60, 23);
+            this.bt_Options.Size = new System.Drawing.Size(80, 28);
             this.bt_Options.TabIndex = 3;
             this.bt_Options.Text = "Options";
             this.bt_Options.UseVisualStyleBackColor = true;
@@ -254,9 +294,10 @@ namespace SynthLiveMidiController
             // 
             this.lb_Tempo.AutoSize = true;
             this.lb_Tempo.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lb_Tempo.Location = new System.Drawing.Point(284, 45);
+            this.lb_Tempo.Location = new System.Drawing.Point(379, 55);
+            this.lb_Tempo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_Tempo.Name = "lb_Tempo";
-            this.lb_Tempo.Size = new System.Drawing.Size(57, 19);
+            this.lb_Tempo.Size = new System.Drawing.Size(70, 24);
             this.lb_Tempo.TabIndex = 2;
             this.lb_Tempo.Text = "T = 120";
             // 
@@ -264,9 +305,10 @@ namespace SynthLiveMidiController
             // 
             this.lb_CommandName.AutoSize = true;
             this.lb_CommandName.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lb_CommandName.Location = new System.Drawing.Point(7, 45);
+            this.lb_CommandName.Location = new System.Drawing.Point(9, 55);
+            this.lb_CommandName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_CommandName.Name = "lb_CommandName";
-            this.lb_CommandName.Size = new System.Drawing.Size(137, 19);
+            this.lb_CommandName.Size = new System.Drawing.Size(176, 24);
             this.lb_CommandName.TabIndex = 1;
             this.lb_CommandName.Text = "1 - Command Name";
             // 
@@ -274,18 +316,20 @@ namespace SynthLiveMidiController
             // 
             this.lb_SongName.AutoSize = true;
             this.lb_SongName.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lb_SongName.Location = new System.Drawing.Point(7, 16);
+            this.lb_SongName.Location = new System.Drawing.Point(9, 20);
+            this.lb_SongName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb_SongName.Name = "lb_SongName";
-            this.lb_SongName.Size = new System.Drawing.Size(141, 23);
+            this.lb_SongName.Size = new System.Drawing.Size(178, 29);
             this.lb_SongName.TabIndex = 0;
             this.lb_SongName.Text = "000 - Song Name";
             // 
             // bt_N9
             // 
             this.bt_N9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N9.Location = new System.Drawing.Point(450, 8);
+            this.bt_N9.Location = new System.Drawing.Point(600, 10);
+            this.bt_N9.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N9.Name = "bt_N9";
-            this.bt_N9.Size = new System.Drawing.Size(30, 24);
+            this.bt_N9.Size = new System.Drawing.Size(40, 30);
             this.bt_N9.TabIndex = 0;
             this.bt_N9.Text = "F9";
             this.bt_N9.UseVisualStyleBackColor = false;
@@ -293,9 +337,10 @@ namespace SynthLiveMidiController
             // bt_N3
             // 
             this.bt_N3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N3.Location = new System.Drawing.Point(450, 87);
+            this.bt_N3.Location = new System.Drawing.Point(600, 107);
+            this.bt_N3.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N3.Name = "bt_N3";
-            this.bt_N3.Size = new System.Drawing.Size(30, 24);
+            this.bt_N3.Size = new System.Drawing.Size(40, 30);
             this.bt_N3.TabIndex = 0;
             this.bt_N3.Text = "F3";
             this.bt_N3.UseVisualStyleBackColor = false;
@@ -303,9 +348,10 @@ namespace SynthLiveMidiController
             // bt_N2
             // 
             this.bt_N2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N2.Location = new System.Drawing.Point(414, 87);
+            this.bt_N2.Location = new System.Drawing.Point(552, 107);
+            this.bt_N2.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N2.Name = "bt_N2";
-            this.bt_N2.Size = new System.Drawing.Size(30, 24);
+            this.bt_N2.Size = new System.Drawing.Size(40, 30);
             this.bt_N2.TabIndex = 0;
             this.bt_N2.Text = "F2";
             this.bt_N2.UseVisualStyleBackColor = false;
@@ -313,9 +359,10 @@ namespace SynthLiveMidiController
             // bt_N8
             // 
             this.bt_N8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N8.Location = new System.Drawing.Point(414, 8);
+            this.bt_N8.Location = new System.Drawing.Point(552, 10);
+            this.bt_N8.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N8.Name = "bt_N8";
-            this.bt_N8.Size = new System.Drawing.Size(30, 24);
+            this.bt_N8.Size = new System.Drawing.Size(40, 30);
             this.bt_N8.TabIndex = 0;
             this.bt_N8.Text = "F8";
             this.bt_N8.UseVisualStyleBackColor = false;
@@ -323,9 +370,10 @@ namespace SynthLiveMidiController
             // bt_N7
             // 
             this.bt_N7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N7.Location = new System.Drawing.Point(378, 8);
+            this.bt_N7.Location = new System.Drawing.Point(504, 10);
+            this.bt_N7.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N7.Name = "bt_N7";
-            this.bt_N7.Size = new System.Drawing.Size(30, 24);
+            this.bt_N7.Size = new System.Drawing.Size(40, 30);
             this.bt_N7.TabIndex = 0;
             this.bt_N7.Text = "F7";
             this.bt_N7.UseVisualStyleBackColor = false;
@@ -333,9 +381,10 @@ namespace SynthLiveMidiController
             // bt_N6
             // 
             this.bt_N6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N6.Location = new System.Drawing.Point(450, 47);
+            this.bt_N6.Location = new System.Drawing.Point(600, 58);
+            this.bt_N6.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N6.Name = "bt_N6";
-            this.bt_N6.Size = new System.Drawing.Size(30, 24);
+            this.bt_N6.Size = new System.Drawing.Size(40, 30);
             this.bt_N6.TabIndex = 0;
             this.bt_N6.Text = "F6";
             this.bt_N6.UseVisualStyleBackColor = false;
@@ -343,9 +392,10 @@ namespace SynthLiveMidiController
             // bt_N1
             // 
             this.bt_N1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N1.Location = new System.Drawing.Point(378, 86);
+            this.bt_N1.Location = new System.Drawing.Point(504, 106);
+            this.bt_N1.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N1.Name = "bt_N1";
-            this.bt_N1.Size = new System.Drawing.Size(30, 24);
+            this.bt_N1.Size = new System.Drawing.Size(40, 30);
             this.bt_N1.TabIndex = 0;
             this.bt_N1.Text = "F1";
             this.bt_N1.UseVisualStyleBackColor = false;
@@ -353,9 +403,10 @@ namespace SynthLiveMidiController
             // bt_S10
             // 
             this.bt_S10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S10.Location = new System.Drawing.Point(334, 87);
+            this.bt_S10.Location = new System.Drawing.Point(445, 107);
+            this.bt_S10.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S10.Name = "bt_S10";
-            this.bt_S10.Size = new System.Drawing.Size(30, 24);
+            this.bt_S10.Size = new System.Drawing.Size(40, 30);
             this.bt_S10.TabIndex = 0;
             this.bt_S10.Text = "0";
             this.bt_S10.UseVisualStyleBackColor = false;
@@ -363,9 +414,10 @@ namespace SynthLiveMidiController
             // bt_N4
             // 
             this.bt_N4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N4.Location = new System.Drawing.Point(378, 47);
+            this.bt_N4.Location = new System.Drawing.Point(504, 58);
+            this.bt_N4.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N4.Name = "bt_N4";
-            this.bt_N4.Size = new System.Drawing.Size(30, 24);
+            this.bt_N4.Size = new System.Drawing.Size(40, 30);
             this.bt_N4.TabIndex = 0;
             this.bt_N4.Text = "F4";
             this.bt_N4.UseVisualStyleBackColor = false;
@@ -373,9 +425,10 @@ namespace SynthLiveMidiController
             // bt_N5
             // 
             this.bt_N5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_N5.Location = new System.Drawing.Point(414, 47);
+            this.bt_N5.Location = new System.Drawing.Point(552, 58);
+            this.bt_N5.Margin = new System.Windows.Forms.Padding(4);
             this.bt_N5.Name = "bt_N5";
-            this.bt_N5.Size = new System.Drawing.Size(30, 24);
+            this.bt_N5.Size = new System.Drawing.Size(40, 30);
             this.bt_N5.TabIndex = 0;
             this.bt_N5.Text = "F5";
             this.bt_N5.UseVisualStyleBackColor = false;
@@ -383,9 +436,10 @@ namespace SynthLiveMidiController
             // bt_S9
             // 
             this.bt_S9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S9.Location = new System.Drawing.Point(298, 87);
+            this.bt_S9.Location = new System.Drawing.Point(397, 107);
+            this.bt_S9.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S9.Name = "bt_S9";
-            this.bt_S9.Size = new System.Drawing.Size(30, 24);
+            this.bt_S9.Size = new System.Drawing.Size(40, 30);
             this.bt_S9.TabIndex = 0;
             this.bt_S9.Text = "9";
             this.bt_S9.UseVisualStyleBackColor = false;
@@ -393,9 +447,10 @@ namespace SynthLiveMidiController
             // bt_S8
             // 
             this.bt_S8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S8.Location = new System.Drawing.Point(262, 87);
+            this.bt_S8.Location = new System.Drawing.Point(349, 107);
+            this.bt_S8.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S8.Name = "bt_S8";
-            this.bt_S8.Size = new System.Drawing.Size(30, 24);
+            this.bt_S8.Size = new System.Drawing.Size(40, 30);
             this.bt_S8.TabIndex = 0;
             this.bt_S8.Text = "8";
             this.bt_S8.UseVisualStyleBackColor = false;
@@ -403,9 +458,10 @@ namespace SynthLiveMidiController
             // bt_S7
             // 
             this.bt_S7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S7.Location = new System.Drawing.Point(226, 87);
+            this.bt_S7.Location = new System.Drawing.Point(301, 107);
+            this.bt_S7.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S7.Name = "bt_S7";
-            this.bt_S7.Size = new System.Drawing.Size(30, 24);
+            this.bt_S7.Size = new System.Drawing.Size(40, 30);
             this.bt_S7.TabIndex = 0;
             this.bt_S7.Text = "7";
             this.bt_S7.UseVisualStyleBackColor = false;
@@ -413,9 +469,10 @@ namespace SynthLiveMidiController
             // bt_S6
             // 
             this.bt_S6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S6.Location = new System.Drawing.Point(190, 87);
+            this.bt_S6.Location = new System.Drawing.Point(253, 107);
+            this.bt_S6.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S6.Name = "bt_S6";
-            this.bt_S6.Size = new System.Drawing.Size(30, 24);
+            this.bt_S6.Size = new System.Drawing.Size(40, 30);
             this.bt_S6.TabIndex = 0;
             this.bt_S6.Text = "6";
             this.bt_S6.UseVisualStyleBackColor = false;
@@ -423,9 +480,10 @@ namespace SynthLiveMidiController
             // bt_S5
             // 
             this.bt_S5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S5.Location = new System.Drawing.Point(154, 87);
+            this.bt_S5.Location = new System.Drawing.Point(205, 107);
+            this.bt_S5.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S5.Name = "bt_S5";
-            this.bt_S5.Size = new System.Drawing.Size(30, 24);
+            this.bt_S5.Size = new System.Drawing.Size(40, 30);
             this.bt_S5.TabIndex = 0;
             this.bt_S5.Text = "5";
             this.bt_S5.UseVisualStyleBackColor = false;
@@ -433,9 +491,10 @@ namespace SynthLiveMidiController
             // bt_S4
             // 
             this.bt_S4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S4.Location = new System.Drawing.Point(118, 87);
+            this.bt_S4.Location = new System.Drawing.Point(157, 107);
+            this.bt_S4.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S4.Name = "bt_S4";
-            this.bt_S4.Size = new System.Drawing.Size(30, 24);
+            this.bt_S4.Size = new System.Drawing.Size(40, 30);
             this.bt_S4.TabIndex = 0;
             this.bt_S4.Text = "4";
             this.bt_S4.UseVisualStyleBackColor = false;
@@ -443,9 +502,10 @@ namespace SynthLiveMidiController
             // bt_S3
             // 
             this.bt_S3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S3.Location = new System.Drawing.Point(82, 87);
+            this.bt_S3.Location = new System.Drawing.Point(109, 107);
+            this.bt_S3.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S3.Name = "bt_S3";
-            this.bt_S3.Size = new System.Drawing.Size(30, 24);
+            this.bt_S3.Size = new System.Drawing.Size(40, 30);
             this.bt_S3.TabIndex = 0;
             this.bt_S3.Text = "3";
             this.bt_S3.UseVisualStyleBackColor = false;
@@ -453,9 +513,10 @@ namespace SynthLiveMidiController
             // bt_S2
             // 
             this.bt_S2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S2.Location = new System.Drawing.Point(46, 87);
+            this.bt_S2.Location = new System.Drawing.Point(61, 107);
+            this.bt_S2.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S2.Name = "bt_S2";
-            this.bt_S2.Size = new System.Drawing.Size(30, 24);
+            this.bt_S2.Size = new System.Drawing.Size(40, 30);
             this.bt_S2.TabIndex = 0;
             this.bt_S2.Text = "2";
             this.bt_S2.UseVisualStyleBackColor = false;
@@ -463,21 +524,62 @@ namespace SynthLiveMidiController
             // bt_S1
             // 
             this.bt_S1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_S1.Location = new System.Drawing.Point(10, 87);
+            this.bt_S1.Location = new System.Drawing.Point(13, 107);
+            this.bt_S1.Margin = new System.Windows.Forms.Padding(4);
             this.bt_S1.Name = "bt_S1";
-            this.bt_S1.Size = new System.Drawing.Size(30, 24);
+            this.bt_S1.Size = new System.Drawing.Size(40, 30);
             this.bt_S1.TabIndex = 0;
             this.bt_S1.Text = "1";
             this.bt_S1.UseVisualStyleBackColor = false;
             // 
             // pn_PicturePanel
             // 
+            this.pn_PicturePanel.Controls.Add(this.ctlByteField1);
+            this.pn_PicturePanel.Controls.Add(this.ctlHoldBoolField1);
+            this.pn_PicturePanel.Controls.Add(this.ctlLocalBoolField1);
             this.pn_PicturePanel.Controls.Add(this.pn_Test);
             this.pn_PicturePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pn_PicturePanel.Location = new System.Drawing.Point(496, 0);
+            this.pn_PicturePanel.Location = new System.Drawing.Point(661, 0);
+            this.pn_PicturePanel.Margin = new System.Windows.Forms.Padding(4);
             this.pn_PicturePanel.Name = "pn_PicturePanel";
-            this.pn_PicturePanel.Size = new System.Drawing.Size(659, 687);
+            this.pn_PicturePanel.Size = new System.Drawing.Size(879, 846);
             this.pn_PicturePanel.TabIndex = 6;
+            // 
+            // ctlByteField1
+            // 
+            this.ctlByteField1.ByteValue = ((byte)(127));
+            this.ctlByteField1.Caption = "Vol:";
+            this.ctlByteField1.EnableContext = false;
+            this.ctlByteField1.EnableEditor = false;
+            this.ctlByteField1.Location = new System.Drawing.Point(154, 252);
+            this.ctlByteField1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ctlByteField1.Name = "ctlByteField1";
+            this.ctlByteField1.Size = new System.Drawing.Size(93, 27);
+            this.ctlByteField1.TabIndex = 11;
+            this.ctlByteField1.Value = 127;
+            // 
+            // ctlHoldBoolField1
+            // 
+            this.ctlHoldBoolField1.Caption = "Hold: ";
+            this.ctlHoldBoolField1.Checked = false;
+            this.ctlHoldBoolField1.EnableContext = true;
+            this.ctlHoldBoolField1.EnableEditor = false;
+            this.ctlHoldBoolField1.Location = new System.Drawing.Point(154, 217);
+            this.ctlHoldBoolField1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ctlHoldBoolField1.Name = "ctlHoldBoolField1";
+            this.ctlHoldBoolField1.Size = new System.Drawing.Size(93, 27);
+            this.ctlHoldBoolField1.TabIndex = 10;
+            // 
+            // ctlLocalBoolField1
+            // 
+            this.ctlLocalBoolField1.Caption = "Local: ";
+            this.ctlLocalBoolField1.Checked = false;
+            this.ctlLocalBoolField1.EnableContext = true;
+            this.ctlLocalBoolField1.EnableEditor = false;
+            this.ctlLocalBoolField1.Location = new System.Drawing.Point(154, 183);
+            this.ctlLocalBoolField1.Name = "ctlLocalBoolField1";
+            this.ctlLocalBoolField1.Size = new System.Drawing.Size(120, 27);
+            this.ctlLocalBoolField1.TabIndex = 9;
             // 
             // pn_Test
             // 
@@ -488,59 +590,35 @@ namespace SynthLiveMidiController
             this.pn_Test.Controls.Add(this.bt_act5);
             this.pn_Test.Controls.Add(this.bt_act3);
             this.pn_Test.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pn_Test.Location = new System.Drawing.Point(517, 0);
+            this.pn_Test.Location = new System.Drawing.Point(690, 0);
+            this.pn_Test.Margin = new System.Windows.Forms.Padding(4);
             this.pn_Test.Name = "pn_Test";
-            this.pn_Test.Size = new System.Drawing.Size(142, 687);
+            this.pn_Test.Size = new System.Drawing.Size(189, 846);
             this.pn_Test.TabIndex = 7;
             // 
             // bt_Act6
             // 
             this.bt_Act6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bt_Act6.Location = new System.Drawing.Point(3, 148);
+            this.bt_Act6.Location = new System.Drawing.Point(4, 182);
+            this.bt_Act6.Margin = new System.Windows.Forms.Padding(4);
             this.bt_Act6.Name = "bt_Act6";
-            this.bt_Act6.Size = new System.Drawing.Size(131, 23);
+            this.bt_Act6.Size = new System.Drawing.Size(175, 28);
             this.bt_Act6.TabIndex = 4;
             this.bt_Act6.Text = "Send Performance";
             this.bt_Act6.UseVisualStyleBackColor = true;
             this.bt_Act6.Click += new System.EventHandler(this.bt_Act6_Click);
             // 
-            // songListControl
-            // 
-            this.songListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.songListControl.Location = new System.Drawing.Point(0, 0);
-            this.songListControl.Margin = new System.Windows.Forms.Padding(0);
-            this.songListControl.Name = "songListControl";
-            this.songListControl.Size = new System.Drawing.Size(488, 537);
-            this.songListControl.TabIndex = 1;
-            // 
-            // trackListControl
-            // 
-            this.trackListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackListControl.Location = new System.Drawing.Point(0, 0);
-            this.trackListControl.Margin = new System.Windows.Forms.Padding(0);
-            this.trackListControl.Name = "trackListControl";
-            this.trackListControl.Size = new System.Drawing.Size(488, 537);
-            this.trackListControl.TabIndex = 0;
-            // 
-            // fastListControl
-            // 
-            this.fastListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastListControl.Location = new System.Drawing.Point(0, 0);
-            this.fastListControl.Margin = new System.Windows.Forms.Padding(4);
-            this.fastListControl.Name = "fastListControl";
-            this.fastListControl.Size = new System.Drawing.Size(488, 537);
-            this.fastListControl.TabIndex = 0;
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(1155, 687);
+            this.ClientSize = new System.Drawing.Size(1540, 846);
             this.Controls.Add(this.pn_PicturePanel);
             this.Controls.Add(this.pn_LeftPanel);
             this.ForeColor = System.Drawing.Color.GreenYellow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Synth Live MIDI Controller";
@@ -603,6 +681,9 @@ namespace SynthLiveMidiController
         private FastListControl fastListControl;
         private System.Windows.Forms.Panel pn_Test;
         private System.Windows.Forms.Button bt_Act6;
+        private ParameterControls.CtlLocalBoolField ctlLocalBoolField1;
+        private ParameterControls.CtlHoldBoolField ctlHoldBoolField1;
+        private ParameterControls.CtlByteField ctlByteField1;
     }
 }
 

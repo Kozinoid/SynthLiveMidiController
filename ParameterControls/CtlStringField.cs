@@ -1,41 +1,20 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Drawing;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlStringField : UserControl
+    public partial class CtlStringField : XP50BaseControl
     {
-        public event EventHandler ValueChanged = null;
-
         // Fields
-        protected string _value = "";
-        protected string caption = "Name:";
-        protected readonly StringFormat sf = new StringFormat();
-        protected TextBox tbEnter = new TextBox();
-        protected Rectangle rect;
-        protected SizeF size;
-
-        // Caption
-        public string Caption
-        {
-            get { return caption; }
-            set
-            {
-                caption = value;
-                CalculateBounds();
-                this.Invalidate();
-            }
-        }
+        protected string data;
 
         // Value
         public string Value
         {
-            get { return _value; }
+            get { return data; }
             set
             {
-                _value = ValidateValue(value);
-                CalculateBounds();
+                data = value;
+                XP_CalculateBounds();
                 this.Invalidate();
             }
         }
@@ -45,65 +24,24 @@ namespace SynthLiveMidiController
         {
             InitializeComponent();
 
-            CalculateBounds();
+            data = "";
+            caption = "Name: ";
+            EnableEditor = true;
 
-            sf.Alignment = StringAlignment.Near;
-            sf.LineAlignment = StringAlignment.Center;
-            sf.FormatFlags = StringFormatFlags.NoWrap;
-
-            tbEnter.KeyDown += TbEnter_KeyDown;
+            XP_CalculateBounds();
         }
 
-        // Validate value
-        protected virtual string ValidateValue(string argument)
+        public override void XP_EndEdit()
         {
-            string res = argument;
-            return res;
+            Value = tbEnter.Text;
+            base.XP_EndEdit();
         }
 
-        // Calculate
-        protected virtual void CalculateBounds()
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
         {
-            size = Graphics.FromHwnd(this.Handle).MeasureString(caption, Font);
-            rect = this.ClientRectangle;
-            rect.Offset((int)size.Width, 0);
-        }
-
-        // Drawing
-        private void CtlStringField_Paint(object sender, PaintEventArgs e)
-        {
-            Drawing(e.Graphics);
-        }
-
-        // Overridable Drawing Fuction
-        public virtual void Drawing(Graphics gr)
-        {
-            gr.DrawString(caption, Font, new SolidBrush(ForeColor), this.ClientRectangle, sf);
-            gr.DrawString(_value, Font, new SolidBrush(ForeColor), rect, sf);
-        }
-
-        // Double Click
-        private void CtlStringField_DoubleClick(object sender, EventArgs e)
-        {
-            tbEnter.Text = _value;
-            tbEnter.Location = rect.Location;
-            tbEnter.Size = new Size(this.ClientRectangle.Width - rect.Left, this.ClientRectangle.Height);
-            this.Controls.Add(tbEnter);
-            tbEnter.Focus();
-        }
-
-        // End Edit
-        private void TbEnter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                _value = ValidateValue(tbEnter.Text);
-                this.Controls.Remove(tbEnter);
-                CalculateBounds();
-                this.Invalidate();
-                e.Handled = true;
-                ValueChanged?.Invoke(sender, e);
-            }
+            base.XP_Drawing(gr);
+            gr.DrawString(data, Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

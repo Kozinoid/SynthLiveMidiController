@@ -1,5 +1,5 @@
 ﻿
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
     partial class CtlEFXSourceField
     {

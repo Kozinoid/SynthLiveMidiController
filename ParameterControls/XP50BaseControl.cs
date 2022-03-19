@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SynthLiveMidiController.InstrumentList.Roland.XP50
+namespace SynthLiveMidiController.ParameterControls
 {
     public abstract partial class XP50BaseControl : UserControl
     {
@@ -57,11 +57,11 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             if (e.KeyCode == Keys.Enter)
             {
-                XP_EndEdit(sender, e);
+                XP_EndEdit();
                 this.Controls.Remove(tbEnter);
                 this.Invalidate();
                 e.Handled = true;
-                ValueChanged?.Invoke(sender, e);
+                CallBackCall();
             }
         }
 
@@ -70,10 +70,15 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             if (over)
             {
-                if (e.Delta > 0) XP_IncValue();
-                if (e.Delta < 0) XP_DecValue();
-                this.Invalidate();
-                ValueChanged?.Invoke(sender, e);
+                bool changed = true;
+                if (e.Delta > 0) changed = XP_IncValue();
+                if (e.Delta < 0) changed = XP_DecValue();
+
+                if (changed)
+                {
+                    this.Invalidate();
+                    CallBackCall();
+                }
             }
         }
 
@@ -111,11 +116,16 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         {
             if (pushed)
             {
-                if (e.Y > y) XP_DecValue();
-                if (e.Y < y) XP_IncValue(); ;
+                bool changed = true;
+                if (e.Y > y) changed = XP_DecValue();
+                if (e.Y < y) changed = XP_IncValue();
                 y = e.Y;
-                this.Invalidate();
-                ValueChanged?.Invoke(sender, e);
+
+                if (changed) 
+                {
+                    this.Invalidate();
+                    CallBackCall();
+                }
             }
         }
 
@@ -133,15 +143,15 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
 
         //_________________________________________  VIRTUAL METHODS  _________________________________________________
         // Increment Value
-        public virtual void XP_IncValue()
+        public virtual bool XP_IncValue()
         {
-
+            return true;
         }
 
         // Decrement Value
-        public virtual void XP_DecValue()
+        public virtual bool XP_DecValue()
         {
-
+            return true;
         }
 
         // Overridable Drawing Fuction
@@ -166,7 +176,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         }
 
         // Enter
-        public virtual void XP_EndEdit(object sender, KeyEventArgs e)
+        public virtual void XP_EndEdit()
         {
             
         }
@@ -177,6 +187,12 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             tbEnter.Location = rect.Location;
             this.Controls.Add(tbEnter);
             tbEnter.Focus();
+        }
+
+        // CallBack Calling
+        protected void CallBackCall()
+        {
+            ValueChanged?.Invoke(this, new EventArgs());
         }
     }
 }

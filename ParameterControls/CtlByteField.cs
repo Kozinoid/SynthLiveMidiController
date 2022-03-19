@@ -1,46 +1,24 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Drawing;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlByteField : UserControl
+    public partial class CtlByteField : XP50BaseControl
     {
-        public event EventHandler ValueChanged = null;
+        const int min = 0;
+        const int max = 127;
 
         // Fields
-        protected int min = 0;
-        protected int max = 127;
-        protected int _value = 127;
-        protected string caption = "Vol:";
-        protected readonly StringFormat sf = new StringFormat();
-        protected TextBox tbEnter = new TextBox();
-        protected Rectangle rect;
-        protected SizeF size;
-        protected bool over = false;
-        protected int y;
-        protected bool pushed = false;
-
-        // Caption
-        public string Caption
-        {
-            get { return caption; }
-            set
-            {
-                caption = value;
-                CalculateBounds();
-                this.Invalidate();
-            }
-        }
+        protected XP50Byte data;
 
         // Value
         public int Value
         {
-            get { return _value; }
+            get { return data.Value; }
             set
             {
-                _value = ValidateValue(value);
-                CalculateBounds();
+                data.Value = ValidateValue(value);
+                XP_CalculateBounds();
                 this.Invalidate();
             }
         }
@@ -48,7 +26,7 @@ namespace SynthLiveMidiController
         // ByteValue
         public virtual byte ByteValue
         {
-            get { return (byte)_value; }
+            get { return (byte)data.Value; }
             set { Value = value; }
         }
 
@@ -57,153 +35,54 @@ namespace SynthLiveMidiController
         {
             InitializeComponent();
 
-            CalculateBounds();
+            data.Value = max;
+            caption = "Vol: ";
+            EnableEditor = true;
 
-            sf.Alignment = StringAlignment.Near;
-            sf.LineAlignment = StringAlignment.Center;
-
-            MouseEnter += CtlByteField_MouseEnter;
-            MouseLeave += CtlByteField_MouseLeave;
-            MouseWheel += CtlByteField_MouseWheel;
-
-            tbEnter.KeyDown += TbEnter_KeyDown;
+            XP_CalculateBounds();
         }
 
-        // ------------------------------------------------  Mouse Wheel Control  -------------------------------------------------------
-        private void CtlByteField_MouseWheel(object sender, MouseEventArgs e)
+        // Validate
+        private int ValidateValue(int val)
         {
-            if (over)
-            {
-                int delta = (e.Delta > 0) ? 1 : -1;
-                _value = ValidateValue(_value + delta);
-                this.Invalidate();
-                ValueChanged?.Invoke(sender, e);
-            }
-        }
-
-        private void CtlByteField_MouseLeave(object sender, EventArgs e)
-        {
-            over = false;
-        }
-
-        private void CtlByteField_MouseEnter(object sender, EventArgs e)
-        {
-            Focus();
-            over = true;
-        }
-
-        //------------------------------------------------  Mouse Drag Control  ---------------------------------------------------------
-        private void CtlByteField_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                y = e.Y;
-                pushed = true;
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                RightClick(sender, e);
-            }
-        }
-
-        private void CtlByteField_MouseUp(object sender, MouseEventArgs e)
-        {
-            pushed = false;
-        }
-
-        private void CtlByteField_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (pushed)
-            {
-                int delta = 0;
-                if (e.Y > y) delta = -1;
-                if (e.Y < y) delta = 1;
-                y = e.Y;
-                _value = ValidateValue(_value + delta);
-                this.Invalidate();
-                ValueChanged?.Invoke(sender, e);
-            }
-        }
-        //-------------------------------------------------------------------------------------------------------------------------------
-
-        // Validate value
-        protected virtual int ValidateValue(int argument)
-        {
-            int res = argument;
-            if (res < min) res = min;
-            if (res > max) res = max;
+            int res = val;
+            if (val < min) res = min;
+            if (val > max) res = max;
             return res;
         }
 
-        // Calculate
-        protected virtual void CalculateBounds()
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
         {
-            size = Graphics.FromHwnd(this.Handle).MeasureString(caption, Font);
-            rect = this.ClientRectangle;
-            rect.Offset((int)size.Width, 0);
-        }
-
-        // Drawing
-        private void CtlByteField_Paint(object sender, PaintEventArgs e)
-        {
-            Drawing(e.Graphics);
-        }
-
-        // Overridable Drawing Fuction
-        public virtual void Drawing(Graphics gr)
-        {
-            gr.DrawString(caption, Font, new SolidBrush(ForeColor), this.ClientRectangle, sf);
-            gr.DrawString(_value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
-        }
-
-        // Double Click
-        private void CtlByteField_DoubleClick(object sender, EventArgs e)
-        {
-            BeginEdit();
-        }
-
-        // Dbl click Override
-        public virtual void BeginEdit()
-        {
-            tbEnter.Text = _value.ToString();
-            tbEnter.Location = rect.Location;
-            this.Controls.Add(tbEnter);
-            tbEnter.Focus();
-        }
-
-        // End Edit
-        private void TbEnter_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
+            if (Value < max)
             {
-                EndEdit(sender, e);
+                Value++;
+                return true;
             }
+            else return false;
         }
 
-        // Enter
-        public virtual void EndEdit(object sender, KeyEventArgs e)
+        public override bool XP_DecValue()
         {
-            int res;
-            try
+            if (Value > min)
             {
-                res = int.Parse(tbEnter.Text);
-
-                this.Controls.Remove(tbEnter);
-                _value = ValidateValue(res);
-                this.Invalidate();
-                e.Handled = true;
-                ValueChanged?.Invoke(sender, e);
+                Value--;
+                return true;
             }
-            catch
-            {
-                MessageBox.Show("Value is not valid!");
-            }
+            else return false;
         }
 
-        // SelectCommand()
-        public virtual void RightClick(object sender, MouseEventArgs e)
+        public override void XP_EndEdit()
         {
-            
+            Value = int.Parse(tbEnter.Text);
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

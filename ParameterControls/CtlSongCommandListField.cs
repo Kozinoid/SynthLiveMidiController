@@ -1,8 +1,8 @@
 ﻿using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlSongCommandListField : CtlUniversalComboBoxField
+    public partial class CtlSongCommandListField : XP50BaseControl
     {
         public CtlSongCommandListField()
         {

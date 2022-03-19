@@ -1,31 +1,48 @@
-﻿namespace SynthLiveMidiController
+﻿using System.Drawing;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
+
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlPerformanceNameField : CtlStringField
+    public partial class CtlPerformanceNameField : XP50BaseControl
     {
+        // Fields
+        protected XP50String12 data;
+
+        // Value
+        public string Value
+        {
+            get { return data.Text; }
+            set
+            {
+                data.Text = value;
+                XP_CalculateBounds();
+                this.Invalidate();
+            }
+        }
+
+        // Constructor
         public CtlPerformanceNameField()
         {
             InitializeComponent();
 
             caption = "Perf:";
+            data.Text = "";
+            EnableEditor = true;
+
+            XP_CalculateBounds();
         }
 
-        protected override string ValidateValue(string argument)
+        public override void XP_EndEdit()
         {
-            int length = argument.Length;
-            string res;
-            if (length > 12)
-            {
-                res = argument.Remove(12, length - 12);
-            }
-            else if (length < 12)
-            {
-                res = argument.PadRight(12);
-            }
-            else
-            {
-                res = argument;
-            }
-            return res;
+            Value = tbEnter.Text;
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.Text, Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

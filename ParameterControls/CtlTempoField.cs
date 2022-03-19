@@ -1,17 +1,33 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Drawing;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlTempoField : CtlByteField
+    public partial class CtlTempoField : XP50BaseControl
     {
-        protected byte[] valBuffer = new byte[2];
+        const int min = 0;
+        const int max = 127;
+
+        protected XP50TwoBytes data;
+
         // ByteValue
         public virtual byte[] ValueBuffer
         {
-            get { return valBuffer; }
-            set { valBuffer = value; }
+            get { return data.ByteArray; }
+            set { data.ByteArray = value; }
+        }
+
+        // Value
+        public int Value
+        {
+            get { return data.Value; }
+            set
+            {
+                data.Value = ValidateValue(value);
+                XP_CalculateBounds();
+                this.Invalidate();
+                EnableEditor = true;
+            }
         }
 
         // Constructor
@@ -19,23 +35,53 @@ namespace SynthLiveMidiController
         {
             InitializeComponent();
 
-            min = 20;
-            max = 250;
-            _value = 120;
             caption = "Tempo:";
+            data.Value = 120;
+
+            XP_CalculateBounds();
         }
 
-        // byte _value -> byte[2] valBuffer
-        public void ByteToBuffer()
+        // Validate
+        private int ValidateValue(int val)
         {
-            valBuffer[1] = (byte)(_value & 0x0F);
-            valBuffer[0] = (byte)((_value & 0xF0) >> 4);
+            int res = val;
+            if (val < min) res = min;
+            if (val > max) res = max;
+            return res;
         }
 
-        // byte[2] valBuffer -> byte _value
-        public  void BufferToByte()
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
         {
-            Value = (valBuffer[0] << 4) + valBuffer[1];
+            if (Value < max)
+            {
+                Value++;
+                return true;
+            }
+            else return false;
+        }
+
+        public override bool XP_DecValue()
+        {
+            if (Value > min)
+            {
+                Value--;
+                return true;
+            }
+            else return false;
+        }
+
+        public override void XP_EndEdit()
+        {
+            Value = int.Parse(tbEnter.Text);
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

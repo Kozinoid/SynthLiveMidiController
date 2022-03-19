@@ -1,7 +1,7 @@
 ﻿
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    partial class CtlBoolField
+    partial class CtlHoldBoolField
     {
         /// <summary> 
         /// Required designer variable.
@@ -38,8 +38,6 @@ namespace SynthLiveMidiController
             this.DoubleBuffered = true;
             this.Name = "CtlBoolField";
             this.Size = new System.Drawing.Size(70, 22);
-            this.Click += new System.EventHandler(this.CtlBoolField_Click);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlBoolField_Paint);
             this.ResumeLayout(false);
 
         }

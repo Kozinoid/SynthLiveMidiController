@@ -1,42 +1,84 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlPanField : CtlByteField
+    public partial class CtlPanField : XP50BaseControl
     {
-        string stringValue;
+        protected XP50PanByte data;
+
+        // Value
+        public int Value
+        {
+            get { return data.Value; }
+            set
+            {
+                data.Value = ValidateValue(value);
+                XP_CalculateBounds();
+                this.Invalidate();
+            }
+        }
+
+        // ByteValue
+        public virtual byte ByteValue
+        {
+            get { return (byte)data.Value; }
+            set { Value = value; }
+        }
 
         // Constructor
         public CtlPanField()
         {
             InitializeComponent();
-            _value = 0;
+            
             caption = "Pan:";
-            min = -63;
-            max = 63;
+            data = new XP50PanByte(0);
+            EnableEditor = true;
+
+            XP_CalculateBounds();
         }
 
-        // ByteValue
-        public override byte ByteValue 
+        // Validate
+        private int ValidateValue(int val)
         {
-            get { return (byte)(_value + 63); }
-            set 
-            { 
-                int res = ValidateValue(value - 63);
-                _value = res;
+            int res = val;
+            if (val < data.Min) res = data.Min;
+            if (val > data.Max) res = data.Max;
+            return res;
+        }
+
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
+        {
+            if (Value < data.Max)
+            {
+                Value++;
+                return true;
             }
+            else return false;
         }
 
-        // Overridable Drawing Fuction
-        public override void Drawing(Graphics gr)
+        public override bool XP_DecValue()
         {
-            if (_value < 0) stringValue = string.Format("L{0}", Math.Abs(_value));
-            else if (_value > 0) stringValue = string.Format("R{0}", _value);
-            else stringValue = "C";
+            if (Value > data.Min)
+            {
+                Value--;
+                return true;
+            }
+            else return false;
+        }
 
-            gr.DrawString(caption, Font, new SolidBrush(ForeColor), this.ClientRectangle, sf);
-            gr.DrawString(stringValue, Font, new SolidBrush(ForeColor), rect, sf);
+        public override void XP_EndEdit()
+        {
+            Value = int.Parse(tbEnter.Text);
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

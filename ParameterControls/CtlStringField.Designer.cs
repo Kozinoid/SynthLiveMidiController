@@ -1,5 +1,5 @@
 ﻿
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
     partial class CtlStringField
     {
@@ -38,8 +38,6 @@ namespace SynthLiveMidiController
             this.DoubleBuffered = true;
             this.Name = "CtlStringField";
             this.Size = new System.Drawing.Size(169, 22);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlStringField_Paint);
-            this.DoubleClick += new System.EventHandler(this.CtlStringField_DoubleClick);
             this.ResumeLayout(false);
 
         }

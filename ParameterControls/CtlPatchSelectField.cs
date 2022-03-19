@@ -1,44 +1,22 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlPatchSelectField : UserControl
+    public partial class CtlPatchSelectField : XP50BaseControl
     {
-        public event EventHandler PatchChange = null;
-
         // Fields
-        private byte[] patchBuffer;
-        private string caption = "Patch:";
-        private readonly StringFormat sf = new StringFormat();
-        private bool over = false;
-        private Rectangle rect;
-        private SizeF size;
-        private int y;
-        private bool pushed = false;
-
-        // Caption
-        public string Caption
-        {
-            get { return caption; }
-            set
-            {
-                caption = value;
-                CalculateBounds();
-                this.Invalidate();
-            }
-        }
+        protected XP50PatchBytes data;
 
         // Buffer
         public byte[] PatchBuffer
         {
-            get { return patchBuffer; }
+            get { return data.ByteArray; }
             set
             {
-                patchBuffer = value;
-                CalculateBounds();
+                data.ByteArray = value;
+                XP_CalculateBounds();
                 this.Invalidate();
             }
         }
@@ -48,102 +26,36 @@ namespace SynthLiveMidiController
         {
             InitializeComponent();
 
-            patchBuffer = BankNameConvertor.ChannelCommandToBuffer(81, 0, 0);
+            caption = "Patch:";
+            PatchBuffer = BankNameConvertor.ChannelCommandToBuffer(81, 0, 0);
+            EnableEditor = true;
 
-            CalculateBounds();
-
-            sf.Alignment = StringAlignment.Near;
-            sf.LineAlignment = StringAlignment.Center;
-
-            MouseEnter += CtlPatchSelectField_MouseEnter;
-            MouseLeave += CtlPatchSelectField_MouseLeave;
-            MouseWheel += CtlPatchSelectField_MouseWheel; ;
+            XP_CalculateBounds();
         }
 
-        // ------------------------------------------------  Mouse Wheel Control  -------------------------------------------------------
-        private void CtlPatchSelectField_MouseWheel(object sender, MouseEventArgs e)
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
         {
-            if (over)
-            {
-                if (e.Delta > 0) NextPatch();
-                if (e.Delta < 0) PrevPatch();
-                CalculateBounds();
-                this.Invalidate();
-                PatchChange?.Invoke(sender, e);
-            }
+            PatchBuffer = BankNameConvertor.Next(PatchBuffer);
+
+            return true;
         }
 
-        private void CtlPatchSelectField_MouseLeave(object sender, EventArgs e)
+        public override bool XP_DecValue()
         {
-            over = false;
+            PatchBuffer = BankNameConvertor.Prev(PatchBuffer);
+
+            return true;
         }
 
-        private void CtlPatchSelectField_MouseEnter(object sender, EventArgs e)
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
         {
-            Focus();
-            over = true;
+            base.XP_Drawing(gr);
+            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
 
-        //------------------------------------------------  Mouse Drag Control  ---------------------------------------------------------
-        private void CtlPatchSelectField_MouseDown(object sender, MouseEventArgs e)
-        {
-            y = e.Y;
-            pushed = true;
-        }
-
-        private void CtlPatchSelectField_MouseUp(object sender, MouseEventArgs e)
-        {
-            pushed = false;
-        }
-
-        private void CtlPatchSelectField_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (pushed)
-            {
-                if (e.Y > y) PrevPatch();
-                if (e.Y < y) NextPatch(); 
-                CalculateBounds();
-                this.Invalidate();
-                PatchChange?.Invoke(sender, e);
-            }
-        }
-        //-------------------------------------------------------------------------------------------------------------------------------
-        private void NextPatch()
-        {
-            patchBuffer = BankNameConvertor.Next(patchBuffer);
-        }
-
-        private void PrevPatch()
-        {
-            patchBuffer = BankNameConvertor.Prev(patchBuffer);
-        }
-        //-------------------------------------------------------------------------------------------------------------------------------
-
-        // Calculate
-        protected virtual void CalculateBounds()
-        {
-            size = Graphics.FromHwnd(this.Handle).MeasureString(caption, Font);
-            rect = this.ClientRectangle;
-            rect.Offset((int)size.Width, 0);
-        }
-
-        // Drawing
-        private void CtlPatchSelectField_Paint(object sender, PaintEventArgs e)
-        {
-            Drawing(e.Graphics);
-        }
-
-        // Overridable Drawing Fuction
-        public void Drawing(Graphics gr)
-        {
-            string patchName = "";
-            if (BankNameConvertor.IsLoaded) patchName = BankNameConvertor.GetPatchName(patchBuffer);
-            gr.DrawString(caption, Font, new SolidBrush(ForeColor), this.ClientRectangle, sf);
-            gr.DrawString(patchName, Font, new SolidBrush(ForeColor), rect, sf);
-        }
-
-        // Double Click
-        private void CtlPatchSelectField_DoubleClick(object sender, EventArgs e)
+        public override void XP_BeginEdit()
         {
             SelectPatchDialog spd = new SelectPatchDialog
             {
@@ -151,7 +63,6 @@ namespace SynthLiveMidiController
             };
             if (spd.ShowDialog() == DialogResult.OK)
             {
-                //Console.WriteLine("Ok");
                 PatchBuffer = spd.CommandBuffer;
             }
         }

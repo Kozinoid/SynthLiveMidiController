@@ -32,15 +32,15 @@ namespace SynthLiveMidiController
             this.pn_Parameters = new System.Windows.Forms.Panel();
             this.pn_Select = new System.Windows.Forms.Panel();
             this.ctlKeyzoneField1 = new SynthLiveMidiController.CtlKeyzoneField();
-            this.ctlChorus = new SynthLiveMidiController.CtlByteField();
-            this.ctlReverb = new SynthLiveMidiController.CtlByteField();
+            this.ctlChorus = new SynthLiveMidiController.ParameterControls.CtlByteField();
+            this.ctlReverb = new SynthLiveMidiController.ParameterControls.CtlByteField();
             this.ctlPatch = new SynthLiveMidiController.CtlPatchSelectField();
             this.ctlKeyUp = new SynthLiveMidiController.CtlKeyField();
             this.ctlOctave = new SynthLiveMidiController.CtlOctaveField();
             this.ctlKeyDown = new SynthLiveMidiController.CtlKeyField();
             this.ctlPan = new SynthLiveMidiController.CtlPanField();
-            this.ctlVolume = new SynthLiveMidiController.CtlByteField();
-            this.ctlHold = new SynthLiveMidiController.CtlBoolField();
+            this.ctlVolume = new SynthLiveMidiController.ParameterControls.CtlByteField();
+            this.ctlHold = new SynthLiveMidiController.ParameterControls.CtlHoldBoolField();
             this.ctlChannel = new SynthLiveMidiController.CtlChannelField();
             this.pn_Parameters.SuspendLayout();
             this.SuspendLayout();
@@ -188,7 +188,7 @@ namespace SynthLiveMidiController
             this.ctlHold.Name = "ctlHold";
             this.ctlHold.Size = new System.Drawing.Size(70, 22);
             this.ctlHold.TabIndex = 1;
-            this.ctlHold.CheckedChange += new System.EventHandler(this.ctlHold_CheckedChange);
+            this.ctlHold.ValueChanged += new System.EventHandler(this.ctlHold_CheckedChange);
             // 
             // ctlChannel
             // 
@@ -219,15 +219,15 @@ namespace SynthLiveMidiController
         #endregion
 
         private System.Windows.Forms.Panel pn_Parameters;
-        private CtlByteField ctlChorus;
-        private CtlByteField ctlReverb;
+        private SynthLiveMidiController.ParameterControls.CtlByteField ctlChorus;
+        private SynthLiveMidiController.ParameterControls.CtlByteField ctlReverb;
         private CtlPatchSelectField ctlPatch;
         private CtlKeyField ctlKeyUp;
         private CtlOctaveField ctlOctave;
         private CtlKeyField ctlKeyDown;
         private CtlPanField ctlPan;
-        private CtlByteField ctlVolume;
-        private CtlBoolField ctlHold;
+        private SynthLiveMidiController.ParameterControls.CtlByteField ctlVolume;
+        private SynthLiveMidiController.ParameterControls.CtlHoldBoolField ctlHold;
         private CtlChannelField ctlChannel;
         private CtlKeyzoneField ctlKeyzoneField1;
         private System.Windows.Forms.Panel pn_Select;

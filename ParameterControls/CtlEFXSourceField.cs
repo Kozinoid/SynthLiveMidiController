@@ -1,51 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Drawing;
+using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlEFXSourceField : CtlByteField
+    public partial class CtlEFXSourceField : XP50BaseControl
     {
-        string stringValue;
-        string[] array = { "Perf", "1", "2", "3", "4", "5", "6", "7", "8", "9", "11", "12", "13", "14", "15", "16" };
+        // Fields
+        protected XP50EFXEnum<EFXSource> data;
+        const int min = 0;
+        private readonly int max;
+
+        // Value
+        public int Value
+        {
+            get { return data.Value; }
+            set
+            {
+                data.Value = ValidateValue(value);
+                XP_CalculateBounds();
+                this.Invalidate();
+            }
+        }
+
+        // ByteValue
+        public virtual byte ByteValue
+        {
+            get { return (byte)data.Value; }
+            set { Value = value; }
+        }
 
         public CtlEFXSourceField()
         {
             InitializeComponent();
 
-            _value = 0;
             caption = "EFX:";
-            min = 0;
-            max = 15;
+            max = data.Count;
+            EnableEditor = true;
+
+            XP_CalculateBounds();
         }
 
-        public override byte ByteValue
+        // Validate
+        private int ValidateValue(int val)
         {
-            get { return (byte)_value; }
-            set
+            int res = val;
+            if (val < min) res = min;
+            if (val > max) res = max;
+            return res;
+        }
+
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
+        {
+            if (Value < max)
             {
-                int res = ValidateValue(value);
-                _value = res;
+                Value++;
+                return true;
             }
+            else return false;
         }
 
-        public override void Drawing(Graphics gr)
+        public override bool XP_DecValue()
         {
-            stringValue = array[_value];
-
-            gr.DrawString(caption, Font, new SolidBrush(ForeColor), this.ClientRectangle, sf);
-            gr.DrawString(stringValue, Font, new SolidBrush(ForeColor), rect, sf);
+            if (Value > min)
+            {
+                Value--;
+                return true;
+            }
+            else return false;
         }
 
-        protected override void CalculateBounds()
+        public override void XP_EndEdit()
         {
-            base.CalculateBounds();
+            Value = int.Parse(tbEnter.Text);
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

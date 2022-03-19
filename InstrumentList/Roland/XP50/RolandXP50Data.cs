@@ -174,7 +174,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     // ----------------  ENUM List  -----------------------------
     interface IXP50EnumList : IXP50NumericData
     {
-        string[] Named { get; }
+        string[] Names { get; }
     }
     // ----------------------------------------------------------
     interface IXP50NumericData : IXP50Data, IXP50Numeric { }
@@ -204,6 +204,35 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public override string ToString()
         {
             return Value.ToString();
+        }
+    }
+
+    // ===========================================================  ONE KEY  ==================================================================
+    public struct XP50Key : IXP50NumericData
+    {
+        static string[] keys = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B", "H" };
+
+        // Field
+        private byte data;
+
+        // Byte Array
+        public byte[] ByteArray
+        {
+            get => new byte[] { (byte)data };
+            set => Value = value[0];
+        }
+
+        // Byte Value
+        public int Value
+        {
+            get => (int)data;
+            set => data = (byte)value;
+        }
+
+        // To String
+        public override string ToString()
+        {
+            return keys[Value % 12] + (Value / 12 - 1).ToString();
         }
     }
 
@@ -403,8 +432,21 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             set => data = (T)Enum.Parse(typeof(T), data.ToString());
         }
 
+        // Data
+        public T Data
+        {
+            set { data = value; }
+            get { return data; }
+        }
+
         // Enum
-        public string[] Named => Enum.GetNames(typeof(T));
+        public string[] Names => Enum.GetNames(typeof(T));
+
+        // Count
+        public int Count
+        {
+            get { return Names.Length; }
+        }
 
         // Constructor
         public XP50EFXEnum(T value)
@@ -562,7 +604,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
                 {
                     buf[i] = space;
                 }
-                for (int i = 0; i < length; i++)
+                for (int i = 0; i < ((length > 12) ? 12 : length); i++)
                 {
                     buf[i] = Encoding.Default.GetBytes(value)[i];
                 }

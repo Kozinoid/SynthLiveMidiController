@@ -1,7 +1,7 @@
 ﻿
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
-    partial class CtlUniversalComboBoxField
+    partial class CtlLocalBoolField
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,17 +29,8 @@ namespace SynthLiveMidiController
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // CtlUniversalComboBoxField
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "CtlUniversalComboBoxField";
-            this.Size = new System.Drawing.Size(184, 22);
-            this.ResumeLayout(false);
-
         }
 
         #endregion

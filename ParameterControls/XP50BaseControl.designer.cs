@@ -1,5 +1,5 @@
 ﻿
-namespace SynthLiveMidiController.InstrumentList.Roland.XP50
+namespace SynthLiveMidiController.ParameterControls
 {
     partial class XP50BaseControl
     {
