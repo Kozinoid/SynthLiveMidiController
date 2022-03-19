@@ -186,6 +186,7 @@ namespace SynthLiveMidiController.ParameterControls
         {
             tbEnter.Location = rect.Location;
             this.Controls.Add(tbEnter);
+            tbEnter.SelectAll();
             tbEnter.Focus();
         }
 
@@ -193,6 +194,13 @@ namespace SynthLiveMidiController.ParameterControls
         protected void CallBackCall()
         {
             ValueChanged?.Invoke(this, new EventArgs());
+        }
+
+        // Resize
+        private void XP50BaseControl_Resize(object sender, EventArgs e)
+        {
+            XP_CalculateBounds();
+            this.Invalidate();
         }
     }
 }

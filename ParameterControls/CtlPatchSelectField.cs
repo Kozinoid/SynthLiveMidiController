@@ -52,9 +52,17 @@ namespace SynthLiveMidiController.ParameterControls
         public override void XP_Drawing(Graphics gr)
         {
             base.XP_Drawing(gr);
-            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
+            if (BankNameConvertor.IsLoaded)
+            {
+                gr.DrawString(BankNameConvertor.GetPatchName(data.ByteArray), Font, new SolidBrush(ForeColor), rect, sf);
+            }
+            else
+            {
+                gr.DrawString(data.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
+            }
         }
 
+        //------------------------------------------------------  Double Ckick  ---------------------------------------------------------
         public override void XP_BeginEdit()
         {
             SelectPatchDialog spd = new SelectPatchDialog

@@ -38,11 +38,6 @@ namespace SynthLiveMidiController.ParameterControls
             this.DoubleBuffered = true;
             this.Name = "CtlPatchSelectField";
             this.Size = new System.Drawing.Size(198, 22);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlPatchSelectField_Paint);
-            this.DoubleClick += new System.EventHandler(this.CtlPatchSelectField_DoubleClick);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlPatchSelectField_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlPatchSelectField_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlPatchSelectField_MouseUp);
             this.ResumeLayout(false);
 
         }

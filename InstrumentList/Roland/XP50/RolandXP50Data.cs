@@ -429,7 +429,7 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public int Value
         {
             get => Convert.ToInt32(data);
-            set => data = (T)Enum.Parse(typeof(T), data.ToString());
+            set => data = (T)Enum.Parse(typeof(T), value.ToString());
         }
 
         // Data
@@ -452,6 +452,12 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
         public XP50EFXEnum(T value)
         {
             data = value;
+        }
+
+        // SetName
+        public void SetName(string name)
+        {
+            data = (T)Enum.Parse(typeof(T), name);
         }
 
         // To String
@@ -486,9 +492,6 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
     // ==========================================================  PATCH NUMBER  =============================================================
     public struct XP50PatchBytes : IXP50NumericData
     {
-        // Callback to Convert
-        public GetPatchString GetPatchStringHandler;
-
         // Fields
         IntUnion patchData;
 
@@ -512,24 +515,10 @@ namespace SynthLiveMidiController.InstrumentList.Roland.XP50
             }
         }
 
-        // Constructor
-        public XP50PatchBytes(GetPatchString callback)
-        {
-            GetPatchStringHandler = callback;
-            patchData.b1 = 0;
-            patchData.b2 = 0;
-            patchData.b3 = 0;
-            patchData.b4 = 0;
-            patchData.i = 0;
-        }
-
         // To String
         public override string ToString()
         {
-            string res;
-            if (GetPatchStringHandler != null) res = GetPatchStringHandler(ByteArray);
-            else res = Value.ToString();
-            return res;
+            return Value.ToString();
         }
     }
 

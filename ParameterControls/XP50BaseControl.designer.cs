@@ -43,6 +43,7 @@ namespace SynthLiveMidiController.ParameterControls
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.XP50BaseControl_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.XP50BaseControl_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.XP50BaseControl_MouseUp);
+            this.Resize += new System.EventHandler(this.XP50BaseControl_Resize);
             this.ResumeLayout(false);
 
         }

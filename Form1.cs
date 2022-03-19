@@ -284,5 +284,10 @@ namespace SynthLiveMidiController
         {
             
         }
+
+        private void pn_PicturePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

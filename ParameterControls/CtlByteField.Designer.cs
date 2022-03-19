@@ -38,11 +38,6 @@ namespace SynthLiveMidiController.ParameterControls
             this.DoubleBuffered = true;
             this.Name = "CtlByteField";
             this.Size = new System.Drawing.Size(70, 22);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CtlByteField_Paint);
-            this.DoubleClick += new System.EventHandler(this.CtlByteField_DoubleClick);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlByteField_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlByteField_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlByteField_MouseUp);
             this.ResumeLayout(false);
 
         }

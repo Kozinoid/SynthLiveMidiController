@@ -97,20 +97,16 @@
     <Compile Include="ParameterControls\CtlChannelField.Designer.cs">
       <DependentUpon>CtlChannelField.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlChannelParametersListEditor.cs">
+    <Compile Include="ParameterControls\CtlChannelParametersListEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlChannelParametersListEditor.Designer.cs">
+    <Compile Include="ParameterControls\CtlChannelParametersListEditor.Designer.cs">
       <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlFastCommandEditor.cs">
+    <Compile Include="ParameterControls\CtlFastCommandListField.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlFastCommandEditor.Designer.cs">
-      <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlFastCommandListField.cs" />
-    <Compile Include="ParameterControls\ToDo\CtlFastCommandListField.Designer.cs">
+    <Compile Include="ParameterControls\CtlFastCommandListField.Designer.cs">
       <DependentUpon>CtlFastCommandListField.cs</DependentUpon>
     </Compile>
     <Compile Include="ParameterControls\CtlLocalBoolField.cs">
@@ -124,12 +120,6 @@
     </Compile>
     <Compile Include="ParameterControls\CtlPerformanceNameField.Designer.cs">
       <DependentUpon>CtlPerformanceNameField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlSongCommandEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlSongCommandEditor.Designer.cs">
-      <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ParameterControls\CtlEFXSourceField.cs">
       <SubType>UserControl</SubType>
@@ -155,10 +145,10 @@
     <Compile Include="ParameterControls\CtlOctaveField.Designer.cs">
       <DependentUpon>CtlOctaveField.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlOneChannelParameters.cs">
+    <Compile Include="ParameterControls\CtlOneChannelParameters.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ParameterControls\ToDo\CtlOneChannelParameters.Designer.cs">
+    <Compile Include="ParameterControls\CtlOneChannelParameters.Designer.cs">
       <DependentUpon>CtlOneChannelParameters.cs</DependentUpon>
     </Compile>
     <Compile Include="ParameterControls\CtlPanField.cs">
@@ -196,12 +186,6 @@
     </Compile>
     <Compile Include="ComplexControls\FastListControl.Designer.cs">
       <DependentUpon>FastListControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ComplexControls\FastPresetEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ComplexControls\FastPresetEditor.Designer.cs">
-      <DependentUpon>FastPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SelectPatchDialog.cs">
       <SubType>Form</SubType>
@@ -247,12 +231,6 @@
     <Compile Include="ComplexControls\SongListControl.Designer.cs">
       <DependentUpon>SongListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComplexControls\SongPresetEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ComplexControls\SongPresetEditor.Designer.cs">
-      <DependentUpon>SongPresetEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Test\TestClass.cs" />
     <Compile Include="ParameterControls\XP50BaseControl.cs">
       <SubType>UserControl</SubType>
@@ -266,19 +244,13 @@
     <EmbeddedResource Include="ParameterControls\CtlByteField.resx">
       <DependentUpon>CtlByteField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ParameterControls\ToDo\CtlChannelParametersListEditor.resx">
+    <EmbeddedResource Include="ParameterControls\CtlChannelParametersListEditor.resx">
       <DependentUpon>CtlChannelParametersListEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParameterControls\ToDo\CtlFastCommandEditor.resx">
-      <DependentUpon>CtlFastCommandEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParameterControls\ToDo\CtlSongCommandEditor.resx">
-      <DependentUpon>CtlSongCommandEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParameterControls\CtlKeyzoneField.resx">
       <DependentUpon>CtlKeyzoneField.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ParameterControls\ToDo\CtlOneChannelParameters.resx">
+    <EmbeddedResource Include="ParameterControls\CtlOneChannelParameters.resx">
       <DependentUpon>CtlOneChannelParameters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParameterControls\CtlPatchSelectField.resx">
@@ -289,9 +261,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ComplexControls\FastListControl.resx">
       <DependentUpon>FastListControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ComplexControls\FastPresetEditor.resx">
-      <DependentUpon>FastPresetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -314,9 +283,6 @@
     </Compile>
     <EmbeddedResource Include="ComplexControls\SongListControl.resx">
       <DependentUpon>SongListControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ComplexControls\SongPresetEditor.resx">
-      <DependentUpon>SongPresetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParameterControls\XP50BaseControl.resx">
       <DependentUpon>XP50BaseControl.cs</DependentUpon>
@@ -346,7 +312,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ParameterControls\ToDo\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="InstrumentList\InstrumentList.txt" />
   </ItemGroup>

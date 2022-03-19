@@ -5,8 +5,8 @@ namespace SynthLiveMidiController.ParameterControls
 {
     public partial class CtlTempoField : XP50BaseControl
     {
-        const int min = 0;
-        const int max = 127;
+        const int min = 20;
+        const int max = 250;
 
         protected XP50TwoBytes data;
 
@@ -75,6 +75,12 @@ namespace SynthLiveMidiController.ParameterControls
         {
             Value = int.Parse(tbEnter.Text);
             base.XP_EndEdit();
+        }
+
+        public override void XP_BeginEdit()
+        {
+            tbEnter.Text = data.ToString();
+            base.XP_BeginEdit();
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------

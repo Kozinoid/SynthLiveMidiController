@@ -1,11 +1,13 @@
-﻿using System.Drawing;
-using SynthLiveMidiController.InstrumentList.Roland.XP50;
+﻿using SynthLiveMidiController.InstrumentList.Roland.XP50;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace SynthLiveMidiController.ParameterControls
 {
-    public partial class CtlChannelField : XP50BaseControl
+    public partial class CtlFastCommandListField : XP50BaseControl
     {
         protected XP50LimitedByte data;
+        protected List<string> namesList;
 
         // Value
         public int Value
@@ -26,14 +28,14 @@ namespace SynthLiveMidiController.ParameterControls
             set { Value = value; }
         }
 
-        // Constructor
-        public CtlChannelField()
+        public CtlFastCommandListField()
         {
             InitializeComponent();
 
-            data = new XP50LimitedByte(1, 16, 1);
-            caption = "Ch:";
+            caption = "Fast Command:";
+            data = new XP50LimitedByte(1, RolandXP50CommandSet.FastCommandCount, 1);
             EnableEditor = true;
+
             XP_CalculateBounds();
         }
 
@@ -71,12 +73,6 @@ namespace SynthLiveMidiController.ParameterControls
         {
             Value = int.Parse(tbEnter.Text);
             base.XP_EndEdit();
-        }
-
-        public override void XP_BeginEdit()
-        {
-            tbEnter.Text = data.ToString();
-            base.XP_BeginEdit();
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------

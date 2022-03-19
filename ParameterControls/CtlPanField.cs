@@ -74,6 +74,12 @@ namespace SynthLiveMidiController.ParameterControls
             base.XP_EndEdit();
         }
 
+        public override void XP_BeginEdit()
+        {
+            tbEnter.Text = data.Value.ToString();
+            base.XP_BeginEdit();
+        }
+
         //------------------------------------------------------  Drawing  --------------------------------------------------------------
         public override void XP_Drawing(Graphics gr)
         {

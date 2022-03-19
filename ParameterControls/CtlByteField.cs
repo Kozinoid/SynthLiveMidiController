@@ -35,11 +35,11 @@ namespace SynthLiveMidiController.ParameterControls
         {
             InitializeComponent();
 
-            data.Value = max;
+            Value = max;
             caption = "Vol: ";
             EnableEditor = true;
 
-            XP_CalculateBounds();
+            //XP_CalculateBounds();
         }
 
         // Validate
@@ -76,6 +76,12 @@ namespace SynthLiveMidiController.ParameterControls
         {
             Value = int.Parse(tbEnter.Text);
             base.XP_EndEdit();
+        }
+
+        public override void XP_BeginEdit()
+        {
+            tbEnter.Text = data.ToString();
+            base.XP_BeginEdit();
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------

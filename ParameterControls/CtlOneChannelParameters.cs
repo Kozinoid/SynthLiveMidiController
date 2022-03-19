@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
     public partial class CtlOneChannelParameters : UserControl
     {

@@ -1,16 +1,85 @@
 ﻿using SynthLiveMidiController.InstrumentList.Roland.XP50;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace SynthLiveMidiController.ParameterControls
 {
     public partial class CtlSongCommandListField : XP50BaseControl
     {
+        protected XP50LimitedByte data;
+        protected List<string> namesList;
+
+        // Value
+        public int Value
+        {
+            get { return data.Value; }
+            set
+            {
+                data.Value = ValidateValue(value);
+                XP_CalculateBounds();
+                this.Invalidate();
+            }
+        }
+
+        // ByteValue
+        public virtual byte ByteValue
+        {
+            get { return (byte)data.Value; }
+            set { Value = value; }
+        }
+
         public CtlSongCommandListField()
         {
             InitializeComponent();
 
-            min = 1;
-            max = RolandXP50CommandSet.SongCommandCount;
             caption = "Song Command:";
+            data = new XP50LimitedByte(1, RolandXP50CommandSet.SongCommandCount, 1);
+            EnableEditor = true;
+
+            XP_CalculateBounds();
+        }
+
+        // Validate
+        private int ValidateValue(int val)
+        {
+            int res = val;
+            if (val < data.Min) res = data.Min;
+            if (val > data.Max) res = data.Max;
+            return res;
+        }
+
+        // ---------------------------------------------------  Value change  -----------------------------------------------------------
+        public override bool XP_IncValue()
+        {
+            if (Value < data.Max)
+            {
+                Value++;
+                return true;
+            }
+            else return false;
+        }
+
+        public override bool XP_DecValue()
+        {
+            if (Value > data.Min)
+            {
+                Value--;
+                return true;
+            }
+            else return false;
+        }
+
+        public override void XP_EndEdit()
+        {
+            Value = int.Parse(tbEnter.Text);
+            base.XP_EndEdit();
+        }
+
+        //------------------------------------------------------  Drawing  --------------------------------------------------------------
+        public override void XP_Drawing(Graphics gr)
+        {
+            base.XP_Drawing(gr);
+            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

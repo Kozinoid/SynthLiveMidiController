@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
     public partial class CtlChannelParametersListEditor : UserControl
     {

@@ -37,11 +37,8 @@ namespace SynthLiveMidiController
             this.pn_LeftPanel = new System.Windows.Forms.Panel();
             this.tab_Control = new System.Windows.Forms.TabControl();
             this.tab_SongList = new System.Windows.Forms.TabPage();
-            this.songListControl = new SynthLiveMidiController.SongListControl();
             this.tab_TrackList = new System.Windows.Forms.TabPage();
-            this.trackListControl = new SynthLiveMidiController.SongListControl();
             this.tab_FastPresets = new System.Windows.Forms.TabPage();
-            this.fastListControl = new SynthLiveMidiController.FastListControl();
             this.pn_ButtonPanel = new System.Windows.Forms.Panel();
             this.gb_Controls = new System.Windows.Forms.GroupBox();
             this.bt_Options = new System.Windows.Forms.Button();
@@ -68,11 +65,11 @@ namespace SynthLiveMidiController
             this.bt_S2 = new System.Windows.Forms.Button();
             this.bt_S1 = new System.Windows.Forms.Button();
             this.pn_PicturePanel = new System.Windows.Forms.Panel();
-            this.ctlByteField1 = new SynthLiveMidiController.ParameterControls.CtlByteField();
-            this.ctlHoldBoolField1 = new SynthLiveMidiController.ParameterControls.CtlHoldBoolField();
-            this.ctlLocalBoolField1 = new SynthLiveMidiController.ParameterControls.CtlLocalBoolField();
             this.pn_Test = new System.Windows.Forms.Panel();
             this.bt_Act6 = new System.Windows.Forms.Button();
+            this.songListControl = new SynthLiveMidiController.SongListControl();
+            this.trackListControl = new SynthLiveMidiController.SongListControl();
+            this.fastListControl = new SynthLiveMidiController.FastListControl();
             this.pn_LeftPanel.SuspendLayout();
             this.tab_Control.SuspendLayout();
             this.tab_SongList.SuspendLayout();
@@ -152,7 +149,7 @@ namespace SynthLiveMidiController
             this.pn_LeftPanel.Location = new System.Drawing.Point(0, 0);
             this.pn_LeftPanel.Margin = new System.Windows.Forms.Padding(4);
             this.pn_LeftPanel.Name = "pn_LeftPanel";
-            this.pn_LeftPanel.Size = new System.Drawing.Size(661, 846);
+            this.pn_LeftPanel.Size = new System.Drawing.Size(661, 814);
             this.pn_LeftPanel.TabIndex = 5;
             // 
             // tab_Control
@@ -167,7 +164,7 @@ namespace SynthLiveMidiController
             this.tab_Control.Name = "tab_Control";
             this.tab_Control.Padding = new System.Drawing.Point(0, 0);
             this.tab_Control.SelectedIndex = 0;
-            this.tab_Control.Size = new System.Drawing.Size(661, 694);
+            this.tab_Control.Size = new System.Drawing.Size(661, 662);
             this.tab_Control.TabIndex = 1;
             this.tab_Control.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tab_Control_DrawItem);
             // 
@@ -178,19 +175,10 @@ namespace SynthLiveMidiController
             this.tab_SongList.Location = new System.Drawing.Point(4, 25);
             this.tab_SongList.Margin = new System.Windows.Forms.Padding(0);
             this.tab_SongList.Name = "tab_SongList";
-            this.tab_SongList.Size = new System.Drawing.Size(653, 665);
+            this.tab_SongList.Size = new System.Drawing.Size(653, 633);
             this.tab_SongList.TabIndex = 0;
             this.tab_SongList.Text = "Писок песен";
             this.tab_SongList.UseVisualStyleBackColor = true;
-            // 
-            // songListControl
-            // 
-            this.songListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.songListControl.Location = new System.Drawing.Point(0, 0);
-            this.songListControl.Margin = new System.Windows.Forms.Padding(0);
-            this.songListControl.Name = "songListControl";
-            this.songListControl.Size = new System.Drawing.Size(653, 665);
-            this.songListControl.TabIndex = 1;
             // 
             // tab_TrackList
             // 
@@ -199,19 +187,10 @@ namespace SynthLiveMidiController
             this.tab_TrackList.Location = new System.Drawing.Point(4, 25);
             this.tab_TrackList.Margin = new System.Windows.Forms.Padding(0);
             this.tab_TrackList.Name = "tab_TrackList";
-            this.tab_TrackList.Size = new System.Drawing.Size(653, 665);
+            this.tab_TrackList.Size = new System.Drawing.Size(653, 633);
             this.tab_TrackList.TabIndex = 1;
             this.tab_TrackList.Text = "Трэклист";
             this.tab_TrackList.UseVisualStyleBackColor = true;
-            // 
-            // trackListControl
-            // 
-            this.trackListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackListControl.Location = new System.Drawing.Point(0, 0);
-            this.trackListControl.Margin = new System.Windows.Forms.Padding(0);
-            this.trackListControl.Name = "trackListControl";
-            this.trackListControl.Size = new System.Drawing.Size(653, 665);
-            this.trackListControl.TabIndex = 0;
             // 
             // tab_FastPresets
             // 
@@ -220,19 +199,10 @@ namespace SynthLiveMidiController
             this.tab_FastPresets.Location = new System.Drawing.Point(4, 25);
             this.tab_FastPresets.Margin = new System.Windows.Forms.Padding(0);
             this.tab_FastPresets.Name = "tab_FastPresets";
-            this.tab_FastPresets.Size = new System.Drawing.Size(653, 665);
+            this.tab_FastPresets.Size = new System.Drawing.Size(653, 633);
             this.tab_FastPresets.TabIndex = 2;
             this.tab_FastPresets.Text = "Быстрые клавиши";
             this.tab_FastPresets.UseVisualStyleBackColor = true;
-            // 
-            // fastListControl
-            // 
-            this.fastListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastListControl.Location = new System.Drawing.Point(0, 0);
-            this.fastListControl.Margin = new System.Windows.Forms.Padding(5);
-            this.fastListControl.Name = "fastListControl";
-            this.fastListControl.Size = new System.Drawing.Size(653, 665);
-            this.fastListControl.TabIndex = 0;
             // 
             // pn_ButtonPanel
             // 
@@ -258,7 +228,7 @@ namespace SynthLiveMidiController
             this.pn_ButtonPanel.Controls.Add(this.bt_S2);
             this.pn_ButtonPanel.Controls.Add(this.bt_S1);
             this.pn_ButtonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pn_ButtonPanel.Location = new System.Drawing.Point(0, 694);
+            this.pn_ButtonPanel.Location = new System.Drawing.Point(0, 662);
             this.pn_ButtonPanel.Margin = new System.Windows.Forms.Padding(4);
             this.pn_ButtonPanel.Name = "pn_ButtonPanel";
             this.pn_ButtonPanel.Size = new System.Drawing.Size(661, 152);
@@ -534,52 +504,14 @@ namespace SynthLiveMidiController
             // 
             // pn_PicturePanel
             // 
-            this.pn_PicturePanel.Controls.Add(this.ctlByteField1);
-            this.pn_PicturePanel.Controls.Add(this.ctlHoldBoolField1);
-            this.pn_PicturePanel.Controls.Add(this.ctlLocalBoolField1);
             this.pn_PicturePanel.Controls.Add(this.pn_Test);
             this.pn_PicturePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_PicturePanel.Location = new System.Drawing.Point(661, 0);
             this.pn_PicturePanel.Margin = new System.Windows.Forms.Padding(4);
             this.pn_PicturePanel.Name = "pn_PicturePanel";
-            this.pn_PicturePanel.Size = new System.Drawing.Size(879, 846);
+            this.pn_PicturePanel.Size = new System.Drawing.Size(741, 814);
             this.pn_PicturePanel.TabIndex = 6;
-            // 
-            // ctlByteField1
-            // 
-            this.ctlByteField1.ByteValue = ((byte)(127));
-            this.ctlByteField1.Caption = "Vol:";
-            this.ctlByteField1.EnableContext = false;
-            this.ctlByteField1.EnableEditor = false;
-            this.ctlByteField1.Location = new System.Drawing.Point(154, 252);
-            this.ctlByteField1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.ctlByteField1.Name = "ctlByteField1";
-            this.ctlByteField1.Size = new System.Drawing.Size(93, 27);
-            this.ctlByteField1.TabIndex = 11;
-            this.ctlByteField1.Value = 127;
-            // 
-            // ctlHoldBoolField1
-            // 
-            this.ctlHoldBoolField1.Caption = "Hold: ";
-            this.ctlHoldBoolField1.Checked = false;
-            this.ctlHoldBoolField1.EnableContext = true;
-            this.ctlHoldBoolField1.EnableEditor = false;
-            this.ctlHoldBoolField1.Location = new System.Drawing.Point(154, 217);
-            this.ctlHoldBoolField1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.ctlHoldBoolField1.Name = "ctlHoldBoolField1";
-            this.ctlHoldBoolField1.Size = new System.Drawing.Size(93, 27);
-            this.ctlHoldBoolField1.TabIndex = 10;
-            // 
-            // ctlLocalBoolField1
-            // 
-            this.ctlLocalBoolField1.Caption = "Local: ";
-            this.ctlLocalBoolField1.Checked = false;
-            this.ctlLocalBoolField1.EnableContext = true;
-            this.ctlLocalBoolField1.EnableEditor = false;
-            this.ctlLocalBoolField1.Location = new System.Drawing.Point(154, 183);
-            this.ctlLocalBoolField1.Name = "ctlLocalBoolField1";
-            this.ctlLocalBoolField1.Size = new System.Drawing.Size(120, 27);
-            this.ctlLocalBoolField1.TabIndex = 9;
+            this.pn_PicturePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.pn_PicturePanel_Paint);
             // 
             // pn_Test
             // 
@@ -590,10 +522,10 @@ namespace SynthLiveMidiController
             this.pn_Test.Controls.Add(this.bt_act5);
             this.pn_Test.Controls.Add(this.bt_act3);
             this.pn_Test.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pn_Test.Location = new System.Drawing.Point(690, 0);
+            this.pn_Test.Location = new System.Drawing.Point(552, 0);
             this.pn_Test.Margin = new System.Windows.Forms.Padding(4);
             this.pn_Test.Name = "pn_Test";
-            this.pn_Test.Size = new System.Drawing.Size(189, 846);
+            this.pn_Test.Size = new System.Drawing.Size(189, 814);
             this.pn_Test.TabIndex = 7;
             // 
             // bt_Act6
@@ -608,12 +540,39 @@ namespace SynthLiveMidiController
             this.bt_Act6.UseVisualStyleBackColor = true;
             this.bt_Act6.Click += new System.EventHandler(this.bt_Act6_Click);
             // 
+            // songListControl
+            // 
+            this.songListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.songListControl.Location = new System.Drawing.Point(0, 0);
+            this.songListControl.Margin = new System.Windows.Forms.Padding(0);
+            this.songListControl.Name = "songListControl";
+            this.songListControl.Size = new System.Drawing.Size(653, 633);
+            this.songListControl.TabIndex = 1;
+            // 
+            // trackListControl
+            // 
+            this.trackListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackListControl.Location = new System.Drawing.Point(0, 0);
+            this.trackListControl.Margin = new System.Windows.Forms.Padding(0);
+            this.trackListControl.Name = "trackListControl";
+            this.trackListControl.Size = new System.Drawing.Size(653, 633);
+            this.trackListControl.TabIndex = 0;
+            // 
+            // fastListControl
+            // 
+            this.fastListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastListControl.Location = new System.Drawing.Point(0, 0);
+            this.fastListControl.Margin = new System.Windows.Forms.Padding(5);
+            this.fastListControl.Name = "fastListControl";
+            this.fastListControl.Size = new System.Drawing.Size(653, 633);
+            this.fastListControl.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(1540, 846);
+            this.ClientSize = new System.Drawing.Size(1402, 814);
             this.Controls.Add(this.pn_PicturePanel);
             this.Controls.Add(this.pn_LeftPanel);
             this.ForeColor = System.Drawing.Color.GreenYellow;
@@ -681,9 +640,6 @@ namespace SynthLiveMidiController
         private FastListControl fastListControl;
         private System.Windows.Forms.Panel pn_Test;
         private System.Windows.Forms.Button bt_Act6;
-        private ParameterControls.CtlLocalBoolField ctlLocalBoolField1;
-        private ParameterControls.CtlHoldBoolField ctlHoldBoolField1;
-        private ParameterControls.CtlByteField ctlByteField1;
     }
 }
 

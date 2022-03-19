@@ -183,8 +183,8 @@ namespace SynthLiveMidiController.ParameterControls
         {
             for (int i = minKey; i <= maxKey; i++)
             {
-                bool sel = false;
-                if ((i >= lowerKey) && (i <= upperKey)) sel = true;
+                bool sel = true;
+                if ((i >= lowerKey) && (i <= upperKey)) sel = false;
                 keyList[i].Draw(gr, sel);
             }
         }

@@ -1,5 +1,5 @@
 ﻿
-namespace SynthLiveMidiController
+namespace SynthLiveMidiController.ParameterControls
 {
     partial class CtlOneChannelParameters
     {
@@ -31,17 +31,17 @@ namespace SynthLiveMidiController
         {
             this.pn_Parameters = new System.Windows.Forms.Panel();
             this.pn_Select = new System.Windows.Forms.Panel();
-            this.ctlKeyzoneField1 = new SynthLiveMidiController.CtlKeyzoneField();
+            this.ctlKeyzoneField1 = new SynthLiveMidiController.ParameterControls.CtlKeyzoneField();
             this.ctlChorus = new SynthLiveMidiController.ParameterControls.CtlByteField();
             this.ctlReverb = new SynthLiveMidiController.ParameterControls.CtlByteField();
-            this.ctlPatch = new SynthLiveMidiController.CtlPatchSelectField();
-            this.ctlKeyUp = new SynthLiveMidiController.CtlKeyField();
-            this.ctlOctave = new SynthLiveMidiController.CtlOctaveField();
-            this.ctlKeyDown = new SynthLiveMidiController.CtlKeyField();
-            this.ctlPan = new SynthLiveMidiController.CtlPanField();
+            this.ctlPatch = new SynthLiveMidiController.ParameterControls.CtlPatchSelectField();
+            this.ctlKeyUp = new SynthLiveMidiController.ParameterControls.CtlKeyField();
+            this.ctlOctave = new SynthLiveMidiController.ParameterControls.CtlOctaveField();
+            this.ctlKeyDown = new SynthLiveMidiController.ParameterControls.CtlKeyField();
+            this.ctlPan = new SynthLiveMidiController.ParameterControls.CtlPanField();
             this.ctlVolume = new SynthLiveMidiController.ParameterControls.CtlByteField();
             this.ctlHold = new SynthLiveMidiController.ParameterControls.CtlHoldBoolField();
-            this.ctlChannel = new SynthLiveMidiController.CtlChannelField();
+            this.ctlChannel = new SynthLiveMidiController.ParameterControls.CtlChannelField();
             this.pn_Parameters.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,7 +123,6 @@ namespace SynthLiveMidiController
         ((byte)(0))};
             this.ctlPatch.Size = new System.Drawing.Size(198, 22);
             this.ctlPatch.TabIndex = 7;
-            this.ctlPatch.PatchChange += new System.EventHandler(this.ctlPatch_PatchChange);
             // 
             // ctlKeyUp
             // 
