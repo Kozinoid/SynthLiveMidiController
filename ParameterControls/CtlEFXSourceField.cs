@@ -92,10 +92,16 @@ namespace SynthLiveMidiController.ParameterControls
             else return false;
         }
 
-        public override void XP_EndEdit()
+        public override void XP_EndEdit(object sender, KeyEventArgs e)
         {
-            Value = int.Parse(tbEnter.Text);
-            base.XP_EndEdit();
+            try
+            {
+                Value = int.Parse(tbEnter.Text);
+            }
+            catch
+            {
+                base.XP_EndEdit(sender, e);
+            }
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------

@@ -57,7 +57,7 @@ namespace SynthLiveMidiController.ParameterControls
         {
             if (e.KeyCode == Keys.Enter)
             {
-                XP_EndEdit();
+                XP_EndEdit(sender, e);
                 this.Controls.Remove(tbEnter);
                 this.Invalidate();
                 e.Handled = true;
@@ -176,9 +176,12 @@ namespace SynthLiveMidiController.ParameterControls
         }
 
         // Enter
-        public virtual void XP_EndEdit()
+        public virtual void XP_EndEdit(object sender, KeyEventArgs e)
         {
-            
+            //this.Controls.Remove(tbEnter);
+            //this.Invalidate();
+            //e.Handled = true;
+            //CallBackCall();
         }
 
         // Dbl click Override

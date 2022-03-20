@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace SynthLiveMidiController.ParameterControls
 {
@@ -31,10 +32,10 @@ namespace SynthLiveMidiController.ParameterControls
             XP_CalculateBounds();
         }
 
-        public override void XP_EndEdit()
+        public override void XP_EndEdit(object sender, KeyEventArgs e)
         {
             Value = tbEnter.Text;
-            base.XP_EndEdit();
+            base.XP_EndEdit(sender, e);
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------

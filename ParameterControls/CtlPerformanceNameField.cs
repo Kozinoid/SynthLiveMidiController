@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using SynthLiveMidiController.InstrumentList.Roland.XP50;
 
 namespace SynthLiveMidiController.ParameterControls
@@ -32,10 +33,11 @@ namespace SynthLiveMidiController.ParameterControls
             XP_CalculateBounds();
         }
 
-        public override void XP_EndEdit()
+        // End Edit
+        public override void XP_EndEdit(object sender, KeyEventArgs e)
         {
             Value = tbEnter.Text;
-            base.XP_EndEdit();
+            base.XP_EndEdit(sender, e);
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------

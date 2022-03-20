@@ -1,13 +1,14 @@
 ﻿using SynthLiveMidiController.InstrumentList.Roland.XP50;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace SynthLiveMidiController.ParameterControls
 {
     public partial class CtlFastCommandListField : XP50BaseControl
     {
-        protected XP50LimitedByte data;
-        protected List<string> namesList;
+        protected XP50LimitedByte data = new XP50LimitedByte(1, RolandXP50CommandSet.FastCommandCount, 1);
+        protected List<string> namesList = new List<string>();
 
         // Value
         public int Value
@@ -28,15 +29,36 @@ namespace SynthLiveMidiController.ParameterControls
             set { Value = value; }
         }
 
+        // Constructor
         public CtlFastCommandListField()
         {
             InitializeComponent();
 
-            caption = "Fast Command:";
-            data = new XP50LimitedByte(1, RolandXP50CommandSet.FastCommandCount, 1);
+            caption = "Song Command:";
+            Init();
+
             EnableEditor = true;
 
             XP_CalculateBounds();
+        }
+
+        // Init
+        public void Init()
+        {
+            for (int i = data.Min; i <= data.Max; i++)
+            {
+                namesList.Add("");
+            }
+            for (int i = data.Min; i <= data.Max; i++)
+            {
+                SetString(i, string.Format("Command {0}", i));
+            }
+        }
+
+        // Set String
+        public void SetString(int key, string value)
+        {
+            namesList[key - data.Offset] = value;
         }
 
         // Validate
@@ -69,17 +91,23 @@ namespace SynthLiveMidiController.ParameterControls
             else return false;
         }
 
-        public override void XP_EndEdit()
+        public override void XP_EndEdit(object sender, KeyEventArgs e)
         {
-            Value = int.Parse(tbEnter.Text);
-            base.XP_EndEdit();
+            SetString(Value, tbEnter.Text);
+            base.XP_EndEdit(sender, e);
+        }
+
+        public override void XP_BeginEdit()
+        {
+            tbEnter.Text = namesList[data.Value - data.Offset];
+            base.XP_BeginEdit();
         }
 
         //------------------------------------------------------  Drawing  --------------------------------------------------------------
         public override void XP_Drawing(Graphics gr)
         {
             base.XP_Drawing(gr);
-            gr.DrawString(data.Value.ToString(), Font, new SolidBrush(ForeColor), rect, sf);
+            gr.DrawString(namesList[data.Value - data.Offset], Font, new SolidBrush(ForeColor), rect, sf);
         }
     }
 }

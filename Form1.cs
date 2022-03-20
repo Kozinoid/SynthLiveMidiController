@@ -251,7 +251,7 @@ namespace SynthLiveMidiController
         // OPTOINS Button
         private void bt_Options_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         //---------------------------------------  TEST  --------------------------------------------
